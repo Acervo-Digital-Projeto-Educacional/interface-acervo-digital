@@ -5,7 +5,7 @@ import type AlunoDTO from "../dto/AlunoDTO";
 class AlunoRequests {
     async obterListaDeAlunos(): Promise<AlunoDTO | undefined> {
         try {
-            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_LISTAR_ALUNOS}`);
+            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_ALUNOS}`);
 
             if(respostaAPI.ok) {
                 const listaDeAlunos: AlunoDTO = await respostaAPI.json();
