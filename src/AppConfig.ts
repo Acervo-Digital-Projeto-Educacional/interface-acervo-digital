@@ -5,5 +5,8 @@ export const SERVER_CFG = {
     ENDPOINT_ALUNOS: '/api/alunos',
     
     // livros
-    ENDPOINT_LIVROS: '/api/livros'
+    ENDPOINT_LIVROS: '/api/livros',
+
+    // empréstimos
+    ENDPOINT_EMPRESTIMOS: '/api/emprestimos'
 }
