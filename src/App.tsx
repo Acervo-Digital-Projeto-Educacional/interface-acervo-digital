@@ -4,6 +4,7 @@ import PHome from './pages/PHome/PHome'
 import PListaAluno from './pages/PLista/PListaAluno/PListaAluno'
 import PListaLivro from './pages/PLista/PListaLivro/PListaLivro'
 import PListaEmprestimo from './pages/PLista/PListaEmprestimo/PListaEmprestimo'
+import PCadastroAluno from './pages/PCadastro/PCadastroAluno/PCadastroAluno'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Route path='/aluno' element={<PListaAluno />} /> 
         <Route path='/livro' element={<PListaLivro />} /> 
         <Route path='/emprestimo' element={<PListaEmprestimo />} /> 
+        <Route path='/cadastro/aluno' element={<PCadastroAluno />} />
       </Routes>
     </BrowserRouter>
   )

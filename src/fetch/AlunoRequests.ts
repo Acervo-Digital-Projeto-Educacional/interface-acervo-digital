@@ -7,7 +7,7 @@ class AlunoRequests {
         try {
             const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_ALUNOS}`);
 
-            if(respostaAPI.ok) {
+            if (respostaAPI.ok) {
                 const listaDeAlunos: AlunoDTO = await respostaAPI.json();
                 return listaDeAlunos;
             } else {
@@ -16,6 +16,29 @@ class AlunoRequests {
         } catch (error) {
             console.error(`Erro ao fazer a consulta de alunos. ${error}`);
             return;
+        }
+    }
+
+    async enviarFormularioAluno(formAluno: AlunoDTO): Promise<boolean> {
+        try {
+            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_ALUNOS}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formAluno)
+            });
+
+            if (!respostaAPI.ok) {
+                throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+            }
+
+            console.info(`${respostaAPI.status} ${respostaAPI.statusText}`);
+
+            return true;
+        } catch (error) {
+            console.error(`Erro ao fazer consulta à API. ${error}`);
+            return false;
         }
     }
 }
