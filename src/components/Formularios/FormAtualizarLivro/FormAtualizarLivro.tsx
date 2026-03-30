@@ -138,9 +138,12 @@ function FormAtualizarLivro() {
                             name="isbn"
                             id="isbn"
                             required
+                            pattern="^(?:(?:\d[\ |-]?){9}[\d|X]|(?:\d[\ |-]?){13})$"
+                            maxLength={14}
+                            title="O ISBN deve ser um formato válido de 10 ou 13 dígitos (ex: 8535902775 ou 978-8535902777)"
                             value={formData.isbn}
                             onChange={handleChange}
-                            placeholder='ISBN'
+                            placeholder='ISBN-10 ou ISBN-13'
                             className='w-2xs border-2 border-slate-500 rounded-md p-1'
                         />
                     </label>

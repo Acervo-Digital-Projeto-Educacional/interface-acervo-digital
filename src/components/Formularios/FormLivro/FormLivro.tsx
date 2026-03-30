@@ -107,12 +107,15 @@ function FormLivro() {
                     <label htmlFor="isbn" className='text-xl m-4'>
                         ISBN <br />
                         <input
-                            type="number"
+                            type="text"
                             name="isbn"
                             id="isbn"
                             required
+                            pattern="^(?:(?:\d[\ |-]?){9}[\d|X]|(?:\d[\ |-]?){13})$"
+                            maxLength={14}
+                            title="O ISBN deve ser um formato válido de 10 ou 13 dígitos (ex: 8535902775 ou 978-8535902777)"
                             onChange={handleChange}
-                            placeholder='ISBN'
+                            placeholder='ISBN-10 ou ISBN-13'
                             className='w-2xs border-2 border-slate-500 rounded-md p-1'
                         />
                     </label>
@@ -177,8 +180,8 @@ function FormLivro() {
                 </div>
 
                 <input type="submit" value="ENVIAR" className=' block mx-auto mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600 shadow-md transition-all' />
-                <button 
-                    type="button" 
+                <button
+                    type="button"
                     onClick={() => navigate('/livro')}
                     className=' block mx-auto mt-4 bg-white border-2 border-slate-500 text-slate-500 min-w-3xs min-h-[2.5rem] rounded-md font-semibold hover:bg-slate-50 transition-all shadow-sm'
                 >
