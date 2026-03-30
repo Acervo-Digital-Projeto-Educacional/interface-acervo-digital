@@ -133,7 +133,7 @@ function ListagemLivro(): JSX.Element {
                         body={(livro: LivroDTO) => (
                             <div className="flex gap-2">
                                 <button
-                                    onClick={() => alert(`Atualizar livro: ${livro.titulo}`)}
+                                    onClick={() => navigate(`/atualizar/livro/${livro.id_livro}`)}
                                     className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded shadow-sm transition-colors text-sm font-medium"
                                 >
                                     Atualizar

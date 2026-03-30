@@ -59,6 +59,45 @@ class LivroRequests {
             return false;
         }
     }
+
+    async obterLivroPorId(id_livro: number): Promise<LivroDTO | undefined> {
+        try {
+            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_LIVROS}/${id_livro}`);
+
+            if (respostaAPI.ok) {
+                const livro: LivroDTO = await respostaAPI.json();
+                return livro;
+            } else {
+                throw new Error("Não foi possível buscar o livro.");
+            }
+        } catch (error) {
+            console.error(`Erro ao fazer a consulta de livro por ID. ${error}`);
+            return;
+        }
+    }
+
+    async atualizarLivro(id_livro: number, formLivro: LivroDTO): Promise<boolean> {
+        try {
+            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_LIVROS}/${id_livro}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formLivro)
+            });
+
+            if (!respostaAPI.ok) {
+                throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+            }
+
+            console.info(`${respostaAPI.status} ${respostaAPI.statusText}`);
+
+            return true;
+        } catch (error) {
+            console.error(`Erro ao fazer consulta à API. ${error}`);
+            return false;
+        }
+    }
 }
 
 export default new LivroRequests;
