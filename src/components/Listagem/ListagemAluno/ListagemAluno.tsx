@@ -155,7 +155,7 @@ function ListagemAluno(): JSX.Element {
                         body={(aluno: AlunoDTO) => (
                             <div className="flex gap-2">
                                 <button
-                                    onClick={() => alert(`Atualizar aluno: ${aluno.nome}`)}
+                                    onClick={() => navigate(`/atualizar/aluno/${aluno.id_aluno}`)}
                                     className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded shadow-sm transition-colors text-sm font-medium"
                                 >
                                     Atualizar

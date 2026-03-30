@@ -21,6 +21,12 @@ class Utilitario {
             currency: 'BRL'
         }).format(valor);
     }
+
+    formatarDataParaInput(data: string | Date | undefined): string {
+        if (!data) return '';
+        const d = new Date(data);
+        return d.toISOString().split('T')[0];
+    }
 }
 
 export default new Utilitario;

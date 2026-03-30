@@ -7,6 +7,7 @@ import PListaEmprestimo from './pages/PLista/PListaEmprestimo/PListaEmprestimo'
 import PCadastroAluno from './pages/PCadastro/PCadastroAluno/PCadastroAluno'
 import PCadastroLivro from './pages/PCadastro/PCadastroLivro/PCadastroLivro'
 import PCadastroEmprestimo from './pages/PCadastro/PCadastroEmprestimo/PCadastroEmprestimo'
+import PAtualizarAluno from './pages/PAtualizar/PAtualizarAluno/PAtualizarAluno'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path='/cadastro/aluno' element={<PCadastroAluno />} />
         <Route path='/cadastro/livro' element={<PCadastroLivro />} />
         <Route path='/cadastro/emprestimo' element={<PCadastroEmprestimo />} />
+        <Route path='/atualizar/aluno/:id' element={<PAtualizarAluno />} />
       </Routes>
     </BrowserRouter>
   )
