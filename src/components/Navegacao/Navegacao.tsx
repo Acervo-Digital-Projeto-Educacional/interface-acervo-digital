@@ -2,6 +2,7 @@ import { type JSX } from "react";
 import { Menubar } from 'primereact/menubar';
 import type { MenuItem } from 'primereact/menuitem';
 import { Avatar } from 'primereact/avatar';
+import AppIcon from '../../assets/app-icon.png';
 
 interface CustomMenuItem extends MenuItem {
     badge?: number;
@@ -33,14 +34,14 @@ function Navegacao(): JSX.Element {
             label: 'Empréstimos',
             icon: 'pi pi-star',
             className: 'm-5 text-white text-lg',
-            url: "/emprestimo"   
+            url: "/emprestimo"
         }
     ];
 
     const start = (
         <img
             alt="logo"
-            src='./src/assets/app-icon.png'
+            src={AppIcon}
             height="100"
             className="h-20 p-3 ml-10 mr-5 h-[7rem]"
         />
@@ -59,10 +60,10 @@ function Navegacao(): JSX.Element {
 
     return (
         <header className="card h-[12vh] bg-slate-700 content-center">
-            <Menubar 
-                model={items} 
-                start={start} 
-                end={end} 
+            <Menubar
+                model={items}
+                start={start}
+                end={end}
             />
         </header>
     );
