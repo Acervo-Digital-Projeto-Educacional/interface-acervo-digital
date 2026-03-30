@@ -1,5 +1,6 @@
 import { type JSX } from "react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import type LivroDTO from "../../../dto/LivroDTO";
 import LivroRequests from "../../../fetch/LivroRequests";
 import { DataTable } from "primereact/datatable";
@@ -8,6 +9,7 @@ import Utilitario from "../../../utils/Utilitario";
 
 function ListagemLivro(): JSX.Element {
     const [livros, setLivros] = useState<LivroDTO[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchLivros = async () => {
@@ -25,8 +27,22 @@ function ListagemLivro(): JSX.Element {
 
     return (
         <main className="bg-gray-200 h-[76vh]">
-            <h1 className="text-[3rem] text-center pt-[1.5rem]">Livros</h1>
-            <p className="text-[1.75rem] text-center p-[0.5rem]">Lista de livros</p>
+            <div className="max-w-[100rem] mx-auto grid grid-cols-3 items-end pt-[1.5rem] px-4 mb-4">
+                <div /> {/* Spacer para centralizar o título */}
+                <div className="text-center">
+                    <h1 className="text-[3rem]">Livros</h1>
+                    <p className="text-[1.75rem] text-gray-600">Lista de livros</p>
+                </div>
+                <div className="flex justify-end">
+                    <button
+                        onClick={() => navigate("/cadastro/livro")}
+                        className="bg-slate-700 hover:bg-slate-800 text-white px-8 py-3 rounded-lg shadow-lg transition-all flex items-center gap-2 font-semibold text-lg mb-2"
+                    >
+                        <i className="pi pi-plus-circle"></i>
+                        Novo Livro
+                    </button>
+                </div>
+            </div>
 
             <div className="overflow-auto h-[60vh]">
                 <DataTable
@@ -104,13 +120,13 @@ function ListagemLivro(): JSX.Element {
                     <Column header="Ações" style={{ width: '15%' }}
                         body={(livro: LivroDTO) => (
                             <div className="flex gap-2">
-                                <button 
+                                <button
                                     onClick={() => alert(`Atualizar livro: ${livro.titulo}`)}
                                     className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded shadow-sm transition-colors text-sm font-medium"
                                 >
                                     Atualizar
                                 </button>
-                                <button 
+                                <button
                                     onClick={() => alert(`Remover livro: ${livro.titulo}`)}
                                     className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow-sm transition-colors text-sm font-medium"
                                 >

@@ -1,5 +1,6 @@
 import { type JSX } from "react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import type AlunoDTO from "../../../dto/AlunoDTO";
 import AlunoRequests from "../../../fetch/AlunoRequests";
 import { DataTable } from "primereact/datatable";
@@ -8,6 +9,7 @@ import Utilitario from "../../../utils/Utilitario";
 
 function ListagemAluno(): JSX.Element {
     const [alunos, setAlunos] = useState<AlunoDTO[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchAlunos = async () => {
@@ -25,8 +27,22 @@ function ListagemAluno(): JSX.Element {
 
     return (
         <main className="bg-gray-200 h-[76vh]">
-            <h1 className="text-[3rem] text-center pt-[1.5rem]">Alunos</h1>
-            <p className="text-[1.75rem] text-center p-[0.5rem]">Lista de alunos</p>
+            <div className="max-w-[100rem] mx-auto grid grid-cols-3 items-end pt-[1.5rem] px-4 mb-4">
+                <div /> {/* Spacer para centralizar o título */}
+                <div className="text-center">
+                    <h1 className="text-[3rem]">Alunos</h1>
+                    <p className="text-[1.75rem] text-gray-600">Lista de alunos</p>
+                </div>
+                <div className="flex justify-end">
+                    <button
+                        onClick={() => navigate("/cadastro/aluno")}
+                        className="bg-slate-700 hover:bg-slate-800 text-white px-8 py-3 rounded-lg shadow-lg transition-all flex items-center gap-2 font-semibold text-lg mb-2"
+                    >
+                        <i className="pi pi-plus-circle"></i>
+                        Novo Aluno
+                    </button>
+                </div>
+            </div>
 
             <div className="overflow-auto h-[60vh]">
                 {/* Exemplo de código utilizando tags de tabela */}
@@ -126,13 +142,13 @@ function ListagemAluno(): JSX.Element {
                     <Column header="Ações" style={{ width: '15%' }}
                         body={(aluno: AlunoDTO) => (
                             <div className="flex gap-2">
-                                <button 
+                                <button
                                     onClick={() => alert(`Atualizar aluno: ${aluno.nome}`)}
                                     className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded shadow-sm transition-colors text-sm font-medium"
                                 >
                                     Atualizar
                                 </button>
-                                <button 
+                                <button
                                     onClick={() => alert(`Remover aluno: ${aluno.nome}`)}
                                     className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow-sm transition-colors text-sm font-medium"
                                 >
