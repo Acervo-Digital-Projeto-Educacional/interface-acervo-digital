@@ -25,6 +25,18 @@ function ListagemAluno(): JSX.Element {
         fetchAlunos();
     }, []);
 
+    const handleRemoverAluno = async (id_aluno: number, nome: string) => {
+        if (window.confirm(`Tem certeza que deseja remover o aluno "${nome}"?`)) {
+            const sucesso = await AlunoRequests.removerAluno(id_aluno);
+            if (sucesso) {
+                alert("Aluno removido com sucesso!");
+                setAlunos(prev => prev.filter(aluno => aluno.id_aluno !== id_aluno));
+            } else {
+                alert("Não foi possível remover o aluno.");
+            }
+        }
+    };
+
     return (
         <main className="bg-gray-200 h-[76vh]">
             <div className="max-w-[100rem] mx-auto grid grid-cols-3 items-end pt-[1.5rem] px-4 mb-4">
@@ -149,7 +161,7 @@ function ListagemAluno(): JSX.Element {
                                     Atualizar
                                 </button>
                                 <button
-                                    onClick={() => alert(`Remover aluno: ${aluno.nome}`)}
+                                    onClick={() => handleRemoverAluno(aluno.id_aluno!, aluno.nome)}
                                     className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow-sm transition-colors text-sm font-medium"
                                 >
                                     Remover
