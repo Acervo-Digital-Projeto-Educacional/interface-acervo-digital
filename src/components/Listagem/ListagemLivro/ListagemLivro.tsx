@@ -25,6 +25,18 @@ function ListagemLivro(): JSX.Element {
         fetchLivros();
     }, []);
 
+    const handleRemoverLivro = async (id_livro: number, titulo: string) => {
+        if (window.confirm(`Tem certeza que deseja remover o livro "${titulo}"?`)) {
+            const sucesso = await LivroRequests.removerLivro(id_livro);
+            if (sucesso) {
+                alert("Livro removido com sucesso!");
+                setLivros(prev => prev.filter(livro => livro.id_livro !== id_livro));
+            } else {
+                alert("Não foi possível remover o livro.");
+            }
+        }
+    };
+
     return (
         <main className="bg-gray-200 h-[76vh]">
             <div className="max-w-[100rem] mx-auto grid grid-cols-3 items-end pt-[1.5rem] px-4 mb-4">
@@ -126,8 +138,8 @@ function ListagemLivro(): JSX.Element {
                                 >
                                     Atualizar
                                 </button>
-                                <button
-                                    onClick={() => alert(`Remover livro: ${livro.titulo}`)}
+                                <button 
+                                    onClick={() => handleRemoverLivro(livro.id_livro!, livro.titulo)}
                                     className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow-sm transition-colors text-sm font-medium"
                                 >
                                     Remover
