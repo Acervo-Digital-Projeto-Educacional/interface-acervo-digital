@@ -108,6 +108,28 @@ function ListagemEmprestimo(): JSX.Element {
                             bodyCell: { className: "p-3 text-gray-700" }
                         }}
                     />
+                    <Column header="Ações" style={{ width: '15%' }}
+                        body={(emprestimo: EmprestimoDTO) => (
+                            <div className="flex gap-2">
+                                <button 
+                                    onClick={() => alert(`Atualizar empréstimo ID: ${emprestimo.id_emprestimo}`)}
+                                    className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded shadow-sm transition-colors text-sm font-medium"
+                                >
+                                    Atualizar
+                                </button>
+                                <button 
+                                    onClick={() => alert(`Remover empréstimo ID: ${emprestimo.id_emprestimo}`)}
+                                    className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow-sm transition-colors text-sm font-medium"
+                                >
+                                    Remover
+                                </button>
+                            </div>
+                        )}
+                        pt={{
+                            headerCell: { className: "bg-slate-700 text-white p-3 text-left font-semibold" },
+                            bodyCell: { className: "p-3 text-gray-700" }
+                        }}
+                    />
                 </DataTable>
             </div>
         </main>
