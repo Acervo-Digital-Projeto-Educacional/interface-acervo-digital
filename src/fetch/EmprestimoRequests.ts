@@ -41,6 +41,25 @@ class EmprestimoRequests {
             return false;
         }
     }
+
+    async removerEmprestimo(id_emprestimo: number): Promise<boolean> {
+        try {
+            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_EMPRESTIMOS}/${id_emprestimo}`, {
+                method: 'DELETE'
+            });
+
+            if (!respostaAPI.ok) {
+                throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+            }
+
+            console.info(`${respostaAPI.status} ${respostaAPI.statusText}`);
+
+            return true;
+        } catch (error) {
+            console.error(`Erro ao fazer consulta à API. ${error}`);
+            return false;
+        }
+    }
 }
 
 export default new EmprestimoRequests;

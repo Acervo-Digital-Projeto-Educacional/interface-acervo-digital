@@ -25,6 +25,18 @@ function ListagemEmprestimo(): JSX.Element {
         fetchEmprestimos();
     }, []);
 
+    const handleRemoverEmprestimo = async (id_emprestimo: number) => {
+        if (window.confirm(`Tem certeza que deseja remover o empréstimo de ID "${id_emprestimo}"?`)) {
+            const sucesso = await EmprestimoRequests.removerEmprestimo(id_emprestimo);
+            if (sucesso) {
+                alert("Empréstimo removido com sucesso!");
+                setEmprestimos(prev => prev.filter(emprestimo => emprestimo.id_emprestimo !== id_emprestimo));
+            } else {
+                alert("Não foi possível remover o empréstimo.");
+            }
+        }
+    };
+
     return (
         <main className="bg-gray-200 h-[76vh]">
             <div className="max-w-[100rem] mx-auto grid grid-cols-3 items-end pt-[1.5rem] px-4 mb-4">
@@ -133,8 +145,8 @@ function ListagemEmprestimo(): JSX.Element {
                                 >
                                     Atualizar
                                 </button>
-                                <button
-                                    onClick={() => alert(`Remover empréstimo ID: ${emprestimo.id_emprestimo}`)}
+                                <button 
+                                    onClick={() => handleRemoverEmprestimo(emprestimo.id_emprestimo)}
                                     className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow-sm transition-colors text-sm font-medium"
                                 >
                                     Remover
