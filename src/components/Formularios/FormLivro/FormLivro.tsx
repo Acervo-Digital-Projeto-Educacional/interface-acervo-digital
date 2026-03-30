@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import LivroRequests from '../../../fetch/LivroRequests';
 import type LivroDTO from '../../../dto/LivroDTO';
 
 function FormLivro() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState<LivroDTO>({
         titulo: '',
         autor: '',
@@ -174,7 +176,14 @@ function FormLivro() {
                     </label>
                 </div>
 
-                <input type="submit" value="ENVIAR" className=' block mx-auto mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600' />
+                <input type="submit" value="ENVIAR" className=' block mx-auto mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600 shadow-md transition-all' />
+                <button 
+                    type="button" 
+                    onClick={() => navigate('/livro')}
+                    className=' block mx-auto mt-4 bg-white border-2 border-slate-500 text-slate-500 min-w-3xs min-h-[2.5rem] rounded-md font-semibold hover:bg-slate-50 transition-all shadow-sm'
+                >
+                    VOLTAR
+                </button>
             </form>
         </section>
     );

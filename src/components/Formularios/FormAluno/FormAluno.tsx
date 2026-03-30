@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AlunoRequests from '../../../fetch/AlunoRequests';
 import type AlunoDTO from '../../../dto/AlunoDTO';
 import Utilitario from '../../../utils/Utilitario';
 
 function FormAluno() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState<AlunoDTO>({
         nome: '',
         sobrenome: '',
@@ -125,7 +127,14 @@ function FormAluno() {
                     </label>
                 </div>
 
-                <input type="submit" value="ENVIAR" className=' block mx-auto mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white'/>
+                <input type="submit" value="ENVIAR" className=' block mx-auto mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600 shadow-md transition-all' />
+                <button 
+                    type="button" 
+                    onClick={() => navigate('/aluno')}
+                    className=' block mx-auto mt-4 bg-white border-2 border-slate-500 text-slate-500 min-w-3xs min-h-[2.5rem] rounded-md font-semibold hover:bg-slate-50 transition-all shadow-sm'
+                >
+                    VOLTAR
+                </button>
             </form>
         </section>
     );

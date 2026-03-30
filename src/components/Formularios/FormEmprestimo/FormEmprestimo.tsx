@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AlunoRequests from '../../../fetch/AlunoRequests';
 import LivroRequests from '../../../fetch/LivroRequests';
 import EmprestimoRequests from '../../../fetch/EmprestimoRequests';
@@ -7,6 +8,7 @@ import type LivroDTO from '../../../dto/LivroDTO';
 import type EmprestimoDTO from '../../../dto/EmprestimoDTO';
 
 function FormEmprestimo() {
+    const navigate = useNavigate();
     const [alunos, setAlunos] = useState<AlunoDTO[]>([]);
     const [livros, setLivros] = useState<LivroDTO[]>([]);
     const [formData, setFormData] = useState<any>({
@@ -144,7 +146,14 @@ function FormEmprestimo() {
                     </div>
                 </div>
 
-                <input type="submit" value="ENVIAR" className=' block mx-auto mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600' />
+                <input type="submit" value="ENVIAR" className=' block mx-auto mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600 shadow-md transition-all' />
+                <button 
+                    type="button" 
+                    onClick={() => navigate('/emprestimo')}
+                    className=' block mx-auto mt-4 bg-white border-2 border-slate-500 text-slate-500 min-w-3xs min-h-[2.5rem] rounded-md font-semibold hover:bg-slate-50 transition-all shadow-sm'
+                >
+                    VOLTAR
+                </button>
             </form>
         </section>
     );
