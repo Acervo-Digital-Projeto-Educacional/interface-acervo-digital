@@ -18,7 +18,7 @@ function FormLivro() {
     // Atualiza o state a partir de qualquer input do formulário
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, type } = e.target;
-        
+
         let parsedValue: string | number = value;
         if (type === 'number') {
             parsedValue = Number(value);
@@ -90,7 +90,7 @@ function FormLivro() {
                     <label htmlFor="ano_publicacao" className='text-xl m-4'>
                         Ano de Publicação <br />
                         <input
-                            type="text"
+                            type="number"
                             name="ano_publicacao"
                             id="ano_publicacao"
                             required
@@ -105,7 +105,7 @@ function FormLivro() {
                     <label htmlFor="isbn" className='text-xl m-4'>
                         ISBN <br />
                         <input
-                            type="text"
+                            type="number"
                             name="isbn"
                             id="isbn"
                             required
@@ -174,7 +174,7 @@ function FormLivro() {
                     </label>
                 </div>
 
-                <input type="submit" value="ENVIAR" className=' block mx-auto mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600'/>
+                <input type="submit" value="ENVIAR" className=' block mx-auto mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600' />
             </form>
         </section>
     );
