@@ -60,6 +60,45 @@ class EmprestimoRequests {
             return false;
         }
     }
+
+    async obterEmprestimoPorId(id_emprestimo: number): Promise<EmprestimoDTO | undefined> {
+        try {
+            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_EMPRESTIMOS}/${id_emprestimo}`);
+
+            if (respostaAPI.ok) {
+                const emprestimo: EmprestimoDTO = await respostaAPI.json();
+                return emprestimo;
+            } else {
+                throw new Error("Não foi possível buscar o empréstimo.");
+            }
+        } catch (error) {
+            console.error(`Erro ao fazer a consulta de empréstimo por ID. ${error}`);
+            return;
+        }
+    }
+
+    async atualizarEmprestimo(id_emprestimo: number, formEmprestimo: EmprestimoDTO): Promise<boolean> {
+        try {
+            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_EMPRESTIMOS}/${id_emprestimo}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formEmprestimo)
+            });
+
+            if (!respostaAPI.ok) {
+                throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+            }
+
+            console.info(`${respostaAPI.status} ${respostaAPI.statusText}`);
+
+            return true;
+        } catch (error) {
+            console.error(`Erro ao fazer consulta à API. ${error}`);
+            return false;
+        }
+    }
 }
 
 export default new EmprestimoRequests;

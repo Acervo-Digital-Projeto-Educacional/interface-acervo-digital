@@ -140,7 +140,7 @@ function ListagemEmprestimo(): JSX.Element {
                         body={(emprestimo: EmprestimoDTO) => (
                             <div className="flex gap-2">
                                 <button
-                                    onClick={() => alert(`Atualizar empréstimo ID: ${emprestimo.id_emprestimo}`)}
+                                    onClick={() => navigate(`/atualizar/emprestimo/${emprestimo.id_emprestimo}`)}
                                     className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded shadow-sm transition-colors text-sm font-medium"
                                 >
                                     Atualizar
