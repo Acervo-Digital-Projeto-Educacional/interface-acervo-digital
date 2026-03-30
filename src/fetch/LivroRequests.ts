@@ -18,6 +18,28 @@ class LivroRequests {
             return;
         }
     }
+    async enviarFormularioLivro(formLivro: LivroDTO): Promise<boolean> {
+        try {
+            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_LIVROS}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formLivro)
+            });
+
+            if (!respostaAPI.ok) {
+                throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+            }
+
+            console.info(`${respostaAPI.status} ${respostaAPI.statusText}`);
+
+            return true;
+        } catch (error) {
+            console.error(`Erro ao fazer consulta à API. ${error}`);
+            return false;
+        }
+    }
 }
 
 export default new LivroRequests;

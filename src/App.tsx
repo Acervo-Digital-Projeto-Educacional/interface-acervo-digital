@@ -5,6 +5,7 @@ import PListaAluno from './pages/PLista/PListaAluno/PListaAluno'
 import PListaLivro from './pages/PLista/PListaLivro/PListaLivro'
 import PListaEmprestimo from './pages/PLista/PListaEmprestimo/PListaEmprestimo'
 import PCadastroAluno from './pages/PCadastro/PCadastroAluno/PCadastroAluno'
+import PCadastroLivro from './pages/PCadastro/PCadastroLivro/PCadastroLivro'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path='/livro' element={<PListaLivro />} /> 
         <Route path='/emprestimo' element={<PListaEmprestimo />} /> 
         <Route path='/cadastro/aluno' element={<PCadastroAluno />} />
+        <Route path='/cadastro/livro' element={<PCadastroLivro />} />
       </Routes>
     </BrowserRouter>
   )
