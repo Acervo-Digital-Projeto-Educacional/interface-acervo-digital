@@ -3,9 +3,22 @@ import { SERVER_CFG } from "../AppConfig";
 import type LivroDTO from "../dto/LivroDTO";
 
 class LivroRequests {
+    private getHeaders() {
+        const token = localStorage.getItem('token');
+        const headers: HeadersInit = {
+            'Content-Type': 'application/json'
+        };
+        if (token) {
+            headers['x-access-token'] = token;
+        }
+        return headers;
+    }
+
     async obterListaDeLivros(): Promise<LivroDTO | undefined> {
         try {
-            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_LIVROS}`);
+            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_LIVROS}`, {
+                headers: this.getHeaders()
+            });
 
             if (respostaAPI.ok) {
                 const listaDeLivros: LivroDTO = await respostaAPI.json();
@@ -22,9 +35,7 @@ class LivroRequests {
         try {
             const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_LIVROS}`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: this.getHeaders(),
                 body: JSON.stringify(formLivro)
             });
 
@@ -44,7 +55,8 @@ class LivroRequests {
     async removerLivro(id_livro: number): Promise<boolean> {
         try {
             const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_LIVROS}/${id_livro}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: this.getHeaders()
             });
 
             if (!respostaAPI.ok) {
@@ -62,7 +74,9 @@ class LivroRequests {
 
     async obterLivroPorId(id_livro: number): Promise<LivroDTO | undefined> {
         try {
-            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_LIVROS}/${id_livro}`);
+            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_LIVROS}/${id_livro}`, {
+                headers: this.getHeaders()
+            });
 
             if (respostaAPI.ok) {
                 const livro: LivroDTO = await respostaAPI.json();
@@ -80,9 +94,7 @@ class LivroRequests {
         try {
             const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_LIVROS}/${id_livro}`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: this.getHeaders(),
                 body: JSON.stringify(formLivro)
             });
 

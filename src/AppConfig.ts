@@ -3,10 +3,13 @@ export const SERVER_CFG = {
 
     // alunos
     ENDPOINT_ALUNOS: '/api/alunos',
-    
+
     // livros
     ENDPOINT_LIVROS: '/api/livros',
 
     // empréstimos
-    ENDPOINT_EMPRESTIMOS: '/api/emprestimos'
+    ENDPOINT_EMPRESTIMOS: '/api/emprestimos',
+
+    // login
+    ENDPOINT_LOGIN: '/api/login'
 }

@@ -3,11 +3,24 @@ import { SERVER_CFG } from "../AppConfig";
 import type EmprestimoDTO from "../dto/EmprestimoDTO";
 
 class EmprestimoRequests {
+    private getHeaders() {
+        const token = localStorage.getItem('token');
+        const headers: HeadersInit = {
+            'Content-Type': 'application/json'
+        };
+        if (token) {
+            headers['x-access-token'] = token;
+        }
+        return headers;
+    }
+
     async obterListaDeEmprestimos(): Promise<EmprestimoDTO | undefined> {
         try {
-            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_EMPRESTIMOS}`);
+            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_EMPRESTIMOS}`, {
+                headers: this.getHeaders()
+            });
 
-            if(respostaAPI.ok) {
+            if (respostaAPI.ok) {
                 const listaDeEmprestimos: EmprestimoDTO = await respostaAPI.json();
                 return listaDeEmprestimos;
             } else {
@@ -23,9 +36,7 @@ class EmprestimoRequests {
         try {
             const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_EMPRESTIMOS}`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: this.getHeaders(),
                 body: JSON.stringify(formEmprestimo)
             });
 
@@ -45,7 +56,8 @@ class EmprestimoRequests {
     async removerEmprestimo(id_emprestimo: number): Promise<boolean> {
         try {
             const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_EMPRESTIMOS}/${id_emprestimo}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: this.getHeaders()
             });
 
             if (!respostaAPI.ok) {
@@ -63,7 +75,9 @@ class EmprestimoRequests {
 
     async obterEmprestimoPorId(id_emprestimo: number): Promise<EmprestimoDTO | undefined> {
         try {
-            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_EMPRESTIMOS}/${id_emprestimo}`);
+            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_EMPRESTIMOS}/${id_emprestimo}`, {
+                headers: this.getHeaders()
+            });
 
             if (respostaAPI.ok) {
                 const emprestimo: EmprestimoDTO = await respostaAPI.json();
@@ -79,11 +93,9 @@ class EmprestimoRequests {
 
     async atualizarEmprestimo(id_emprestimo: number, formEmprestimo: EmprestimoDTO): Promise<boolean> {
         try {
-            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_EMPRESTIMOS}/${id_emprestimo}`, {
+            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_ALUNOS}/${id_emprestimo}`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: this.getHeaders(),
                 body: JSON.stringify(formEmprestimo)
             });
 
