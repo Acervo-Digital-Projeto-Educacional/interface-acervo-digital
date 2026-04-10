@@ -1,0 +1,163 @@
+import { useEffect, useState, type JSX } from "react";
+import { Card } from "primereact/card";
+import { Skeleton } from "primereact/skeleton";
+import { Tag } from "primereact/tag";
+import { Divider } from "primereact/divider";
+import { Message } from "primereact/message";
+import AlunoRequests from "../../../fetch/AlunoRequests";
+import type AlunoDTO from "../../../dto/AlunoDTO";
+import Utilitario from "../../../utils/Utilitario";
+import { useNavigate } from "react-router-dom";
+
+interface DetalhesAlunoProps {
+    id_aluno: number;
+}
+
+/**
+ * Componente que exibe os detalhes de um aluno.
+ * Faz a consulta à API com base no ID fornecido e monta a visualização.
+ */
+function DetalhesAluno({ id_aluno }: DetalhesAlunoProps): JSX.Element {
+    const [aluno, setAluno] = useState<AlunoDTO | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        async function buscarDados() {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const dados = await AlunoRequests.obterAlunoPorId(id_aluno);
+                if (dados) {
+                    setAluno(dados);
+                } else {
+                    setError("Aluno não encontrado.");
+                }
+            } catch (err) {
+                console.error("Erro ao carregar detalhes do aluno:", err);
+                setError("Ocorreu um erro ao buscar as informações do aluno.");
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        buscarDados();
+    }, [id_aluno]);
+
+    // Renderização do estado de carregamento (Skeleton)
+    if (loading) {
+        return (
+            <Card className="shadow-4">
+                <div className="flex flex-col gap-4">
+                    <div className="flex items-center gap-4">
+                        <Skeleton shape="circle" size="4rem"></Skeleton>
+                        <div className="flex-1">
+                            <Skeleton width="60%" height="2rem" className="mb-2"></Skeleton>
+                            <Skeleton width="40%"></Skeleton>
+                        </div>
+                    </div>
+                    <Divider />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {[1, 2, 3, 4, 5, 6].map((i) => (
+                            <div key={i}>
+                                <Skeleton width="30%" className="mb-2"></Skeleton>
+                                <Skeleton width="80%" height="1.5rem"></Skeleton>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </Card>
+        );
+    }
+
+    // Renderização do estado de erro
+    if (error || !aluno) {
+        return (
+            <div className="flex justify-center p-4">
+                <Message severity="error" text={error || "Erro desconhecido."} />
+            </div>
+        );
+    }
+
+    // Renderização dos detalhes do aluno
+    return (
+        <main className="bg-gray-200 h-[76vh] flex flex-col">
+            <Card title={`${aluno.nome} ${aluno.sobrenome}`} className="shadow-lg animate-fade-in transition-all duration-300 w-[80vw] p-8 mx-auto font-bold text-xl">
+                <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                        <span className="text-gray-500 font-medium tracking-tight">Registro Acadêmico (RA)</span>
+                        <Tag value={aluno.ra} severity="info" className="px-3 py-1" />
+                    </div>
+
+                    <Divider />
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-2">
+                        {/* Seção de Informações Pessoais */}
+                        <div className="flex flex-col gap-4">
+                            <h3 className="text-lg font-semibold text-primary-700 flex items-center gap-2">
+                                <i className="pi pi-user text-blue-500"></i> Informações Pessoais
+                            </h3>
+                            <div className="flex flex-col gap-3 ml-1 border-l-2 border-blue-50 relative pl-4">
+                                <div className="flex flex-col">
+                                    <span className="text-xs uppercase text-gray-400 font-bold tracking-wider">Data de Nascimento</span>
+                                    <span className="text-gray-700 font-medium">{Utilitario.formatarData(aluno.data_nascimento)}</span>
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-xs uppercase text-gray-400 font-bold tracking-wider">E-mail Acadêmico</span>
+                                    <span className="text-gray-700 font-medium break-all">{aluno.email}</span>
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-xs uppercase text-gray-400 font-bold tracking-wider">Status do Aluno</span>
+                                    <Tag
+                                        value={aluno.status_aluno ? "Ativo" : "Inativo"}
+                                        severity={aluno.status_aluno ? "success" : "danger"}
+                                        className="w-fit mt-1 rounded-sm"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Seção de Contato e Localização */}
+                        <div className="flex flex-col gap-4">
+                            <h3 className="text-lg font-semibold text-primary-700 flex items-center gap-2">
+                                <i className="pi pi-map-marker text-orange-500"></i> Contato e Localização
+                            </h3>
+                            <div className="flex flex-col gap-3 ml-1 border-l-2 border-orange-50 relative pl-4">
+                                <div className="flex flex-col">
+                                    <span className="text-xs uppercase text-gray-400 font-bold tracking-wider">Celular / Telefone</span>
+                                    <span className="text-gray-700 font-medium">
+                                        {aluno.celular ? Utilitario.formatarTelefone(aluno.celular) : "Não informado"}
+                                    </span>
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-xs uppercase text-gray-400 font-bold tracking-wider">Endereço Residencial</span>
+                                    <span className="text-gray-700 font-medium leading-relaxed">{aluno.endereco}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <style>{`
+                .animate-fade-in {
+                    animation: fadeIn 0.5s ease-out;
+                }
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+            `}</style>
+            </Card>
+            <button
+                className="bg-slate-700 hover:bg-slate-500 text-white px-4 py-2 rounded-md w-[80vw] mx-auto mt-8"
+                onClick={() => navigate(`/atualizar/aluno/${aluno.id_aluno}`)}
+            >
+                Editar
+            </button>
+        </main>
+    );
+}
+
+export default DetalhesAluno;

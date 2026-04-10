@@ -6,7 +6,7 @@ import Utilitario from '../../../utils/Utilitario';
 
 function FormAtualizarAluno() {
     const navigate = useNavigate();
-    const { id } = useParams<{ id: string }>();
+    const { id_aluno } = useParams<{ id_aluno: string }>();
     const [formData, setFormData] = useState<AlunoDTO>({
         nome: '',
         sobrenome: '',
@@ -19,8 +19,8 @@ function FormAtualizarAluno() {
 
     useEffect(() => {
         const carregarAluno = async () => {
-            if (id) {
-                const aluno = await AlunoRequests.obterAlunoPorId(Number(id));
+            if (id_aluno) {
+                const aluno = await AlunoRequests.obterAlunoPorId(Number(id_aluno));
                 if (aluno) {
                     setFormData(aluno);
                 } else {
@@ -31,7 +31,7 @@ function FormAtualizarAluno() {
             }
         };
         carregarAluno();
-    }, [id, navigate]);
+    }, [id_aluno, navigate]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -47,8 +47,8 @@ function FormAtualizarAluno() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (id) {
-            const resposta = await AlunoRequests.atualizarAluno(Number(id), formData);
+        if (id_aluno) {
+            const resposta = await AlunoRequests.atualizarAluno(Number(id_aluno), formData);
             if (resposta) {
                 alert('Aluno atualizado com sucesso.');
                 navigate('/aluno');
@@ -155,14 +155,16 @@ function FormAtualizarAluno() {
                     </label>
                 </div>
 
-                <input type="submit" value="ATUALIZAR" className=' block mx-auto mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600 shadow-md transition-all' />
-                <button 
-                    type="button" 
-                    onClick={() => navigate('/aluno')}
-                    className=' block mx-auto mt-4 bg-white border-2 border-slate-500 text-slate-500 min-w-3xs min-h-[2.5rem] rounded-md font-semibold hover:bg-slate-50 transition-all shadow-sm'
-                >
-                    VOLTAR
-                </button>
+                <div className='flex flex-1'>
+                    <input type="submit" value="ATUALIZAR" className='block mx-auto p-4 mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600 shadow-md transition-all' />
+                    <button
+                        type="button"
+                        onClick={() => navigate('/aluno')}
+                        className='block mx-auto p-4 mt-12 bg-white border-2 border-slate-500 text-slate-500 min-w-3xs min-h-[2.5rem] rounded-md font-semibold hover:bg-slate-50 transition-all shadow-sm'
+                    >
+                        VOLTAR
+                    </button>
+                </div>
             </form>
         </section>
     );

@@ -113,29 +113,13 @@ function ListagemAluno(): JSX.Element {
                             bodyCell: { className: "p-3 text-gray-700" }
                         }}
                     />
-                    <Column field="nome" header="Nome" style={{ width: '15%' }}
+                    <Column
+                        header="Nome"
+                        style={{ width: '20%' }}
+                        body={(rowData) => `${rowData.nome} ${rowData.sobrenome}`}
                         pt={{
                             headerCell: { className: "bg-slate-700 text-white p-3 text-left font-semibold" },
                             bodyCell: { className: "p-3 text-gray-700 font-medium" }
-                        }}
-                    />
-                    <Column field="sobrenome" header="Sobrenome" style={{ width: '15%' }}
-                        pt={{
-                            headerCell: { className: "bg-slate-700 text-white p-3 text-left font-semibold" },
-                            bodyCell: { className: "p-3 text-gray-700" }
-                        }}
-                    />
-                    <Column field="data_nascimento" header="Data de Nascimento" style={{ width: '15%' }}
-                        body={(aluno: AlunoDTO) => Utilitario.formatarData(aluno.data_nascimento)}
-                        pt={{
-                            headerCell: { className: "bg-slate-700 text-white p-3 text-left font-semibold" },
-                            bodyCell: { className: "p-3 text-gray-700" }
-                        }}
-                    />
-                    <Column field="endereco" header="Endereço" style={{ width: '15%' }}
-                        pt={{
-                            headerCell: { className: "bg-slate-700 text-white p-3 text-left font-semibold" },
-                            bodyCell: { className: "p-3 text-gray-700" }
                         }}
                     />
                     <Column field="email" header="E-mail" style={{ width: '15%' }}
@@ -159,6 +143,12 @@ function ListagemAluno(): JSX.Element {
                                     className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded shadow-sm transition-colors text-sm font-medium"
                                 >
                                     Atualizar
+                                </button>
+                                <button
+                                    onClick={() => navigate(`/detalhes/aluno/${aluno.id_aluno}`)}
+                                    className="bg-green-700 hover:bg-green-600 text-white px-3 py-1 rounded shadow-sm transition-colors text-sm font-medium"
+                                >
+                                    Detalhes
                                 </button>
                                 <button
                                     onClick={() => handleRemoverAluno(aluno.id_aluno!, aluno.nome)}
