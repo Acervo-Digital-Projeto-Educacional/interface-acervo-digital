@@ -1,126 +1,88 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// Importa o tipo JSX do React para definir o tipo de retorno do componente
+import { type JSX, useState } from 'react';// Importa os estilos CSS específicos para o formulário de login
+import estilo from './FormLogin.module.css';
 import AuthRequests from '../../../fetch/AuthRequests';
-import type LoginDTO from '../../../dto/LoginDTO';
 
-function FormLogin() {
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState<LoginDTO>({
-        email: '',
-        senha: ''
-    });
-    const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState<boolean>(false);
+// Declara o componente funcional LoginForm que retorna um elemento JSX
+function LoginForm(): JSX.Element {
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-        if (error) setError(null);
-    };
+    interface LoginData {
+        email: string;
+        senha: string;
+    }
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    interface FormEvent {
+        preventDefault: () => void;
+    }
+
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        setLoading(true);
-        setError(null);
-
+        const login: LoginData = { email: email, senha: senha }
+        
+        // lógica para autenticação do usuário
         try {
-            const logado = await AuthRequests.login(formData);
-            
-            if (logado) {
-                // Redireciona para a home
-                navigate('/');
-            } else {
-                setError('Falha na autenticação. Verifique suas credenciais.');
+            if(await AuthRequests.login(login)) {
+                window.location.href = '/'; // redireciona para a página inicial
             }
-        } catch (err: any) {
-            setError(err.message || 'Ocorreu um erro ao tentar entrar.');
-        } finally {
-            setLoading(false);
+        } catch (error) {
+            // lança um erro
+            console.error(`Erro ao tentar fazer login: ${error}`);
+            alert('Erro ao fazer login, verifique se usuário e/ou senha estão corretos.');
         }
     };
 
     return (
-        <div className="p-8 bg-white rounded-2xl shadow-xl w-full max-w-md border border-slate-100 flex flex-col items-center">
-            <div className="flex flex-col items-center mb-8 gap-2">
-                <div className="bg-slate-700 p-3 rounded-xl shadow-md">
-                    <i className="pi pi-lock text-white text-3xl"></i>
-                </div>
-                <h2 className="text-3xl font-bold text-slate-800">Acesso Restrito</h2>
-                <p className="text-slate-500 text-sm">Biblioteca Digital - Login</p>
-            </div>
+        // Seção principal que contém o formulário de login, com classe de estilo personalizada
+        <section className={estilo['login-form-container']}>
 
-            <form onSubmit={handleSubmit} className="w-full flex flex-col gap-6">
-                {error && (
-                    <div className="w-full bg-red-50 border-l-4 border-red-500 p-4 rounded text-red-700 text-sm flex items-center gap-3">
-                        <i className="pi pi-exclamation-circle text-red-500"></i>
-                        <span>{error}</span>
-                    </div>
-                )}
+            {/* Início do formulário com classe de estilo personalizada */}
+            <form action="POST" className={estilo['login-form']} onSubmit={handleSubmit}>
 
-                <div className="flex flex-col gap-2">
-                    <label htmlFor="email" className="text-sm font-semibold text-slate-600 ml-1">
-                        E-mail de Usuário
-                    </label>
-                    <div className="relative">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
-                            <i className="pi pi-at"></i>
-                        </span>
+                {/* Título do formulário */}
+                <h2>LOGIN</h2>
+
+                {/* Campo de e-mail com rótulo */}
+                <div className={estilo['form-group']}>
+                    <label>
+                        Usuário
                         <input
-                            id="email"
-                            name="email"
-                            type="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                            placeholder="exemplo@email.com"
-                            className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-slate-400 focus:border-slate-400 transition-all text-slate-700"
+                            type="text" // Define o tipo do input como e-mail
+                            placeholder='Informe o seu usuário' // Texto de dica para o usuário
+                            className={estilo['input-email-login']} // Classe CSS personalizada
+                            value={email}  // valor digitado no campo
+                            onChange={(e) => setEmail(e.target.value)}  // atualiza o valor conforme usuário digita
+                            required  // campo obrigatório
                         />
-                    </div>
-                </div>
-
-                <div className="flex flex-col gap-2">
-                    <label htmlFor="senha" className="text-sm font-semibold text-slate-600 ml-1">
-                        Senha de Acesso
                     </label>
-                    <div className="relative">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
-                            <i className="pi pi-key"></i>
-                        </span>
-                        <input
-                            id="senha"
-                            name="senha"
-                            type="password"
-                            value={formData.senha}
-                            onChange={handleChange}
-                            required
-                            placeholder="Sua senha secreta"
-                            className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-slate-400 focus:border-slate-400 transition-all text-slate-700"
-                        />
-                    </div>
                 </div>
 
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full mt-2 py-4 bg-slate-700 hover:bg-slate-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3 active:scale-98 disabled:opacity-70 disabled:cursor-not-allowed"
-                >
-                    {loading ? (
-                        <i className="pi pi-spin pi-spinner text-xl"></i>
-                    ) : (
-                        <>
-                            <i className="pi pi-sign-in text-xl"></i>
-                            <span>ENTRAR NO SISTEMA</span>
-                        </>
-                    )}
-                </button>
+                {/* Campo de senha com rótulo */}
+                <div className={estilo['form-group']}>
+                    <label>
+                        Senha
+                        <input
+                            type="password" // Define o tipo do input como senha
+                            placeholder='Informe sua senha' // Texto de dica para o usuário
+                            className={estilo['input-password-login']} // Classe CSS personalizada
+                            value={senha}  // valor digitado no campo
+                            onChange={(e) => setSenha(e.target.value)}  // atualiza o valor conforme usuário digita
+                            required  // campo obrigatório
+                        />
+                    </label>
+                </div>
+
+                {/* Botão de login */}
+                <input
+                    type="submit" // Tipo botão (não envia o formulário por padrão)
+                    value="Entrar" // Texto exibido no botão
+                    className={estilo['login-button']} // Classe CSS personalizada
+                />
             </form>
-
-            <div className="mt-10 text-center flex flex-col gap-1">
-                <p className="text-sm text-slate-400 uppercase tracking-widest font-medium">Esqueceu a senha?</p>
-                <p className="text-xs text-slate-400">Entre em contato com o administrador do acervo.</p>
-            </div>
-        </div>
+        </section>
     );
 }
 
-export default FormLogin;
+// Exporta o componente para ser utilizado em outros arquivos do projeto
+export default LoginForm;

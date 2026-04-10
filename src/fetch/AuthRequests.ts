@@ -1,69 +1,91 @@
-// Classe responsável por fazer requisições à API - autenticação
-import { SERVER_CFG } from "../AppConfig";
-import type LoginDTO from "../dto/LoginDTO";
-
+/**
+ * Classe para lidar com autenticação
+ */
 class AuthRequests {
+
+    private serverUrl: string;
+    private endpointLogin: string;
+    
     /**
-     * Realiza a autenticação do usuário
-     * @param loginDados Objeto com email e senha
-     * @returns Objeto com status de autenticação, token e dados do usuário
+     * Construtor das rotas e do endereço do servidor
      */
-    async login(loginDados: LoginDTO): Promise<boolean> {
+    constructor() {
+        // endereço do servidor
+        this.serverUrl = 'http://localhost:3333';
+        // rota do servidor
+        this.endpointLogin = '/api/login';
+    }
+
+    /**
+     * Realiza a autenticação no servidor
+     * @param {*} login - email e senha
+     * @returns **true** caso sucesso, **false** caso erro
+     */
+    async login(login: { email: string, senha: string}) {       
         try {
-            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_LOGIN}`, {
+            // faz a requisição POST ao servidor...
+            const response = await fetch(`${this.serverUrl}${this.endpointLogin}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(loginDados)
+                // passando as informações de login no corpo da requisição
+                body: JSON.stringify(login)
             });
-
-            if (respostaAPI.ok) {
-                const dados = await respostaAPI.json();
-                if (dados.auth) this.persistToken(dados.token, dados.usuario.nome, dados.usuario.email, dados.usuario.id_usuario, dados.auth);
-                return true;
-            } else {
-                const erro = await respostaAPI.json();
-                throw new Error(erro.message || "Erro ao realizar login.");
+            
+            // Verifica alguma falha na comunicação
+            if (!response.ok) {
+                console.log('Erro na autenticação');
+                throw new Error('Falha no login');
             }
+            // caso a requisição seja bem sucedida, armazena a resposta em uma constante
+            const data = await response.json();
+            console.log( data );
+
+            // verifica se o atributo auth da resposta tem o valor TRUE, se tiver é porque a autenticação teve sucesso
+            if (data.auth) {
+                // persistem o token, o nome e o id do professor no localstorage
+                this.persistToken(data.token, data.usuario, data.auth);
+            }
+
+            // retorna a resposta da requisição a quem chamou a função
+            return true;
         } catch (error) {
-            console.error(`Erro ao tentar realizar login. ${error}`);
-            return false;
+            // lança um erro em caso de falha
+            console.error('Erro: ', error);
+            throw error;
         }
     }
 
     /**
      * Persiste o token no localStorage
      * @param {*} token - token recebido do servidor
-     * @param {*} email - nome usuário recebido do servidor
-     * @param {*} id_usuario - idUsuario recebido do servidor
+     * @param {*} usuario - objeto com informações do usuário vindos do servidor
+     * @param {*} isAuth - estado da autenticação do usuário
      */
-    persistToken(token: string, nome: string, email: string, id_usuario: number, is_auth: boolean) {
-        // adiciona o token no localstorade com o apelido de token
-        localStorage.setItem('token', token);  // -> armazena o token no localStorage e coloca o 'apelido' de token
-        localStorage.setItem('nome', nome);
-        // adiciona o nome de usuário no localstorade com o apelido de username
-        localStorage.setItem('email', email);  // -> armazena o username no localStorage e coloca o 'apelido' de username 
-        // adiciona o id da pessoa no localstorade com o apelido de idPessoa
-        localStorage.setItem('id_usuario', id_usuario.toString());  // -> armazena o idPessoa no localStorage e coloca o 'apelido' de idPessoa
-        // adiciona o valor de autenticação no localstorade com o apelido de isAuth
-        localStorage.setItem('is_auth', is_auth.toString());  // -> armazena o estado da autenticação (true, false) no localStorage e coloca o 'apelido' de isAuth
+    persistToken(token: string, usuario: {id_usuario: number, nome: string, email: string, role: string}, isAuth: boolean) {
+        localStorage.setItem('token', token);
+        localStorage.setItem('nome', usuario.nome);
+        localStorage.setItem('idUsuario', usuario.id_usuario.toString());
+        localStorage.setItem('email', usuario.email);
+        localStorage.setItem('role', usuario.role);
+        localStorage.setItem('isAuth', isAuth.toString());
     }
 
     /**
      * Remove as informações do localStorage
      */
     removeToken() {
-        // remove o token do localstorade
-        localStorage.removeItem('token');  // -> remove o 'apelido' de token do localStorage
-        localStorage.removeItem('nome');
-        // remove o username do localstorage
-        localStorage.removeItem('email');  // -> remove o 'apelido' de username do localStorage
-        // remove o id_usuario do localstorage
-        localStorage.removeItem('id_usuario');  // -> remove o 'apelido' de id_usuario do localStorage
-        // remove o is_auth do localstorage
-        localStorage.removeItem('is_auth');  // -> remove o 'apelido' de is_auth do localStorage
-        // redireciona o usuário para a página de login
+        const keys = [
+            'token',
+            'nome',
+            'idUsuario',
+            'email',
+            'role',
+            'isAuth'
+        ];
+
+        keys.map(key => localStorage.removeItem(key));
         window.location.href = `/login`;
     }
 
@@ -74,7 +96,7 @@ class AuthRequests {
     checkTokenExpiry() {
         // recupera o valor do token no localstorage
         const token = localStorage.getItem('token');
-
+        
         // verifica se o valor é diferente de vazio
         if (token) {
             // recupera a data de expiração do token

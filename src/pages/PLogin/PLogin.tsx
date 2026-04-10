@@ -1,30 +1,25 @@
-import { type JSX, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import FormLogin from "../../components/Formularios/FormLogin/FormLogin";
-import Rodape from "../../components/Rodape/Rodape";
+import { type JSX } from "react";
+
+// Importa o componente de cabeçalho da aplicação
 import Navegacao from "../../components/Navegacao/Navegacao";
 
+// Importa o componente que contém o formulário de login
+import LoginForm from "../../components/Formularios/FormLogin/FormLogin";
+
+
+// Componente funcional que representa a página de login
 function PLogin(): JSX.Element {
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const isAuth = localStorage.getItem('is_auth') === 'true';
-        if (isAuth) {
-            navigate('/', { replace: true });
-        }
-    }, [navigate]);
-
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="pagina-grid">
+            {/* Renderiza o cabeçalho da página */}
             <Navegacao />
-            
-            <main className="flex-grow flex items-center justify-center bg-slate-50 py-8 px-4">
-                <FormLogin />
-            </main>
-            
-            <Rodape />
+
+            {/* Renderiza o formulário de login */}
+            {/* <LoginForm /> */}
+            <LoginForm />
         </div>
     );
 }
 
+// Exporta o componente para que possa ser usado em outras partes da aplicação
 export default PLogin;

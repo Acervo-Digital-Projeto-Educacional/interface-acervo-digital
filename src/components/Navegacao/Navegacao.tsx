@@ -1,10 +1,8 @@
-import { type JSX, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, type JSX } from "react";
 import { Menubar } from 'primereact/menubar';
 import type { MenuItem } from 'primereact/menuitem';
 import { Avatar } from 'primereact/avatar';
-import { Button } from 'primereact/button';
-import AppIcon from '../../assets/app-icon.png';
+import { useNavigate } from 'react-router-dom';
 import AuthRequests from "../../fetch/AuthRequests";
 
 interface CustomMenuItem extends MenuItem {
@@ -14,99 +12,95 @@ interface CustomMenuItem extends MenuItem {
 }
 
 function Navegacao(): JSX.Element {
+    const [isAuthenticated] = useState(() => {
+        const isAuth = localStorage.getItem('isAuth');
+        const token = localStorage.getItem('token');
+        return !!(isAuth && token && AuthRequests.checkTokenExpiry());
+    });
     const navigate = useNavigate();
-    const [nomeUsuario, setNomeUsuario] = useState<string>('Convidado');
-    const [isAuth, setIsAuth] = useState<boolean>(false);
 
-    useEffect(() => {
-        const nome = localStorage.getItem('nome');
-        const auth = localStorage.getItem('is_auth');
-        if (nome) setNomeUsuario(nome);
-        if (auth === 'true') setIsAuth(true);
-    }, []);
-
-    const logout = () => {
-        AuthRequests.removeToken();
-        setIsAuth(false);
-    };
+    const nome = localStorage.getItem('nome') || 'Usuário';
+    const email = localStorage.getItem('email') || '';
+    const avatarImage = "https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png";
 
     const items: CustomMenuItem[] = [
         {
             label: 'Home',
             icon: 'pi pi-home',
             className: 'm-5 text-white text-lg',
-            command: () => navigate('/')
-        }
-    ];
-
-    if (isAuth) {
-        items.push(
+            url: "/"
+        },
+        ...(isAuthenticated ? [
             {
                 label: 'Alunos',
-                icon: 'pi pi-users',
+                icon: 'pi pi-star',
                 className: 'm-5 text-white text-lg',
-                command: () => navigate('/aluno')
+                url: "#"
             },
             {
                 label: 'Livros',
-                icon: 'pi pi-book',
+                icon: 'pi pi-star',
                 className: 'm-5 text-white text-lg',
-                command: () => navigate('/livro')
+                url: "#"
             },
             {
                 label: 'Empréstimos',
-                icon: 'pi pi-calendar',
+                icon: 'pi pi-star',
                 className: 'm-5 text-white text-lg',
-                command: () => navigate('/emprestimo')
+                url: "#"
             }
-        );
-    }
+        ] : [])
+    ];
 
     const start = (
         <img
             alt="logo"
-            src={AppIcon}
+            src='./src/assets/app-icon.png'
             height="100"
-            className="h-20 p-3 ml-10 mr-5 h-[7rem] cursor-pointer"
-            onClick={() => navigate('/')}
+            className="h-20 p-3 ml-10 mr-5 h-[7rem]"
         />
     );
 
-    const end = (
-        <div className="flex items-center gap-3 mr-8">
-            {isAuth ? (
-                <>
-                    <p className="text-white content-center font-bold">{nomeUsuario}</p>
-                    <Avatar
-                        icon="pi pi-user"
-                        shape="circle"
-                        className="bg-primary text-white"
-                    />
-                    <Button
-                        label="Sair"
-                        icon="pi pi-sign-out"
-                        className="p-button-rounded p-button-danger p-button-outlined text-white border-white hover:bg-red-500 transition-all"
-                        onClick={logout}
-                    />
-                </>
-            ) : (
-                <Button
-                    label="Entrar"
-                    icon="pi pi-sign-in"
-                    className="p-button-outlined text-white border-white hover:bg-white hover:text-slate-700 transition-all px-4"
-                    onClick={() => navigate('/login')}
-                />
-            )}
+    const userActions = isAuthenticated ? (
+        <div className="flex items-center gap-4">
+            <div className="flex flex-col pr-3">
+                <p className="text-white font-semibold m-0">{nome}</p>
+                <p className="text-white text-sm m-0">{email}</p>
+            </div>
+            <Avatar
+                image={avatarImage}
+                shape="circle"
+                className="!w-[40px] !h-[40px]"
+            />
+            <button
+                className="bg-white text-slate-700 px-8 py-5 rounded border-none cursor-pointer flex items-center justify-center gap-1 hover:bg-gray-100 transition-colors"
+                onClick={AuthRequests.removeToken}
+                style={{ height: '32px', fontSize: '14px' }}
+            >
+                <i className="pi pi-sign-out"></i>
+                <span>Sair</span>
+            </button>
         </div>
+    ) : (
+        <button
+            className="bg-white text-slate-700 px-8 py-1 rounded border-none cursor-pointer flex items-center justify-center gap-1 hover:bg-gray-100 transition-colors"
+            onClick={() => navigate('/login')}
+            style={{ height: '32px', fontSize: '14px' }}
+        >
+            <i className="pi pi-sign-in"></i>
+            <span>Login</span>
+        </button>
     );
 
     return (
-        <header className="card h-[12vh] bg-slate-700 content-center">
-            <Menubar
-                model={items}
-                start={start}
-                end={end}
-            />
+        <header className="card h-[12vh] bg-slate-700 flex items-center px-4">
+            <div className="flex-1">
+                <Menubar
+                    model={items}
+                    start={start}
+                />
+            </div>
+            {userActions}
         </header>
     );
 }
