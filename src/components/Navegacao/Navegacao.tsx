@@ -4,6 +4,7 @@ import type { MenuItem } from 'primereact/menuitem';
 import { Avatar } from 'primereact/avatar';
 import { useNavigate } from 'react-router-dom';
 import AuthRequests from "../../fetch/AuthRequests";
+import appIcon from '../../assets/app-icon.png';
 
 interface CustomMenuItem extends MenuItem {
     badge?: number;
@@ -55,7 +56,7 @@ function Navegacao(): JSX.Element {
     const start = (
         <img
             alt="logo"
-            src='./src/assets/app-icon.png'
+            src={appIcon}
             height="100"
             className="h-20 p-3 ml-10 mr-5 h-[7rem]"
         />
