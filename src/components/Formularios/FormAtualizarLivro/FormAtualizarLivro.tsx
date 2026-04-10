@@ -5,7 +5,7 @@ import type LivroDTO from '../../../dto/LivroDTO';
 
 function FormAtualizarLivro() {
     const navigate = useNavigate();
-    const { id } = useParams<{ id: string }>();
+    const { id_livro } = useParams<{ id_livro: string }>();
     const [formData, setFormData] = useState<LivroDTO>({
         titulo: '',
         autor: '',
@@ -21,8 +21,8 @@ function FormAtualizarLivro() {
 
     useEffect(() => {
         const carregarLivro = async () => {
-            if (id) {
-                const livro = await LivroRequests.obterLivroPorId(Number(id));
+            if (id_livro) {
+                const livro = await LivroRequests.obterLivroPorId(Number(id_livro));
                 if (livro) {
                     setFormData(livro);
                 } else {
@@ -33,7 +33,7 @@ function FormAtualizarLivro() {
             }
         };
         carregarLivro();
-    }, [id, navigate]);
+    }, [id_livro, navigate]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, type } = e.target;
@@ -48,8 +48,8 @@ function FormAtualizarLivro() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (id) {
-            const resposta = await LivroRequests.atualizarLivro(Number(id), formData);
+        if (id_livro) {
+            const resposta = await LivroRequests.atualizarLivro(Number(id_livro), formData);
             if (resposta) {
                 alert('Livro atualizado com sucesso.');
                 navigate('/livro');
@@ -211,14 +211,16 @@ function FormAtualizarLivro() {
                     </label>
                 </div>
 
-                <input type="submit" value="ATUALIZAR" className=' block mx-auto mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600 shadow-md transition-all' />
-                <button
-                    type="button"
-                    onClick={() => navigate('/livro')}
-                    className=' block mx-auto mt-4 bg-white border-2 border-slate-500 text-slate-500 min-w-3xs min-h-[2.5rem] rounded-md font-semibold hover:bg-slate-50 transition-all shadow-sm'
-                >
-                    VOLTAR
-                </button>
+                <div className='flex flex-1'>
+                    <input type="submit" value="ATUALIZAR" className='block mx-auto p-4 mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600 shadow-md transition-all' />
+                    <button
+                        type="button"
+                        onClick={() => navigate('/lista/livros')}
+                        className='block mx-auto p-4 mt-12 bg-white border-2 border-slate-500 text-slate-500 min-w-3xs min-h-[2.5rem] rounded-md font-semibold hover:bg-slate-50 transition-all shadow-sm'
+                    >
+                        VOLTAR
+                    </button>
+                </div>
             </form>
         </section>
     );

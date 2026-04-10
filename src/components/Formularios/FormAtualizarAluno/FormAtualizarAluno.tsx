@@ -159,7 +159,7 @@ function FormAtualizarAluno() {
                     <input type="submit" value="ATUALIZAR" className='block mx-auto p-4 mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600 shadow-md transition-all' />
                     <button
                         type="button"
-                        onClick={() => navigate('/aluno')}
+                        onClick={() => navigate('/lista/alunos')}
                         className='block mx-auto p-4 mt-12 bg-white border-2 border-slate-500 text-slate-500 min-w-3xs min-h-[2.5rem] rounded-md font-semibold hover:bg-slate-50 transition-all shadow-sm'
                     >
                         VOLTAR

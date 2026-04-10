@@ -92,41 +92,16 @@ function ListagemLivro(): JSX.Element {
                             bodyCell: { className: "p-3 text-gray-700" }
                         }}
                     />
-                    <Column field="ano_publicacao" header="Ano de Publicação" style={{ width: '10%' }}
-                        pt={{
-                            headerCell: { className: "bg-slate-700 text-white p-3 text-left font-semibold" },
-                            bodyCell: { className: "p-3 text-gray-700" }
-                        }}
-                    />
                     <Column field="isbn" header="ISBN" style={{ width: '15%' }}
                         pt={{
                             headerCell: { className: "bg-slate-700 text-white p-3 text-left font-semibold" },
                             bodyCell: { className: "p-3 text-gray-700" }
                         }}
                     />
-                    <Column field="quant_total" header="Qtd. Total" style={{ width: '8%' }}
-                        pt={{
-                            headerCell: { className: "bg-slate-700 text-white p-3 text-left font-semibold" },
-                            bodyCell: { className: "p-3 text-gray-700 text-center" }
-                        }}
-                    />
                     <Column field="quant_disponivel" header="Qtd. Disponível" style={{ width: '8%' }}
                         pt={{
                             headerCell: { className: "bg-slate-700 text-white p-3 text-left font-semibold" },
                             bodyCell: { className: "p-3 text-gray-700 text-center" }
-                        }}
-                    />
-                    <Column field="quant_aquisicao" header="Qtd. Aquisição" style={{ width: '8%' }}
-                        pt={{
-                            headerCell: { className: "bg-slate-700 text-white p-3 text-left font-semibold" },
-                            bodyCell: { className: "p-3 text-gray-700 text-center" }
-                        }}
-                    />
-                    <Column field="valor_aquisicao" header="Valor de Aquisição" style={{ width: '10%' }}
-                        body={(livro: LivroDTO) => Utilitario.formatarParaReal(livro.valor_aquisicao)}
-                        pt={{
-                            headerCell: { className: "bg-slate-700 text-white p-3 text-left font-semibold" },
-                            bodyCell: { className: "p-3 text-gray-700" }
                         }}
                     />
                     <Column header="Ações" style={{ width: '15%' }}
@@ -138,7 +113,13 @@ function ListagemLivro(): JSX.Element {
                                 >
                                     Atualizar
                                 </button>
-                                <button 
+                                <button
+                                    onClick={() => navigate(`/detalhes/livro/${livro.id_livro}`)}
+                                    className="bg-green-700 hover:bg-green-600 text-white px-3 py-1 rounded shadow-sm transition-colors text-sm font-medium"
+                                >
+                                    Detalhes
+                                </button>
+                                <button
                                     onClick={() => handleRemoverLivro(livro.id_livro!, livro.titulo)}
                                     className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow-sm transition-colors text-sm font-medium"
                                 >
