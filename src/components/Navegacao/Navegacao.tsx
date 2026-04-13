@@ -27,26 +27,26 @@ function Navegacao(): JSX.Element {
         {
             label: 'Home',
             icon: 'pi pi-home',
-            className: 'text-white text-lg',
+            className: 'm-5 text-white text-lg',
             url: "/"
         },
         ...(isAuthenticated ? [
             {
                 label: 'Alunos',
                 icon: 'pi pi-star',
-                className: 'text-white text-lg',
+                className: 'm-5 text-white text-lg',
                 url: "/lista/alunos"
             },
             {
                 label: 'Livros',
                 icon: 'pi pi-star',
-                className: 'text-white text-lg',
+                className: 'm-5 text-white text-lg',
                 url: "/lista/livros"
             },
             {
                 label: 'Empréstimos',
                 icon: 'pi pi-star',
-                className: 'text-white text-lg',
+                className: 'm-5 text-white text-lg',
                 url: "/lista/emprestimos"
             }
         ] : [])
@@ -63,7 +63,7 @@ function Navegacao(): JSX.Element {
     );
 
     const userActions = isAuthenticated ? (
-        <div className="flex items-center gap-4">
+        <div className="flex items- justify-end items-center mr-10 gap-4">
             <div className="flex flex-col pr-3">
                 <p className="text-white font-semibold m-0">{nome}</p>
                 <p className="text-white text-sm m-0">{email}</p>
@@ -71,9 +71,10 @@ function Navegacao(): JSX.Element {
             <Avatar
                 image={avatarImage}
                 shape="circle"
+                className="!w-[10%] !h-[10%]"
             />
             <button
-                className="bg-white text-slate-700 px-8 py-5 rounded border-none cursor-pointer flex items-center justify-center gap-1 hover:bg-gray-100 transition-colors"
+                className="bg-white ml-6 text-slate-700 px-10 py-5 rounded border-none cursor-pointer flex items-center justify-center gap-1 hover:bg-gray-100 transition-colors"
                 onClick={AuthRequests.removeToken}
                 style={{ height: '32px', fontSize: '14px' }}
             >
