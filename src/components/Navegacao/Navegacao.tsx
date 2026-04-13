@@ -41,7 +41,7 @@ function Navegacao(): JSX.Element {
                 label: 'Livros',
                 icon: 'pi pi-star',
                 className: 'm-5 text-white text-lg',
-                url: "#"
+                url: "/lista/livro"
             },
             {
                 label: 'Empréstimos',
