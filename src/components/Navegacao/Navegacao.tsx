@@ -47,7 +47,7 @@ function Navegacao(): JSX.Element {
                 label: 'Empréstimos',
                 icon: 'pi pi-star',
                 className: 'm-5 text-white text-lg',
-                url: "#"
+                url: "/lista/emprestimo"
             }
         ] : [])
     ];

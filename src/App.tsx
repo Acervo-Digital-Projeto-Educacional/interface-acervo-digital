@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import PHome from './pages/PHome/PHome'
 import PLogin from './pages/PLogin/PLogin'
 import PListagemAluno from './pages/PListagem/PListagemAluno/PListagemAluno'
+import PListagemEmprestimo from './pages/PListagem/PListagemEmprestimo/PListagemEmprestimo'
 // import ProtectedRoute from './components/Rotas/ProtectedRoutes'
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Route path='/' element={<PHome />} />
         <Route path='/login' element={<PLogin />} />
         <Route path='/lista/aluno' element={<PListagemAluno />} />
+        <Route path='/lista/emprestimo' element={<PListagemEmprestimo />} />
       </Routes>
     </BrowserRouter>
   )
