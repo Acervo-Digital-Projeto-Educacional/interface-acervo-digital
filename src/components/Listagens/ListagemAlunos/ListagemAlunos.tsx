@@ -14,8 +14,8 @@ function ListagemAlunos(): JSX.Element {
                 <table className="table-auto w-full border-collapse text-xl">
                     <thead className="bg-slate-700 sticky top-0 z-10">
                         <tr>
-                            <th className="border border-slate-600 text-white p-4">ID</th>
-                            <th className="border border-slate-600 text-white">RA</th>
+                            <th className="border border-slate-600 text-white">ID</th>
+                            <th className="border border-slate-600 text-white p-4">RA</th>
                             <th className="border border-slate-600 text-white">Nome</th>
                             <th className="border border-slate-600 text-white">E-mail</th>
                             <th className="border border-slate-600 text-white">Telefone</th>
