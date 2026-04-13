@@ -27,26 +27,26 @@ function Navegacao(): JSX.Element {
         {
             label: 'Home',
             icon: 'pi pi-home',
-            className: 'm-5 text-white text-lg',
+            className: 'text-white text-lg',
             url: "/"
         },
         ...(isAuthenticated ? [
             {
                 label: 'Alunos',
                 icon: 'pi pi-star',
-                className: 'm-5 text-white text-lg',
+                className: 'text-white text-lg',
                 url: "/lista/alunos"
             },
             {
                 label: 'Livros',
                 icon: 'pi pi-star',
-                className: 'm-5 text-white text-lg',
+                className: 'text-white text-lg',
                 url: "/lista/livros"
             },
             {
                 label: 'Empréstimos',
                 icon: 'pi pi-star',
-                className: 'm-5 text-white text-lg',
+                className: 'text-white text-lg',
                 url: "/lista/emprestimos"
             }
         ] : [])
@@ -57,7 +57,8 @@ function Navegacao(): JSX.Element {
             alt="logo"
             src='./src/assets/app-icon.png'
             height="100"
-            className="h-20 p-3 ml-10 mr-5 h-[7rem]"
+            // className="h-20 p-3 ml-10 mr-5 h-[7rem]"
+            className="w-[40%] max-w-[40%] ml-10"
         />
     );
 
@@ -70,7 +71,6 @@ function Navegacao(): JSX.Element {
             <Avatar
                 image={avatarImage}
                 shape="circle"
-                className="!w-[40px] !h-[40px]"
             />
             <button
                 className="bg-white text-slate-700 px-8 py-5 rounded border-none cursor-pointer flex items-center justify-center gap-1 hover:bg-gray-100 transition-colors"
@@ -83,7 +83,7 @@ function Navegacao(): JSX.Element {
         </div>
     ) : (
         <button
-            className="bg-white text-slate-700 px-8 py-1 rounded border-none cursor-pointer flex items-center justify-center gap-1 hover:bg-gray-100 transition-colors"
+            className="bg-white font-bold text-slate-700 px-10 py-5 mr-10 rounded border-none cursor-pointer flex items-center justify-center gap-1 hover:bg-gray-100 transition-colors"
             onClick={() => navigate('/login')}
             style={{ height: '32px', fontSize: '14px' }}
         >
