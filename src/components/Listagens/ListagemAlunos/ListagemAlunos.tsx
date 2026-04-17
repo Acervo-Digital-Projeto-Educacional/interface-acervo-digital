@@ -1,6 +1,24 @@
 import { type JSX } from "react";
+import { useState, useEffect } from "react";
+import AlunoRequests from "../../../fetch/AlunoRequests";
 
 function ListagemAlunos(): JSX.Element {
+    const [alunos, setAlunos] = useState([]);
+
+    useEffect(() => {
+        const buscarAlunos = async () => {
+            try {
+                const listaDeAlunos = await AlunoRequests.obterListaDeAlunos();
+                setAlunos(listaDeAlunos);
+            } catch (error) {
+                console.error(`Erro ao buscar alunos. ${error}`);
+                alert("Erro ao criar a listagem de alunos.");
+            }
+        }
+
+        buscarAlunos();
+    }, []);
+
     return (
         <main className="bg-gray-200 h-[76vh]"> {/* Web Semântica SEO (Search Engine Optimizer) */}
             <div className="w-8/10 flex m-auto p-12">
@@ -23,200 +41,20 @@ function ListagemAlunos(): JSX.Element {
                         </tr>
                     </thead>
                     <tbody> {/* Dados fictícios (por enquanto) */}
-                        <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer">
-                            <td>1</td>
-                            <td className="p-3">A123456</td>
-                            <td>Felisberto Felis</td>
-                            <td>felisberto@email.com</td>
-                            <td>(16) 9 9999-9999</td>
-                            <td>
-                                <a href="#" className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
-                                <a href="#" className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
-                                <a href="#" className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
-                            </td>
-                        </tr>
-                        <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer">
-                            <td>2</td>
-                            <td className="p-1.5">A626351</td>
-                            <td>Pedro Roque</td>
-                            <td>roque_febroso@email.com</td>
-                            <td>(16) 9 1245-0666</td>
-                            <td>
-                                <a className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
-                                <a className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
-                                <a className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
-                            </td>
-                        </tr>
-                        <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer">
-                            <td>2</td>
-                            <td className="p-1.5">A626351</td>
-                            <td>Pedro Roque</td>
-                            <td>roque_febroso@email.com</td>
-                            <td>(16) 9 1245-0666</td>
-                            <td>
-                                <a className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
-                                <a className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
-                                <a className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
-                            </td>
-                        </tr>
-                        <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer">
-                            <td>2</td>
-                            <td className="p-1.5">A626351</td>
-                            <td>Pedro Roque</td>
-                            <td>roque_febroso@email.com</td>
-                            <td>(16) 9 1245-0666</td>
-                            <td>
-                                <a className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
-                                <a className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
-                                <a className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
-                            </td>
-                        </tr>
-
-                        {/* APAGAR */}
-                        <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer">
-                            <td>2</td>
-                            <td className="p-1.5">A626351</td>
-                            <td>Pedro Roque</td>
-                            <td>roque_febroso@email.com</td>
-                            <td>(16) 9 1245-0666</td>
-                            <td>
-                                <a className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
-                                <a className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
-                                <a className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
-                            </td>
-                        </tr>
-                        <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer">
-                            <td>2</td>
-                            <td className="p-1.5">A626351</td>
-                            <td>Pedro Roque</td>
-                            <td>roque_febroso@email.com</td>
-                            <td>(16) 9 1245-0666</td>
-                            <td>
-                                <a className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
-                                <a className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
-                                <a className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
-                            </td>
-                        </tr>
-                        <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer">
-                            <td>2</td>
-                            <td className="p-1.5">A626351</td>
-                            <td>Pedro Roque</td>
-                            <td>roque_febroso@email.com</td>
-                            <td>(16) 9 1245-0666</td>
-                            <td>
-                                <a className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
-                                <a className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
-                                <a className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
-                            </td>
-                        </tr>
-                        <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer">
-                            <td>2</td>
-                            <td className="p-1.5">A626351</td>
-                            <td>Pedro Roque</td>
-                            <td>roque_febroso@email.com</td>
-                            <td>(16) 9 1245-0666</td>
-                            <td>
-                                <a className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
-                                <a className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
-                                <a className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
-                            </td>
-                        </tr>
-                        <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer">
-                            <td>2</td>
-                            <td className="p-1.5">A626351</td>
-                            <td>Pedro Roque</td>
-                            <td>roque_febroso@email.com</td>
-                            <td>(16) 9 1245-0666</td>
-                            <td>
-                                <a className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
-                                <a className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
-                                <a className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
-                            </td>
-                        </tr>
-                        <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer">
-                            <td>2</td>
-                            <td className="p-1.5">A626351</td>
-                            <td>Pedro Roque</td>
-                            <td>roque_febroso@email.com</td>
-                            <td>(16) 9 1245-0666</td>
-                            <td>
-                                <a className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
-                                <a className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
-                                <a className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
-                            </td>
-                        </tr>
-                        <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer">
-                            <td>2</td>
-                            <td className="p-1.5">A626351</td>
-                            <td>Pedro Roque</td>
-                            <td>roque_febroso@email.com</td>
-                            <td>(16) 9 1245-0666</td>
-                            <td>
-                                <a className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
-                                <a className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
-                                <a className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
-                            </td>
-                        </tr>
-                        <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer">
-                            <td>2</td>
-                            <td className="p-1.5">A626351</td>
-                            <td>Pedro Roque</td>
-                            <td>roque_febroso@email.com</td>
-                            <td>(16) 9 1245-0666</td>
-                            <td>
-                                <a className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
-                                <a className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
-                                <a className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
-                            </td>
-                        </tr>
-                        <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer">
-                            <td>2</td>
-                            <td className="p-1.5">A626351</td>
-                            <td>Pedro Roque</td>
-                            <td>roque_febroso@email.com</td>
-                            <td>(16) 9 1245-0666</td>
-                            <td>
-                                <a className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
-                                <a className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
-                                <a className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
-                            </td>
-                        </tr>
-                        <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer">
-                            <td>2</td>
-                            <td className="p-1.5">A626351</td>
-                            <td>Pedro Roque</td>
-                            <td>roque_febroso@email.com</td>
-                            <td>(16) 9 1245-0666</td>
-                            <td>
-                                <a className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
-                                <a className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
-                                <a className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
-                            </td>
-                        </tr>
-                        <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer">
-                            <td>2</td>
-                            <td className="p-1.5">A626351</td>
-                            <td>Pedro Roque</td>
-                            <td>roque_febroso@email.com</td>
-                            <td>(16) 9 1245-0666</td>
-                            <td>
-                                <a className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
-                                <a className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
-                                <a className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
-                            </td>
-                        </tr>
-                        <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer">
-                            <td>2</td>
-                            <td className="p-1.5">A626351</td>
-                            <td>Pedro Roque</td>
-                            <td>roque_febroso@email.com</td>
-                            <td>(16) 9 1245-0666</td>
-                            <td>
-                                <a className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
-                                <a className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
-                                <a className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
-                            </td>
-                        </tr>
+                        {alunos.map((aluno) => (
+                            <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer" key={aluno.id_aluno}>
+                                <td>{aluno.id_aluno}</td>
+                                <td className="p-3">{aluno.ra}</td>
+                                <td>{aluno.nome} {aluno.sobrenome}</td>
+                                <td>{aluno.email}</td>
+                                <td>{aluno.telefone}</td>
+                                <td>
+                                    <a href="#" className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
+                                    <a href="#" className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
+                                    <a href="#" className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
