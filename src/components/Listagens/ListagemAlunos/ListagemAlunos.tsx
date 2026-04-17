@@ -1,9 +1,10 @@
 import { type JSX } from "react";
 import { useState, useEffect } from "react";
 import AlunoRequests from "../../../fetch/AlunoRequests";
+import type AlunoDTO from "../../../dto/AlunoDTO";
 
 function ListagemAlunos(): JSX.Element {
-    const [alunos, setAlunos] = useState([]);
+    const [alunos, setAlunos] = useState<AlunoDTO[]>([]);
 
     useEffect(() => {
         const buscarAlunos = async () => {
@@ -41,20 +42,26 @@ function ListagemAlunos(): JSX.Element {
                         </tr>
                     </thead>
                     <tbody> {/* Dados fictícios (por enquanto) */}
-                        {alunos.map((aluno) => (
-                            <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer" key={aluno.id_aluno}>
-                                <td>{aluno.id_aluno}</td>
-                                <td className="p-3">{aluno.ra}</td>
-                                <td>{aluno.nome} {aluno.sobrenome}</td>
-                                <td>{aluno.email}</td>
-                                <td>{aluno.telefone}</td>
-                                <td>
-                                    <a href="#" className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
-                                    <a href="#" className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
-                                    <a href="#" className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
-                                </td>
+                        {alunos && alunos.length > 0 ? (
+                            alunos.map((aluno) => (
+                                <tr className="border-b-2 text-center odd:bg-slate-300 even:bg-slate-100 hover:bg-slate-600 hover:text-white hover:cursor-pointer" key={aluno.id_aluno}>
+                                    <td>{aluno.id_aluno}</td>
+                                    <td className="p-3">{aluno.ra}</td>
+                                    <td>{aluno.nome} {aluno.sobrenome}</td>
+                                    <td>{aluno.email}</td>
+                                    <td>{aluno.celular}</td>
+                                    <td>
+                                        <a href="#" className="inline-block bg-sky-600 p-2 m-2 w-1/5 rounded-md text-white text-center">Detalhes</a>
+                                        <a href="#" className="inline-block bg-emerald-400 p-2 m-2 w-1/5 rounded-md text-white">Atualizar</a>
+                                        <a href="#" className="inline-block bg-red-600 p-2 m-2 w-1/5 rounded-md text-white">Deletar</a>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan={6} className="text-center p-4">Nenhum aluno encontrado</td>
                             </tr>
-                        ))}
+                        )}
                     </tbody>
                 </table>
             </div>
