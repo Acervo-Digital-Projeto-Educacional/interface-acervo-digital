@@ -120,19 +120,19 @@ function ListagemEmprestimos(): JSX.Element {
                                         <td className="p-2 md:p-4">
                                             <div className="flex flex-col sm:flex-row items-center justify-center gap-1 md:gap-2">
                                                 <button
-                                                    className="w-full sm:w-auto bg-sky-100 text-sky-700 px-3 py-1.5 rounded-md text-xs md:text-sm font-medium hover:bg-sky-600 hover:text-white transition-all"
+                                                    className="w-full sm:w-auto bg-sky-100 text-sky-700 px-3 py-1.5 rounded-md text-xs md:text-sm font-medium hover:bg-sky-600 hover:text-white transition-all hover:cursor-pointer"
                                                     onClick={() => navigate(`/detalhes/emprestimo/${emp.id_emprestimo}`)}
                                                 >
                                                     Detalhes
                                                 </button>
                                                 <button
-                                                    className="w-full sm:w-auto bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-md text-xs md:text-sm font-medium hover:bg-emerald-600 hover:text-white transition-all"
+                                                    className="w-full sm:w-auto bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-md text-xs md:text-sm font-medium hover:bg-emerald-600 hover:text-white transition-all hover:cursor-pointer"
                                                     onClick={() => navigate(`/atualizar/emprestimo/${emp.id_emprestimo}`)}
                                                 >
                                                     Atualizar
                                                 </button>
                                                 <button
-                                                    className="w-full sm:w-auto bg-red-100 text-red-700 px-3 py-1.5 rounded-md text-xs md:text-sm font-medium hover:bg-red-600 hover:text-white transition-all"
+                                                    className="w-full sm:w-auto bg-red-100 text-red-700 px-3 py-1.5 rounded-md text-xs md:text-sm font-medium hover:bg-red-600 hover:text-white transition-all hover:cursor-pointer"
                                                     onClick={() => emp.id_emprestimo && handleRemoverEmprestimo(emp.id_emprestimo)}
                                                 >
                                                     Deletar

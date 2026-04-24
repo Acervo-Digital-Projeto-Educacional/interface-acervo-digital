@@ -107,19 +107,19 @@ function ListagemAlunos(): JSX.Element {
                                         <td className="p-2 md:p-4">
                                             <div className="flex flex-col sm:flex-row items-center justify-center gap-1 md:gap-2">
                                                 <button
-                                                    className="w-full sm:w-auto bg-sky-100 text-sky-700 px-3 py-1.5 rounded-md text-xs md:text-sm font-medium hover:bg-sky-600 hover:text-white transition-all"
+                                                    className="w-full sm:w-auto bg-sky-100 text-sky-700 px-3 py-1.5 rounded-md text-xs md:text-sm font-medium hover:bg-sky-600 hover:text-white transition-all hover:cursor-pointer"
                                                     onClick={() => navigate(`/detalhes/aluno/${aluno.id_aluno}`)}
                                                 >
                                                     Detalhes
                                                 </button>
                                                 <button
-                                                    className="w-full sm:w-auto bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-md text-xs md:text-sm font-medium hover:bg-emerald-600 hover:text-white transition-all"
+                                                    className="w-full sm:w-auto bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-md text-xs md:text-sm font-medium hover:bg-emerald-600 hover:text-white transition-all hover:cursor-pointer"
                                                     onClick={() => navigate(`/atualizar/aluno/${aluno.id_aluno}`)}
                                                 >
                                                     Atualizar
                                                 </button>
                                                 <button
-                                                    className="w-full sm:w-auto bg-red-100 text-red-700 px-3 py-1.5 rounded-md text-xs md:text-sm font-medium hover:bg-red-600 hover:text-white transition-all"
+                                                    className="w-full sm:w-auto bg-red-100 text-red-700 px-3 py-1.5 rounded-md text-xs md:text-sm font-medium hover:bg-red-600 hover:text-white transition-all hover:cursor-pointer"
                                                     onClick={() => aluno.id_aluno && handleRemoverAluno(aluno.id_aluno)}
                                                 >
                                                     Deletar
