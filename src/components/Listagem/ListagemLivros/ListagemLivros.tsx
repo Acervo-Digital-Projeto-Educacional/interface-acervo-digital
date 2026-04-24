@@ -85,7 +85,7 @@ function ListagemLivros(): JSX.Element {
                     <table className="table-auto w-full border-collapse text-xs sm:text-sm md:text-base">
                         <thead className="bg-slate-700 sticky top-0 z-10 shadow-sm">
                             <tr>
-                                <th className="border-b border-slate-600 text-white p-3 md:p-4 hidden md:table-cell text-left">ID</th>
+                                <th className="border-b border-slate-600 text-white p-3 md:p-4 hidden md:table-cell text-left" hidden>ID</th>
                                 <th className="border-b border-slate-600 text-white p-3 md:p-4 text-left">Título</th>
                                 <th className="border-b border-slate-600 text-white p-3 md:p-4 text-left">Autor</th>
                                 <th className="border-b border-slate-600 text-white p-3 md:p-4 hidden sm:table-cell text-left">ISBN</th>
@@ -97,7 +97,7 @@ function ListagemLivros(): JSX.Element {
                             {currentLivros && currentLivros.length > 0 ? (
                                 currentLivros.map((livro) => (
                                     <tr className="text-center md:text-left transition-colors hover:bg-slate-50 group" key={livro.id_livro}>
-                                        <td className="p-3 md:p-4 hidden md:table-cell text-slate-500">{livro.id_livro}</td>
+                                        <td className="p-3 md:p-4 hidden md:table-cell text-slate-500" hidden>{livro.id_livro}</td>
                                         <td className="p-3 md:p-4 font-medium text-slate-700">{livro.titulo}</td>
                                         <td className="p-3 md:p-4 text-slate-700">{livro.autor}</td>
                                         <td className="p-3 md:p-4 hidden sm:table-cell text-slate-600">{livro.isbn}</td>

@@ -87,7 +87,7 @@ function ListagemAlunos(): JSX.Element {
                     <table className="table-auto w-full border-collapse text-xs sm:text-sm md:text-base">
                         <thead className="bg-slate-700 sticky top-0 z-10 shadow-sm">
                             <tr>
-                                <th className="border-b border-slate-600 text-white p-3 md:p-4 hidden md:table-cell text-left">ID</th>
+                                <th className="border-b border-slate-600 text-white p-3 md:p-4 hidden md:table-cell text-left" hidden>ID</th>
                                 <th className="border-b border-slate-600 text-white p-3 md:p-4 text-left">RA</th>
                                 <th className="border-b border-slate-600 text-white p-3 md:p-4 text-left">Nome</th>
                                 <th className="border-b border-slate-600 text-white p-3 md:p-4 hidden sm:table-cell text-left">E-mail</th>
@@ -99,7 +99,7 @@ function ListagemAlunos(): JSX.Element {
                             {currentAlunos && currentAlunos.length > 0 ? (
                                 currentAlunos.map((aluno) => (
                                     <tr className="text-center md:text-left transition-colors hover:bg-slate-50 group" key={aluno.id_aluno}>
-                                        <td className="p-3 md:p-4 hidden md:table-cell text-slate-500">{aluno.id_aluno}</td>
+                                        <td className="p-3 md:p-4 hidden md:table-cell text-slate-500" hidden>{aluno.id_aluno}</td>
                                         <td className="p-3 md:p-4 font-medium text-slate-700">{aluno.ra}</td>
                                         <td className="p-3 md:p-4 text-slate-700 font-semibold">{aluno.nome} {aluno.sobrenome}</td>
                                         <td className="p-3 md:p-4 hidden sm:table-cell text-slate-600">{aluno.email}</td>

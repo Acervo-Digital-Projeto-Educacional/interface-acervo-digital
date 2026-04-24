@@ -91,7 +91,7 @@ function ListagemEmprestimos(): JSX.Element {
                     <table className="table-auto w-full border-collapse text-xs sm:text-sm md:text-base">
                         <thead className="bg-slate-700 sticky top-0 z-10 shadow-sm">
                             <tr>
-                                <th className="border-b border-slate-600 text-white p-3 md:p-4 hidden md:table-cell text-left">ID</th>
+                                <th className="border-b border-slate-600 text-white p-3 md:p-4 hidden md:table-cell text-left" hidden>ID</th>
                                 <th className="border-b border-slate-600 text-white p-3 md:p-4 text-left">Aluno</th>
                                 <th className="border-b border-slate-600 text-white p-3 md:p-4 text-left">Livro</th>
                                 <th className="border-b border-slate-600 text-white p-3 md:p-4 hidden sm:table-cell text-center">Retirada</th>
@@ -104,7 +104,7 @@ function ListagemEmprestimos(): JSX.Element {
                             {currentEmprestimos && currentEmprestimos.length > 0 ? (
                                 currentEmprestimos.map((emp) => (
                                     <tr className="text-center md:text-left transition-colors hover:bg-slate-50 group" key={emp.id_emprestimo}>
-                                        <td className="p-3 md:p-4 hidden md:table-cell text-slate-500">{emp.id_emprestimo}</td>
+                                        <td className="p-3 md:p-4 hidden md:table-cell text-slate-500" hidden>{emp.id_emprestimo}</td>
                                         <td className="p-3 md:p-4 font-medium text-slate-700">{emp.aluno.nome} {emp.aluno.sobrenome}</td>
                                         <td className="p-3 md:p-4 text-slate-700 truncate max-w-[150px] md:max-w-xs" title={emp.livro.titulo}>{emp.livro.titulo}</td>
                                         <td className="p-3 md:p-4 hidden sm:table-cell text-center text-slate-600">{formatDate(emp.data_emprestimo)}</td>
