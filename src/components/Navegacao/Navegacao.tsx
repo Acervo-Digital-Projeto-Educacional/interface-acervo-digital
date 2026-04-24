@@ -4,6 +4,7 @@ import type { MenuItem } from 'primereact/menuitem';
 import { Avatar } from 'primereact/avatar';
 import { useNavigate } from 'react-router-dom';
 import AuthRequests from "../../fetch/AuthRequests";
+import appIcon from "../../assets/app-icon.png";
 
 interface CustomMenuItem extends MenuItem {
     badge?: number;
@@ -27,26 +28,26 @@ function Navegacao(): JSX.Element {
         {
             label: 'Home',
             icon: 'pi pi-home',
-            className: 'm-5 text-white text-lg',
+            className: 'mx-2 md:mx-4 text-white text-sm md:text-base lg:text-lg',
             url: "/"
         },
         ...(isAuthenticated ? [
             {
                 label: 'Alunos',
                 icon: 'pi pi-star',
-                className: 'm-5 text-white text-lg',
+                className: 'mx-2 md:mx-4 text-white text-sm md:text-base lg:text-lg',
                 url: "/lista/alunos"
             },
             {
                 label: 'Livros',
                 icon: 'pi pi-star',
-                className: 'm-5 text-white text-lg',
+                className: 'mx-2 md:mx-4 text-white text-sm md:text-base lg:text-lg',
                 url: "/lista/livros"
             },
             {
                 label: 'Empréstimos',
                 icon: 'pi pi-star',
-                className: 'm-5 text-white text-lg',
+                className: 'mx-2 md:mx-4 text-white text-sm md:text-base lg:text-lg',
                 url: "/lista/emprestimos"
             }
         ] : [])
@@ -55,28 +56,25 @@ function Navegacao(): JSX.Element {
     const start = (
         <img
             alt="logo"
-            src='./src/assets/app-icon.png'
-            height="100"
-            // className="h-20 p-3 ml-10 mr-5 h-[7rem]"
-            className="w-[40%] max-w-[40%] ml-10"
+            src={appIcon}
+            className="h-10 md:h-12 lg:h-14 w-auto ml-2 md:ml-4 lg:ml-6"
         />
     );
 
     const userActions = isAuthenticated ? (
-        <div className="flex items- justify-end items-center mr-10 gap-4">
-            <div className="flex flex-col pr-3">
-                <p className="text-white font-semibold m-0">{nome}</p>
-                <p className="text-white text-sm m-0">{email}</p>
+        <div className="flex items-center justify-end mr-4 md:mr-6 lg:mr-10 gap-2 md:gap-4">
+            <div className="flex flex-col pr-2 md:pr-3 hidden sm:flex">
+                <p className="text-white font-semibold m-0 text-sm md:text-base">{nome}</p>
+                <p className="text-white text-xs md:text-sm m-0">{email}</p>
             </div>
             <Avatar
                 image={avatarImage}
                 shape="circle"
-                className="!w-[10%] !h-[10%]"
+                className="!w-8 !h-8 md:!w-10 md:!h-10"
             />
             <button
-                className="bg-white ml-6 text-slate-700 px-10 py-5 rounded border-none cursor-pointer flex items-center justify-center gap-1 hover:bg-gray-100 transition-colors"
+                className="bg-white ml-2 md:ml-4 text-slate-700 px-3 py-1.5 md:px-5 md:py-2 rounded border-none cursor-pointer flex items-center justify-center gap-1 hover:bg-gray-100 transition-colors text-xs md:text-sm"
                 onClick={AuthRequests.removeToken}
-                style={{ height: '32px', fontSize: '14px' }}
             >
                 <i className="pi pi-sign-out"></i>
                 <span>Sair</span>
@@ -84,9 +82,8 @@ function Navegacao(): JSX.Element {
         </div>
     ) : (
         <button
-            className="bg-white font-bold text-slate-700 px-10 py-5 mr-10 rounded border-none cursor-pointer flex items-center justify-center gap-1 hover:bg-gray-100 transition-colors"
+            className="bg-white font-bold text-slate-700 px-3 py-1.5 md:px-5 md:py-2 mr-4 md:mr-6 lg:mr-10 rounded border-none cursor-pointer flex items-center justify-center gap-1 hover:bg-gray-100 transition-colors text-xs md:text-sm"
             onClick={() => navigate('/login')}
-            style={{ height: '32px', fontSize: '14px' }}
         >
             <i className="pi pi-sign-in"></i>
             <span>Login</span>
@@ -94,7 +91,7 @@ function Navegacao(): JSX.Element {
     );
 
     return (
-        <header className="card h-[12vh] bg-slate-700 flex items-center px-4">
+        <header className="card bg-slate-700 flex items-center px-2 md:px-4 py-3 min-h-[64px]">
             <div className="flex-1">
                 <Menubar
                     model={items}
