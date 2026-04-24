@@ -86,13 +86,13 @@ function FormAluno() {
                         {/* Linha 2: Data de Nascimento e Celular */}
                         <div className="flex flex-col sm:flex-row gap-6">
                             <div className="flex-1">
-                                <label htmlFor="dataNascimento" className="block text-sm font-semibold text-slate-700 mb-2">
+                                <label htmlFor="data_nascimento" className="block text-sm font-semibold text-slate-700 mb-2">
                                     Data de Nascimento
                                 </label>
                                 <input
                                     type="date"
-                                    name="dataNascimento"
-                                    id="dataNascimento"
+                                    name="data_nascimento"
+                                    id="data_nascimento"
                                     onChange={handleChange}
                                     className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-slate-500 focus:outline-none transition-all"
                                 />
