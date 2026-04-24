@@ -87,8 +87,8 @@ function ListagemEmprestimos(): JSX.Element {
                 }}
             />
 
-            <div className="w-full max-w-7xl mx-auto flex flex-col bg-white rounded-xl shadow-xl border border-slate-300 overflow-hidden">
-                <div className="overflow-auto overscroll-none">
+            <div className="w-full max-w-7xl mx-auto flex-1 flex flex-col min-h-0 bg-white rounded-xl shadow-xl border border-slate-300 overflow-hidden">
+                <div className="flex-1 overflow-auto overscroll-none">
                     <table className="table-auto w-full border-collapse text-xs sm:text-sm md:text-base">
                         <thead className="bg-slate-700 sticky top-0 z-10 shadow-sm">
                             <tr>
