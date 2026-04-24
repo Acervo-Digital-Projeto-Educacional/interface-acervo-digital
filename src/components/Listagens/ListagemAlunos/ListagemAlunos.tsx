@@ -39,6 +39,8 @@ function ListagemAlunos(): JSX.Element {
                 </a>
             </div>
 
+            <input type="text" name="busca-aluno" id="busca-aluno" placeholder="Buscar aluno" className="w-full max-w-6xl mx-auto p-3 md:p-2 md:mb-4 border-b-2 border-slate-700 rounded-sm" />
+
             <div className="w-full max-w-7xl mx-auto flex-1 flex flex-col min-h-0 bg-white rounded-xl shadow-xl border border-slate-300 overflow-hidden">
                 <div className="flex-1 overflow-auto overscroll-none">
                     <table className="table-auto w-full border-collapse text-xs sm:text-sm md:text-base">
