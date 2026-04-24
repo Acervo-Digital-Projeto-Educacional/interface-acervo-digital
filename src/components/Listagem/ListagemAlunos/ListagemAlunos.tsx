@@ -7,6 +7,7 @@ import type AlunoDTO from "../../../dto/AlunoDTO";
 function ListagemAlunos(): JSX.Element {
     const [alunos, setAlunos] = useState<AlunoDTO[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate();
     const rowsPerPage = 7;
 
@@ -26,11 +27,18 @@ function ListagemAlunos(): JSX.Element {
         buscarAlunos();
     }, []);
 
-    // Lógica de Paginação
-    const totalPages = Math.ceil(alunos.length / rowsPerPage);
+    // Lógica de Filtragem e Paginação
+    const filteredAlunos = alunos.filter(aluno =>
+        aluno.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        aluno.sobrenome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (aluno.ra?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false) ||
+        aluno.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const totalPages = Math.ceil(filteredAlunos.length / rowsPerPage);
     const indexOfLastRow = currentPage * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-    const currentAlunos = alunos.slice(indexOfFirstRow, indexOfLastRow);
+    const currentAlunos = filteredAlunos.slice(indexOfFirstRow, indexOfLastRow);
 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -61,7 +69,18 @@ function ListagemAlunos(): JSX.Element {
                 </a>
             </div>
 
-            <input type="text" name="busca-aluno" id="busca-aluno" placeholder="Buscar aluno" className="w-full max-w-6xl mx-auto p-3 md:p-2 md:mb-4 border-b-2 border-slate-700 rounded-sm" />
+            <input
+                type="text"
+                name="busca-aluno"
+                id="busca-aluno"
+                placeholder="Buscar aluno por nome, RA ou e-mail"
+                className="w-full max-w-6xl mx-auto p-3 md:p-2 md:mb-4 border-b-2 border-slate-700 rounded-sm focus:outline-none focus:border-slate-500 transition-colors"
+                value={searchTerm}
+                onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setCurrentPage(1);
+                }}
+            />
 
             <div className="w-full max-w-7xl mx-auto flex flex-col bg-white rounded-xl shadow-xl border border-slate-300 overflow-hidden">
                 <div className="overflow-auto overscroll-none">
@@ -141,7 +160,7 @@ function ListagemAlunos(): JSX.Element {
                     <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                         <div>
                             <p className="text-sm text-slate-700">
-                                Mostrando <span className="font-semibold">{indexOfFirstRow + 1}</span> até <span className="font-semibold">{Math.min(indexOfLastRow, alunos.length)}</span> de <span className="font-semibold">{alunos.length}</span> resultados
+                                Mostrando <span className="font-semibold">{filteredAlunos.length > 0 ? indexOfFirstRow + 1 : 0}</span> até <span className="font-semibold">{Math.min(indexOfLastRow, filteredAlunos.length)}</span> de <span className="font-semibold">{filteredAlunos.length}</span> resultados
                             </p>
                         </div>
                         <div>

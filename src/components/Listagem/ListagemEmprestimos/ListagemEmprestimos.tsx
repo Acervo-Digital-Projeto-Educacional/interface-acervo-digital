@@ -6,6 +6,7 @@ import EmprestimoRequests from "../../../fetch/EmprestimoRequests";
 function ListagemEmprestimos(): JSX.Element {
     const [emprestimos, setEmprestimos] = useState<EmprestimoDTO[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate();
     const rowsPerPage = 7;
 
@@ -25,11 +26,18 @@ function ListagemEmprestimos(): JSX.Element {
         buscarEmprestimos();
     }, []);
 
-    // Lógica de Paginação
-    const totalPages = Math.ceil(emprestimos.length / rowsPerPage);
+    // Lógica de Filtragem e Paginação
+    const filteredEmprestimos = emprestimos.filter(emp =>
+        (emp.aluno.nome?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false) ||
+        (emp.aluno.sobrenome?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false) ||
+        (emp.livro.titulo?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false) ||
+        (emp.status_emprestimo?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false)
+    );
+
+    const totalPages = Math.ceil(filteredEmprestimos.length / rowsPerPage);
     const indexOfLastRow = currentPage * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-    const currentEmprestimos = emprestimos.slice(indexOfFirstRow, indexOfLastRow);
+    const currentEmprestimos = filteredEmprestimos.slice(indexOfFirstRow, indexOfLastRow);
 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -65,7 +73,18 @@ function ListagemEmprestimos(): JSX.Element {
                 </a>
             </div>
 
-            <input type="text" name="busca-emprestimo" id="busca-emprestimo" placeholder="Buscar empréstimo" className="w-full max-w-6xl mx-auto p-3 md:p-2 md:mb-4 border-b-2 border-slate-700 rounded-sm" />
+            <input
+                type="text"
+                name="busca-emprestimo"
+                id="busca-emprestimo"
+                placeholder="Buscar por aluno, livro ou status"
+                className="w-full max-w-6xl mx-auto p-3 md:p-2 md:mb-4 border-b-2 border-slate-700 rounded-sm focus:outline-none focus:border-slate-500 transition-colors"
+                value={searchTerm}
+                onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setCurrentPage(1);
+                }}
+            />
 
             <div className="w-full max-w-7xl mx-auto flex flex-col bg-white rounded-xl shadow-xl border border-slate-300 overflow-hidden">
                 <div className="overflow-auto overscroll-none">
@@ -154,7 +173,7 @@ function ListagemEmprestimos(): JSX.Element {
                     <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                         <div>
                             <p className="text-sm text-slate-700">
-                                Mostrando <span className="font-semibold">{indexOfFirstRow + 1}</span> até <span className="font-semibold">{Math.min(indexOfLastRow, emprestimos.length)}</span> de <span className="font-semibold">{emprestimos.length}</span> resultados
+                                Mostrando <span className="font-semibold">{filteredEmprestimos.length > 0 ? indexOfFirstRow + 1 : 0}</span> até <span className="font-semibold">{Math.min(indexOfLastRow, filteredEmprestimos.length)}</span> de <span className="font-semibold">{filteredEmprestimos.length}</span> resultados
                             </p>
                         </div>
                         <div>

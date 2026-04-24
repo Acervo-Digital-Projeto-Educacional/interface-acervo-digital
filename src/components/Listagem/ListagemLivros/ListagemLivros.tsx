@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 function ListagemLivros(): JSX.Element {
     const [livros, setLivros] = useState<LivroDTO[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate();
     const rowsPerPage = 7;
 
@@ -25,11 +26,17 @@ function ListagemLivros(): JSX.Element {
         buscarLivros();
     }, []);
 
-    // Lógica de Paginação
-    const totalPages = Math.ceil(livros.length / rowsPerPage);
+    // Lógica de Filtragem e Paginação
+    const filteredLivros = livros.filter(livro =>
+        livro.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        livro.autor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        livro.isbn.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const totalPages = Math.ceil(filteredLivros.length / rowsPerPage);
     const indexOfLastRow = currentPage * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-    const currentLivros = livros.slice(indexOfFirstRow, indexOfLastRow);
+    const currentLivros = filteredLivros.slice(indexOfFirstRow, indexOfLastRow);
 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -60,7 +67,18 @@ function ListagemLivros(): JSX.Element {
                 </a>
             </div>
 
-            <input type="text" name="buscar-livro" id="buscar-livro" placeholder="Buscar livro" className="w-full max-w-6xl mx-auto p-3 md:p-2 md:mb-4 border-b-2 border-slate-700 rounded-sm" />
+            <input
+                type="text"
+                name="buscar-livro"
+                id="buscar-livro"
+                placeholder="Buscar livro por título, autor ou ISBN"
+                className="w-full max-w-6xl mx-auto p-3 md:p-2 md:mb-4 border-b-2 border-slate-700 rounded-sm focus:outline-none focus:border-slate-500 transition-colors"
+                value={searchTerm}
+                onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setCurrentPage(1);
+                }}
+            />
 
             <div className="w-full max-w-7xl mx-auto flex-1 flex flex-col min-h-0 bg-white rounded-xl shadow-xl border border-slate-300 overflow-hidden">
                 <div className="flex-1 overflow-auto overscroll-none">
@@ -140,7 +158,7 @@ function ListagemLivros(): JSX.Element {
                     <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                         <div>
                             <p className="text-sm text-slate-700">
-                                Mostrando <span className="font-semibold">{indexOfFirstRow + 1}</span> até <span className="font-semibold">{Math.min(indexOfLastRow, livros.length)}</span> de <span className="font-semibold">{livros.length}</span> resultados
+                                Mostrando <span className="font-semibold">{filteredLivros.length > 0 ? indexOfFirstRow + 1 : 0}</span> até <span className="font-semibold">{Math.min(indexOfLastRow, filteredLivros.length)}</span> de <span className="font-semibold">{filteredLivros.length}</span> resultados
                             </p>
                         </div>
                         <div>
