@@ -5,11 +5,11 @@ import FormAtualizarLivro from "../../../components/Formularios/FormAtualizarLiv
 
 function PAtualizarLivro(): JSX.Element {
     return (
-        <>
+        <div className="min-h-screen flex flex-col">
             <Navegacao />
             <FormAtualizarLivro />
             <Rodape />
-        </>
+        </div>
     );
 }
 

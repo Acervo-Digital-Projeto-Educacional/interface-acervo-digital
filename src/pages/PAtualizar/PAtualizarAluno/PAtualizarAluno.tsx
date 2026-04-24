@@ -5,11 +5,11 @@ import FormAtualizarAluno from "../../../components/Formularios/FormAtualizarAlu
 
 function PAtualizarAluno(): JSX.Element {
     return (
-        <>
+        <div className="min-h-screen flex flex-col">
             <Navegacao />
             <FormAtualizarAluno />
             <Rodape />
-        </>
+        </div>
     );
 }
 

@@ -25,7 +25,7 @@ function FormAtualizarAluno() {
                     setFormData(aluno);
                 } else {
                     alert("Aluno não encontrado.");
-                    navigate('/aluno');
+                    navigate('/lista/alunos');
                 }
                 setLoading(false);
             }
@@ -51,7 +51,7 @@ function FormAtualizarAluno() {
             const resposta = await AlunoRequests.atualizarAluno(Number(id_aluno), formData);
             if (resposta) {
                 alert('Aluno atualizado com sucesso.');
-                navigate('/aluno');
+                navigate('/lista/alunos');
             } else {
                 alert('Erro ao atualizar aluno.');
             }
@@ -63,109 +63,142 @@ function FormAtualizarAluno() {
     }
 
     return (
-        <section className='bg-gray-200 h-[76vh] flex items-center justify-center overflow-auto'>
-            <form onSubmit={handleSubmit} className="py-8">
-                <h1 className="text-[3rem] text-center pt-[1.5rem]">Atualizar Aluno</h1>
+        <section className="bg-gray-200 flex-1 py-6 sm:py-10 px-4 overflow-y-auto">
+            <div className="w-full max-w-4xl mx-auto bg-white rounded-xl shadow-xl border border-slate-300 overflow-hidden animate-fade-in transition-all duration-300">
+                <header className="bg-slate-700 p-6 text-white text-center">
+                    <h1 className="text-2xl sm:text-3xl font-bold">Atualizar Aluno</h1>
+                    <p className="text-slate-300 text-sm mt-1">Edite as informações do cadastro do aluno</p>
+                </header>
 
-                <div className='flex justify-center'>
-                    <label htmlFor="nome" className='text-xl m-4'>
-                        Nome <br />
+                <form onSubmit={handleSubmit} className="p-6 sm:p-10">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Nome */}
+                        <div className="flex flex-col gap-1.5">
+                            <label htmlFor="nome" className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                                Nome
+                            </label>
+                            <input
+                                type="text"
+                                name="nome"
+                                id="nome"
+                                required
+                                minLength={3}
+                                value={formData.nome}
+                                onChange={handleChange}
+                                placeholder="Nome do aluno"
+                                className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50"
+                            />
+                        </div>
+
+                        {/* Sobrenome */}
+                        <div className="flex flex-col gap-1.5">
+                            <label htmlFor="sobrenome" className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                                Sobrenome
+                            </label>
+                            <input
+                                type="text"
+                                name="sobrenome"
+                                id="sobrenome"
+                                required
+                                minLength={3}
+                                value={formData.sobrenome}
+                                onChange={handleChange}
+                                placeholder="Sobrenome do aluno"
+                                className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50"
+                            />
+                        </div>
+
+                        {/* Data de Nascimento */}
+                        <div className="flex flex-col gap-1.5">
+                            <label htmlFor="data_nascimento" className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                                Data de Nascimento
+                            </label>
+                            <input
+                                type="date"
+                                name="data_nascimento"
+                                id="data_nascimento"
+                                value={Utilitario.formatarDataParaInput(formData.data_nascimento)}
+                                onChange={handleChange}
+                                className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50"
+                            />
+                        </div>
+
+                        {/* Celular */}
+                        <div className="flex flex-col gap-1.5">
+                            <label htmlFor="celular" className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                                Celular
+                            </label>
+                            <input
+                                type="tel"
+                                name="celular"
+                                id="celular"
+                                value={formData.celular}
+                                onChange={handleChange}
+                                placeholder="(xx) x xxxx-xxxx"
+                                className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50"
+                            />
+                        </div>
+
+                        {/* Endereço */}
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
+                            <label htmlFor="endereco" className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                                Endereço Residencial
+                            </label>
+                            <input
+                                type="text"
+                                name="endereco"
+                                id="endereco"
+                                minLength={6}
+                                value={formData.endereco}
+                                onChange={handleChange}
+                                placeholder="Rua, número, bairro, cidade - UF"
+                                className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50"
+                            />
+                        </div>
+
+                        {/* E-mail */}
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
+                            <label htmlFor="email" className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                                E-mail Acadêmico
+                            </label>
+                            <input
+                                type="email"
+                                name="email"
+                                id="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                placeholder="exemplo@email.com"
+                                className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-4 mt-10">
                         <input
-                            type="text"
-                            name="nome"
-                            id="nome"
-                            required
-                            minLength={3}
-                            value={formData.nome}
-                            onChange={handleChange}
-                            placeholder='Nome'
-                            className='w-2xs border-2 border-slate-500 rounded-md p-1'
+                            type="submit"
+                            value="ATUALIZAR CADASTRO"
+                            className="flex-1 bg-slate-700 text-white font-bold py-3.5 rounded-lg cursor-pointer hover:bg-slate-600 shadow-md hover:shadow-lg transition-all active:scale-95 uppercase tracking-wide text-sm"
                         />
-                    </label>
+                        <button
+                            type="button"
+                            onClick={() => navigate('/lista/alunos')}
+                            className="flex-1 bg-white border-2 border-slate-200 text-slate-600 font-bold py-3.5 rounded-lg hover:bg-slate-50 transition-all shadow-sm uppercase tracking-wide text-sm"
+                        >
+                            VOLTAR PARA LISTAGEM
+                        </button>
+                    </div>
+                </form>
+            </div>
 
-                    <label htmlFor="sobrenome" className='text-xl m-4'>
-                        Sobrenome <br />
-                        <input
-                            type="text"
-                            name="sobrenome"
-                            id="sobrenome"
-                            required
-                            minLength={3}
-                            value={formData.sobrenome}
-                            onChange={handleChange}
-                            placeholder='Sobrenome'
-                            className='w-2xs border-2 border-slate-500 rounded-md p-1'
-                        />
-                    </label>
-                </div>
-
-                <div className='flex justify-center'>
-                    <label htmlFor="data_nascimento" className='text-xl m-4'>
-                        Data de Nascimento <br />
-                        <input
-                            type="date"
-                            name="data_nascimento"
-                            id="data_nascimento"
-                            value={Utilitario.formatarDataParaInput(formData.data_nascimento)}
-                            onChange={handleChange}
-                            className='w-2xs border-2 border-slate-500 rounded-md p-1'
-                        />
-                    </label>
-
-                    <label htmlFor="celular" className='text-xl m-4'>
-                        Celular <br />
-                        <input
-                            type="tel"
-                            name="celular"
-                            id="celular"
-                            value={formData.celular}
-                            onChange={handleChange}
-                            placeholder='(xx) x xxxx-xxxx'
-                            className='w-2xs border-2 border-slate-500 rounded-md p-1'
-                        />
-                    </label>
-                </div>
-
-                <div className='flex justify-center'>
-                    <label htmlFor="endereco" className='text-xl m-4'>
-                        Endereço <br />
-                        <input
-                            type="text"
-                            name="endereco"
-                            id="endereco"
-                            minLength={6}
-                            value={formData.endereco}
-                            onChange={handleChange}
-                            placeholder='Endereço'
-                            className='w-2xs border-2 border-slate-500 rounded-md p-1'
-                        />
-                    </label>
-
-                    <label htmlFor="email" className='text-xl m-4'>
-                        E-mail <br />
-                        <input
-                            type="email"
-                            name="email"
-                            id="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            placeholder='exemplo@mail.com'
-                            className='w-2xs border-2 border-slate-500 rounded-md p-1'
-                        />
-                    </label>
-                </div>
-
-                <div className='flex flex-1'>
-                    <input type="submit" value="ATUALIZAR" className='block mx-auto p-4 mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600 shadow-md transition-all' />
-                    <button
-                        type="button"
-                        onClick={() => navigate('/lista/alunos')}
-                        className='block mx-auto p-4 mt-12 bg-white border-2 border-slate-500 text-slate-500 min-w-3xs min-h-[2.5rem] rounded-md font-semibold hover:bg-slate-50 transition-all shadow-sm'
-                    >
-                        VOLTAR
-                    </button>
-                </div>
-            </form>
+            <style>{`
+                .animate-fade-in {
+                    animation: fadeIn 0.5s ease-out;
+                }
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+            `}</style>
         </section>
     );
 }

@@ -5,11 +5,11 @@ import FormAtualizarEmprestimo from "../../../components/Formularios/FormAtualiz
 
 function PAtualizarEmprestimo(): JSX.Element {
     return (
-        <>
+        <div className="min-h-screen flex flex-col">
             <Navegacao />
             <FormAtualizarEmprestimo />
             <Rodape />
-        </>
+        </div>
     );
 }
 

@@ -27,7 +27,7 @@ function FormAtualizarLivro() {
                     setFormData(livro);
                 } else {
                     alert("Livro não encontrado.");
-                    navigate('/livro');
+                    navigate('/lista/livros');
                 }
                 setLoading(false);
             }
@@ -52,7 +52,7 @@ function FormAtualizarLivro() {
             const resposta = await LivroRequests.atualizarLivro(Number(id_livro), formData);
             if (resposta) {
                 alert('Livro atualizado com sucesso.');
-                navigate('/livro');
+                navigate('/lista/livros');
             } else {
                 alert('Erro ao atualizar livro.');
             }
@@ -64,164 +64,200 @@ function FormAtualizarLivro() {
     }
 
     return (
-        <section className='bg-gray-200 h-[76vh] flex items-center justify-center overflow-auto'>
-            <form onSubmit={handleSubmit} className="py-8">
-                <h1 className="text-[3rem] text-center pt-[1.5rem]">Atualizar Livro</h1>
+        <section className="bg-gray-200 flex-1 py-6 sm:py-10 px-4 overflow-y-auto">
+            <div className="w-full max-w-4xl mx-auto bg-white rounded-xl shadow-xl border border-slate-300 overflow-hidden animate-fade-in transition-all duration-300">
+                <header className="bg-slate-700 p-6 text-white text-center">
+                    <h1 className="text-2xl sm:text-3xl font-bold">Atualizar Livro</h1>
+                    <p className="text-slate-300 text-sm mt-1">Edite as informações bibliográficas e de estoque</p>
+                </header>
 
-                <div className='flex justify-center'>
-                    <label htmlFor="titulo" className='text-xl m-4'>
-                        Título <br />
-                        <input
-                            type="text"
-                            name="titulo"
-                            id="titulo"
-                            required
-                            minLength={3}
-                            value={formData.titulo}
-                            onChange={handleChange}
-                            placeholder='Título'
-                            className='w-2xs border-2 border-slate-500 rounded-md p-1'
-                        />
-                    </label>
+                <form onSubmit={handleSubmit} className="p-6 sm:p-10">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Título */}
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
+                            <label htmlFor="titulo" className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                                Título do Livro
+                            </label>
+                            <input
+                                type="text"
+                                name="titulo"
+                                id="titulo"
+                                required
+                                minLength={3}
+                                value={formData.titulo}
+                                onChange={handleChange}
+                                placeholder="Ex: O Senhor dos Anéis"
+                                className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50"
+                            />
+                        </div>
 
-                    <label htmlFor="autor" className='text-xl m-4'>
-                        Autor <br />
-                        <input
-                            type="text"
-                            name="autor"
-                            id="autor"
-                            required
-                            minLength={3}
-                            value={formData.autor}
-                            onChange={handleChange}
-                            placeholder='Autor'
-                            className='w-2xs border-2 border-slate-500 rounded-md p-1'
-                        />
-                    </label>
-                </div>
+                        {/* Autor */}
+                        <div className="flex flex-col gap-1.5">
+                            <label htmlFor="autor" className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                                Autor
+                            </label>
+                            <input
+                                type="text"
+                                name="autor"
+                                id="autor"
+                                required
+                                minLength={3}
+                                value={formData.autor}
+                                onChange={handleChange}
+                                placeholder="Nome do autor"
+                                className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50"
+                            />
+                        </div>
 
-                <div className='flex justify-center'>
-                    <label htmlFor="editora" className='text-xl m-4'>
-                        Editora <br />
-                        <input
-                            type="text"
-                            name="editora"
-                            id="editora"
-                            required
-                            value={formData.editora}
-                            onChange={handleChange}
-                            placeholder='Editora'
-                            className='w-2xs border-2 border-slate-500 rounded-md p-1'
-                        />
-                    </label>
+                        {/* Editora */}
+                        <div className="flex flex-col gap-1.5">
+                            <label htmlFor="editora" className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                                Editora
+                            </label>
+                            <input
+                                type="text"
+                                name="editora"
+                                id="editora"
+                                required
+                                value={formData.editora}
+                                onChange={handleChange}
+                                placeholder="Nome da editora"
+                                className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50"
+                            />
+                        </div>
 
-                    <label htmlFor="ano_publicacao" className='text-xl m-4'>
-                        Ano de Publicação <br />
-                        <input
-                            type="number"
-                            name="ano_publicacao"
-                            id="ano_publicacao"
-                            required
-                            value={formData.ano_publicacao}
-                            onChange={handleChange}
-                            placeholder='Ano de Publicação'
-                            className='w-2xs border-2 border-slate-500 rounded-md p-1'
-                        />
-                    </label>
-                </div>
+                        {/* Ano de Publicação */}
+                        <div className="flex flex-col gap-1.5">
+                            <label htmlFor="ano_publicacao" className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                                Ano de Publicação
+                            </label>
+                            <input
+                                type="number"
+                                name="ano_publicacao"
+                                id="ano_publicacao"
+                                required
+                                value={formData.ano_publicacao}
+                                onChange={handleChange}
+                                placeholder="Ex: 2024"
+                                className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50"
+                            />
+                        </div>
 
-                <div className='flex justify-center'>
-                    <label htmlFor="isbn" className='text-xl m-4'>
-                        ISBN <br />
-                        <input
-                            type="text"
-                            name="isbn"
-                            id="isbn"
-                            required
-                            pattern="^(?:(?:\d[\ |-]?){9}[\d|X]|(?:\d[\ |-]?){13})$"
-                            maxLength={14}
-                            title="O ISBN deve ser um formato válido de 10 ou 13 dígitos (ex: 8535902775 ou 978-8535902777)"
-                            value={formData.isbn}
-                            onChange={handleChange}
-                            placeholder='ISBN-10 ou ISBN-13'
-                            className='w-2xs border-2 border-slate-500 rounded-md p-1'
-                        />
-                    </label>
+                        {/* ISBN */}
+                        <div className="flex flex-col gap-1.5">
+                            <label htmlFor="isbn" className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                                ISBN
+                            </label>
+                            <input
+                                type="text"
+                                name="isbn"
+                                id="isbn"
+                                required
+                                pattern="^(?:(?:\d[\ |-]?){9}[\d|X]|(?:\d[\ |-]?){13})$"
+                                maxLength={14}
+                                title="O ISBN deve ser um formato válido de 10 ou 13 dígitos"
+                                value={formData.isbn}
+                                onChange={handleChange}
+                                placeholder="ISBN-10 ou ISBN-13"
+                                className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50"
+                            />
+                        </div>
 
-                    <label htmlFor="valor_aquisicao" className='text-xl m-4'>
-                        Valor de Aquisição <br />
-                        <input
-                            type="number"
-                            name="valor_aquisicao"
-                            id="valor_aquisicao"
-                            required
-                            min={0}
-                            step={0.01}
-                            value={formData.valor_aquisicao}
-                            onChange={handleChange}
-                            placeholder='0.00'
-                            className='w-2xs border-2 border-slate-500 rounded-md p-1'
-                        />
-                    </label>
-                </div>
+                        {/* Valor de Aquisição */}
+                        <div className="flex flex-col gap-1.5">
+                            <label htmlFor="valor_aquisicao" className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                                Valor de Aquisição (R$)
+                            </label>
+                            <input
+                                type="number"
+                                name="valor_aquisicao"
+                                id="valor_aquisicao"
+                                required
+                                min={0}
+                                step={0.01}
+                                value={formData.valor_aquisicao}
+                                onChange={handleChange}
+                                placeholder="0.00"
+                                className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50"
+                            />
+                        </div>
 
-                <div className='flex justify-center'>
-                    <label htmlFor="quant_total" className='text-xl m-4'>
-                        Quant. Total <br />
-                        <input
-                            type="number"
-                            name="quant_total"
-                            id="quant_total"
-                            required
-                            min={0}
-                            value={formData.quant_total}
-                            onChange={handleChange}
-                            placeholder='0'
-                            className='w-[8rem] border-2 border-slate-500 rounded-md p-1'
-                        />
-                    </label>
+                        {/* Quantidades - Grid interno */}
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:col-span-2 mt-2">
+                            <div className="flex flex-col gap-1.5">
+                                <label htmlFor="quant_total" className="text-xs font-bold text-slate-500 uppercase">
+                                    Quant. Total
+                                </label>
+                                <input
+                                    type="number"
+                                    name="quant_total"
+                                    id="quant_total"
+                                    required
+                                    min={0}
+                                    value={formData.quant_total}
+                                    onChange={handleChange}
+                                    className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50"
+                                />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label htmlFor="quant_disponivel" className="text-xs font-bold text-slate-500 uppercase">
+                                    Quant. Disponível
+                                </label>
+                                <input
+                                    type="number"
+                                    name="quant_disponivel"
+                                    id="quant_disponivel"
+                                    required
+                                    min={0}
+                                    value={formData.quant_disponivel}
+                                    onChange={handleChange}
+                                    className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50"
+                                />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label htmlFor="quant_aquisicao" className="text-xs font-bold text-slate-500 uppercase">
+                                    Quant. Aquisição
+                                </label>
+                                <input
+                                    type="number"
+                                    name="quant_aquisicao"
+                                    id="quant_aquisicao"
+                                    required
+                                    min={0}
+                                    value={formData.quant_aquisicao}
+                                    onChange={handleChange}
+                                    className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50"
+                                />
+                            </div>
+                        </div>
+                    </div>
 
-                    <label htmlFor="quant_disponivel" className='text-xl m-4'>
-                        Quant. Disponível <br />
+                    <div className="flex flex-col sm:flex-row gap-4 mt-10">
                         <input
-                            type="number"
-                            name="quant_disponivel"
-                            id="quant_disponivel"
-                            required
-                            min={0}
-                            value={formData.quant_disponivel}
-                            onChange={handleChange}
-                            placeholder='0'
-                            className='w-[8rem] border-2 border-slate-500 rounded-md p-1'
+                            type="submit"
+                            value="ATUALIZAR LIVRO"
+                            className="flex-1 bg-slate-700 text-white font-bold py-3.5 rounded-lg cursor-pointer hover:bg-slate-600 shadow-md hover:shadow-lg transition-all active:scale-95 uppercase tracking-wide text-sm"
                         />
-                    </label>
-                    <label htmlFor="quant_aquisicao" className='text-xl m-4'>
-                        Quant. Aquisição <br />
-                        <input
-                            type="number"
-                            name="quant_aquisicao"
-                            id="quant_aquisicao"
-                            required
-                            min={0}
-                            value={formData.quant_aquisicao}
-                            onChange={handleChange}
-                            placeholder='0'
-                            className='w-[8rem] border-2 border-slate-500 rounded-md p-1'
-                        />
-                    </label>
-                </div>
+                        <button
+                            type="button"
+                            onClick={() => navigate('/lista/livros')}
+                            className="flex-1 bg-white border-2 border-slate-200 text-slate-600 font-bold py-3.5 rounded-lg hover:bg-slate-50 transition-all shadow-sm uppercase tracking-wide text-sm"
+                        >
+                            VOLTAR PARA LISTAGEM
+                        </button>
+                    </div>
+                </form>
+            </div>
 
-                <div className='flex flex-1'>
-                    <input type="submit" value="ATUALIZAR" className='block mx-auto p-4 mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600 shadow-md transition-all' />
-                    <button
-                        type="button"
-                        onClick={() => navigate('/lista/livros')}
-                        className='block mx-auto p-4 mt-12 bg-white border-2 border-slate-500 text-slate-500 min-w-3xs min-h-[2.5rem] rounded-md font-semibold hover:bg-slate-50 transition-all shadow-sm'
-                    >
-                        VOLTAR
-                    </button>
-                </div>
-            </form>
+            <style>{`
+                .animate-fade-in {
+                    animation: fadeIn 0.5s ease-out;
+                }
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+            `}</style>
         </section>
     );
 }
