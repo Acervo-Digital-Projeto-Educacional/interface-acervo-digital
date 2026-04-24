@@ -116,6 +116,7 @@ function ListagemAlunos(): JSX.Element {
                                     disabled={currentPage === 1}
                                     className={`relative inline-flex items-center px-2 py-2 rounded-l-md border border-slate-300 bg-white text-sm font-medium text-slate-500 hover:bg-slate-50 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 >
+                                    Anterior
                                     <span className="sr-only">Anterior</span>
                                     <i className="pi pi-chevron-left"></i>
                                 </button>
@@ -133,6 +134,7 @@ function ListagemAlunos(): JSX.Element {
                                     disabled={currentPage === totalPages}
                                     className={`relative inline-flex items-center px-2 py-2 rounded-r-md border border-slate-300 bg-white text-sm font-medium text-slate-500 hover:bg-slate-50 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 >
+                                    Próximo
                                     <span className="sr-only">Próximo</span>
                                     <i className="pi pi-chevron-right"></i>
                                 </button>
