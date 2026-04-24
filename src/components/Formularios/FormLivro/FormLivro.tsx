@@ -41,7 +41,7 @@ function FormLivro() {
     };
 
     return (
-        <section className='bg-gray-200 h-[76vh] flex items-center justify-center overflow-auto'>
+        <main className="bg-gray-200 flex-1 py-6 sm:py-10 px-4 overflow-y-auto">
             <form onSubmit={handleSubmit} className="py-8">
                 <h1 className="text-[3rem] text-center pt-[1.5rem]">Cadastro Livro</h1>
 
@@ -188,7 +188,7 @@ function FormLivro() {
                     VOLTAR
                 </button>
             </form>
-        </section>
+        </main>
     );
 }
 

@@ -19,7 +19,7 @@ function FormAluno() {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
-        if(name === 'celular') {
+        if (name === 'celular') {
             const celularFormatado = Utilitario.formatarTelefone(value);
             setFormData(prev => ({ ...prev, [name]: celularFormatado }));
             return;
@@ -40,7 +40,7 @@ function FormAluno() {
     };
 
     return (
-        <section className='bg-gray-200 h-[76vh] flex items-center justify-center'>
+        <main className="bg-gray-200 flex-1 py-6 sm:py-10 px-4 overflow-y-auto">
             <form onSubmit={handleSubmit}>
                 <h1 className="text-[3rem] text-center pt-[1.5rem]">Cadastro Aluno</h1>
 
@@ -128,15 +128,15 @@ function FormAluno() {
                 </div>
 
                 <input type="submit" value="ENVIAR" className=' block mx-auto mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600 shadow-md transition-all' />
-                <button 
-                    type="button" 
+                <button
+                    type="button"
                     onClick={() => navigate('/aluno')}
                     className=' block mx-auto mt-4 bg-white border-2 border-slate-500 text-slate-500 min-w-3xs min-h-[2.5rem] rounded-md font-semibold hover:bg-slate-50 transition-all shadow-sm'
                 >
                     VOLTAR
                 </button>
             </form>
-        </section>
+        </main>
     );
 }
 

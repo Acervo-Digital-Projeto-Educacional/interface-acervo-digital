@@ -4,12 +4,12 @@ import Rodape from "../../../components/Rodape/Rodape";
 import FormEmprestimo from "../../../components/Formularios/FormEmprestimo/FormEmprestimo";
 
 function PCadastroEmprestimo(): JSX.Element {
-    return(
-        <>
+    return (
+        <div className="min-h-screen flex flex-col">
             <Navegacao />
             <FormEmprestimo />
             <Rodape />
-        </>
+        </div>
     );
 }
 

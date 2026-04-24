@@ -22,7 +22,7 @@ function FormEmprestimo() {
         const carregarDados = async () => {
             const listaAlunos = await AlunoRequests.obterListaDeAlunos();
             const listaLivros = await LivroRequests.obterListaDeLivros();
-            
+
             if (listaAlunos && Array.isArray(listaAlunos)) {
                 setAlunos(listaAlunos);
             } else if (listaAlunos) {
@@ -60,7 +60,7 @@ function FormEmprestimo() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
+
         // Validação básica
         if (formData.aluno.id_aluno === 0 || formData.livro.id_livro === 0) {
             alert('Por favor, selecione um aluno e um livro.');
@@ -76,7 +76,7 @@ function FormEmprestimo() {
     };
 
     return (
-        <section className='bg-gray-200 h-[76vh] flex items-center justify-center overflow-auto'>
+        <main className="bg-gray-200 flex-1 py-6 sm:py-10 px-4 overflow-y-auto">
             <form onSubmit={handleSubmit} className="py-8">
                 <h1 className="text-[3rem] text-center pt-[1.5rem]">Cadastro Empréstimo</h1>
 
@@ -147,15 +147,15 @@ function FormEmprestimo() {
                 </div>
 
                 <input type="submit" value="ENVIAR" className=' block mx-auto mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600 shadow-md transition-all' />
-                <button 
-                    type="button" 
+                <button
+                    type="button"
                     onClick={() => navigate('/emprestimo')}
                     className=' block mx-auto mt-4 bg-white border-2 border-slate-500 text-slate-500 min-w-3xs min-h-[2.5rem] rounded-md font-semibold hover:bg-slate-50 transition-all shadow-sm'
                 >
                     VOLTAR
                 </button>
             </form>
-        </section>
+        </main>
     );
 }
 
