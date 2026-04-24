@@ -76,85 +76,105 @@ function FormEmprestimo() {
     };
 
     return (
-        <main className="bg-gray-200 flex-1 py-6 sm:py-10 px-4 overflow-y-auto">
-            <form onSubmit={handleSubmit} className="py-8">
-                <h1 className="text-[3rem] text-center pt-[1.5rem]">Cadastro Empréstimo</h1>
+        <main className="bg-gray-100 flex-1 py-8 sm:py-12 px-4 sm:px-6 lg:px-8 overflow-y-auto">
+            <div className="max-w-3xl mx-auto">
+                <form onSubmit={handleSubmit} className="bg-white shadow-2xl rounded-2xl p-6 sm:p-10 border border-slate-200">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl text-center font-bold text-slate-800 mb-8 sm:mb-12">
+                        Cadastro de Empréstimo
+                    </h1>
 
-                <div className='flex flex-col items-center'>
-                    <div className='flex justify-center'>
-                        <label htmlFor="id_aluno" className='text-xl m-4'>
-                            Aluno <br />
-                            <select
-                                name="id_aluno"
-                                id="id_aluno"
-                                required
-                                onChange={handleChange}
-                                className='w-2xs border-2 border-slate-500 rounded-md p-1 bg-white h-[2.5rem]'
-                            >
-                                <option value="">Selecione um aluno</option>
-                                {alunos.map(aluno => (
-                                    <option key={aluno.id_aluno} value={aluno.id_aluno}>
-                                        {aluno.nome} {aluno.sobrenome}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
+                    <div className="space-y-6 sm:space-y-8">
+                        {/* Linha 1: Aluno e Livro */}
+                        <div className="flex flex-col sm:flex-row gap-6">
+                            <div className="flex-1">
+                                <label htmlFor="id_aluno" className="block text-sm font-semibold text-slate-700 mb-2">
+                                    Aluno
+                                </label>
+                                <select
+                                    name="id_aluno"
+                                    id="id_aluno"
+                                    required
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-slate-500 focus:outline-none transition-all bg-white appearance-none"
+                                >
+                                    <option value="">Selecione um aluno</option>
+                                    {alunos.map(aluno => (
+                                        <option key={aluno.id_aluno} value={aluno.id_aluno}>
+                                            {aluno.nome} {aluno.sobrenome}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
 
-                        <label htmlFor="id_livro" className='text-xl m-4'>
-                            Livro <br />
-                            <select
-                                name="id_livro"
-                                id="id_livro"
-                                required
-                                onChange={handleChange}
-                                className='w-2xs border-2 border-slate-500 rounded-md p-1 bg-white h-[2.5rem]'
-                            >
-                                <option value="">Selecione um livro</option>
-                                {livros.map(livro => (
-                                    <option key={livro.id_livro} value={livro.id_livro}>
-                                        {livro.titulo}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
+                            <div className="flex-1">
+                                <label htmlFor="id_livro" className="block text-sm font-semibold text-slate-700 mb-2">
+                                    Livro
+                                </label>
+                                <select
+                                    name="id_livro"
+                                    id="id_livro"
+                                    required
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-slate-500 focus:outline-none transition-all bg-white appearance-none"
+                                >
+                                    <option value="">Selecione um livro</option>
+                                    {livros.map(livro => (
+                                        <option key={livro.id_livro} value={livro.id_livro}>
+                                            {livro.titulo}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+
+                        {/* Linha 2: Datas */}
+                        <div className="flex flex-col sm:flex-row gap-6">
+                            <div className="flex-1">
+                                <label htmlFor="data_emprestimo" className="block text-sm font-semibold text-slate-700 mb-2">
+                                    Data do Empréstimo
+                                </label>
+                                <input
+                                    type="date"
+                                    name="data_emprestimo"
+                                    id="data_emprestimo"
+                                    required
+                                    value={formData.data_emprestimo}
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-slate-500 focus:outline-none transition-all"
+                                />
+                            </div>
+
+                            <div className="flex-1">
+                                <label htmlFor="data_devolucao" className="block text-sm font-semibold text-slate-700 mb-2">
+                                    Data de Devolução (Opcional)
+                                </label>
+                                <input
+                                    type="date"
+                                    name="data_devolucao"
+                                    id="data_devolucao"
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-slate-500 focus:outline-none transition-all"
+                                />
+                            </div>
+                        </div>
                     </div>
 
-                    <div className='flex justify-center'>
-                        <label htmlFor="data_emprestimo" className='text-xl m-4'>
-                            Data do Empréstimo <br />
-                            <input
-                                type="date"
-                                name="data_emprestimo"
-                                id="data_emprestimo"
-                                required
-                                value={formData.data_emprestimo}
-                                onChange={handleChange}
-                                className='w-2xs border-2 border-slate-500 rounded-md p-1'
-                            />
-                        </label>
-
-                        <label htmlFor="data_devolucao" className='text-xl m-4'>
-                            Data de Devolução (Opcional) <br />
-                            <input
-                                type="date"
-                                name="data_devolucao"
-                                id="data_devolucao"
-                                onChange={handleChange}
-                                className='w-2xs border-2 border-slate-500 rounded-md p-1'
-                            />
-                        </label>
+                    <div className="mt-10 sm:mt-14 space-y-4">
+                        <input
+                            type="submit"
+                            value="CADASTRAR EMPRÉSTIMO"
+                            className="w-full bg-slate-800 text-white py-4 rounded-xl font-bold text-lg cursor-pointer hover:bg-slate-700 shadow-lg hover:shadow-xl transition-all active:scale-[0.98]"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => navigate('/lista/emprestimos')}
+                            className="w-full bg-white border-2 border-slate-300 text-slate-600 py-4 rounded-xl font-bold text-lg hover:bg-slate-50 transition-all active:scale-[0.98]"
+                        >
+                            VOLTAR PARA LISTAGEM
+                        </button>
                     </div>
-                </div>
-
-                <input type="submit" value="ENVIAR" className=' block mx-auto mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600 shadow-md transition-all' />
-                <button
-                    type="button"
-                    onClick={() => navigate('/emprestimo')}
-                    className=' block mx-auto mt-4 bg-white border-2 border-slate-500 text-slate-500 min-w-3xs min-h-[2.5rem] rounded-md font-semibold hover:bg-slate-50 transition-all shadow-sm'
-                >
-                    VOLTAR
-                </button>
-            </form>
+                </form>
+            </div>
         </main>
     );
 }
