@@ -27,6 +27,11 @@ class Utilitario {
         const d = new Date(data);
         return d.toISOString().split('T')[0];
     }
+
+    validarEmail(email: string) {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    }
 }
 
 export default new Utilitario;

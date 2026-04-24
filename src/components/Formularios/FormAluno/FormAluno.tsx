@@ -31,6 +31,10 @@ function FormAluno() {
     // Envia os dados para a requisição
     const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (!Utilitario.validarEmail(formData.email)) {
+            alert("E-mail inválido");
+            return;
+        }
         const resposta = await AlunoRequests.enviarFormularioAluno(formData);
         if (resposta) {
             alert('Aluno cadastrado com sucesso.');

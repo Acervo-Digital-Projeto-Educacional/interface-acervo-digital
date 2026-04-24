@@ -47,6 +47,10 @@ function FormAtualizarAluno() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (!Utilitario.validarEmail(formData.email)) {
+            alert("E-mail inválido");
+            return;
+        }
         if (id_aluno) {
             const resposta = await AlunoRequests.atualizarAluno(Number(id_aluno), formData);
             if (resposta) {
@@ -132,7 +136,7 @@ function FormAtualizarAluno() {
                                 type="tel"
                                 name="celular"
                                 id="celular"
-                                value={formData.celular}
+                                value={Utilitario.formatarTelefone(formData.celular as string)}
                                 onChange={handleChange}
                                 placeholder="(xx) x xxxx-xxxx"
                                 className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50"
