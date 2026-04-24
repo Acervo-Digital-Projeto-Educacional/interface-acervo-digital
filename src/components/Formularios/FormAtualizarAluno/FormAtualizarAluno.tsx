@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import AlunoRequests from '../../../fetch/AlunoRequests';
 import type AlunoDTO from '../../../dto/AlunoDTO';
 import Utilitario from '../../../utils/Utilitario';
+import toast from 'react-hot-toast';
 
 function FormAtualizarAluno() {
     const navigate = useNavigate();
@@ -54,10 +55,12 @@ function FormAtualizarAluno() {
         if (id_aluno) {
             const resposta = await AlunoRequests.atualizarAluno(Number(id_aluno), formData);
             if (resposta) {
-                alert('Aluno atualizado com sucesso.');
+                toast.success('Aluno atualizado com sucesso!')
+                // alert('Aluno atualizado com sucesso.');
                 navigate('/lista/alunos');
             } else {
-                alert('Erro ao atualizar aluno.');
+                toast.error('Erro ao atualizar aluno.');
+                // alert('Erro ao atualizar aluno.');
             }
         }
     };

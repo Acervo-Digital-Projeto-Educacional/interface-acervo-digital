@@ -21,11 +21,16 @@ import PListagemEmprestimo from './pages/PListagem/PListagemEmprestimo/PListagem
 import PDetalhesEmprestimo from './pages/PDetalhes/PDetalhesEmprestimo/PDetalhesEmprestimo'
 import PAtualizarEmprestimo from './pages/PAtualizar/PAtualizarEmprestimo/PAtualizarEmprestimo'
 import PCadastroEmprestimo from './pages/PCadastro/PCadastroEmprestimo/PCadastroEmprestimo'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
 
   return (
     <BrowserRouter>
+      <Toaster
+        position="top-right"
+        reverseOrder={true}
+      />
       <Routes>
         <Route path='/' element={<PHome />} />
         <Route path='/login' element={<PLogin />} />
