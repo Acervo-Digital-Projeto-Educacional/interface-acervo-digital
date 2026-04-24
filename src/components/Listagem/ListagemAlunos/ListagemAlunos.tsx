@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AlunoRequests from "../../../fetch/AlunoRequests";
 import type AlunoDTO from "../../../dto/AlunoDTO";
+import Utilitario from "../../../utils/Utilitario";
 
 function ListagemAlunos(): JSX.Element {
     const [alunos, setAlunos] = useState<AlunoDTO[]>([]);
@@ -103,7 +104,7 @@ function ListagemAlunos(): JSX.Element {
                                         <td className="p-3 md:p-4 font-medium text-slate-700">{aluno.ra}</td>
                                         <td className="p-3 md:p-4 text-slate-700 font-semibold">{aluno.nome} {aluno.sobrenome}</td>
                                         <td className="p-3 md:p-4 hidden sm:table-cell text-slate-600">{aluno.email}</td>
-                                        <td className="p-3 md:p-4 hidden lg:table-cell text-slate-600">{aluno.celular}</td>
+                                        <td className="p-3 md:p-4 hidden lg:table-cell text-slate-600">{Utilitario.formatarTelefone(aluno.celular as string)}</td>
                                         <td className="p-2 md:p-4">
                                             <div className="flex flex-col sm:flex-row items-center justify-center gap-1 md:gap-2">
                                                 <button
