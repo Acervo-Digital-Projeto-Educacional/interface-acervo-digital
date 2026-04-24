@@ -5,7 +5,7 @@ import EmprestimoRequests from "../../../fetch/EmprestimoRequests";
 function ListagemEmprestimos(): JSX.Element {
     const [emprestimos, setEmprestimos] = useState<EmprestimoDTO[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const rowsPerPage = 8;
+    const rowsPerPage = 5;
 
     useEffect(() => {
         const buscarEmprestimos = async () => {
