@@ -5,7 +5,7 @@ import LivroRequests from "../../../fetch/LivroRequests";
 function ListagemLivros(): JSX.Element {
     const [livros, setLivros] = useState<LivroDTO[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const rowsPerPage = 5;
+    const rowsPerPage = 7;
 
     useEffect(() => {
         const buscarLivros = async () => {

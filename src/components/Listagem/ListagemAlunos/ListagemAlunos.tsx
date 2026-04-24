@@ -6,7 +6,7 @@ import type AlunoDTO from "../../../dto/AlunoDTO";
 function ListagemAlunos(): JSX.Element {
     const [alunos, setAlunos] = useState<AlunoDTO[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const rowsPerPage = 5;
+    const rowsPerPage = 7;
 
     useEffect(() => {
         const buscarAlunos = async () => {
@@ -43,8 +43,8 @@ function ListagemAlunos(): JSX.Element {
 
             <input type="text" name="busca-aluno" id="busca-aluno" placeholder="Buscar aluno" className="w-full max-w-6xl mx-auto p-3 md:p-2 md:mb-4 border-b-2 border-slate-700 rounded-sm" />
 
-            <div className="w-full max-w-7xl mx-auto flex-1 flex flex-col min-h-0 bg-white rounded-xl shadow-xl border border-slate-300 overflow-hidden">
-                <div className="flex-1 overflow-auto overscroll-none">
+            <div className="w-full max-w-7xl mx-auto flex flex-col bg-white rounded-xl shadow-xl border border-slate-300 overflow-hidden">
+                <div className="overflow-auto overscroll-none">
                     <table className="table-auto w-full border-collapse text-xs sm:text-sm md:text-base">
                         <thead className="bg-slate-700 sticky top-0 z-10 shadow-sm">
                             <tr>
