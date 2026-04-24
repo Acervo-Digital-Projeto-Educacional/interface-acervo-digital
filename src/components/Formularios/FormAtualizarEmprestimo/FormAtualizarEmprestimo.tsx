@@ -10,7 +10,7 @@ import Utilitario from '../../../utils/Utilitario';
 
 function FormAtualizarEmprestimo() {
     const navigate = useNavigate();
-    const { id } = useParams<{ id: string }>();
+    const { id_emprestimo } = useParams<{ id_emprestimo: string }>();
     const [alunos, setAlunos] = useState<AlunoDTO[]>([]);
     const [livros, setLivros] = useState<LivroDTO[]>([]);
     const [formData, setFormData] = useState<any>({
@@ -25,7 +25,7 @@ function FormAtualizarEmprestimo() {
         const carregarDados = async () => {
             const listaAlunos = await AlunoRequests.obterListaDeAlunos();
             const listaLivros = await LivroRequests.obterListaDeLivros();
-            
+
             if (listaAlunos && Array.isArray(listaAlunos)) {
                 setAlunos(listaAlunos);
             }
@@ -33,8 +33,8 @@ function FormAtualizarEmprestimo() {
                 setLivros(listaLivros);
             }
 
-            if (id) {
-                const emprestimo = await EmprestimoRequests.obterEmprestimoPorId(Number(id));
+            if (id_emprestimo) {
+                const emprestimo = await EmprestimoRequests.obterEmprestimoPorId(Number(id_emprestimo));
                 if (emprestimo) {
                     setFormData({
                         aluno: { id_aluno: emprestimo.aluno.id_aluno },
@@ -44,14 +44,14 @@ function FormAtualizarEmprestimo() {
                     });
                 } else {
                     alert("Empréstimo não encontrado.");
-                    navigate('/emprestimo');
+                    navigate('/lista/emprestimos');
                 }
             }
             setLoading(false);
         };
 
         carregarDados();
-    }, [id, navigate]);
+    }, [id_emprestimo, navigate]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -73,17 +73,17 @@ function FormAtualizarEmprestimo() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
+
         if (formData.aluno.id_aluno === 0 || formData.livro.id_livro === 0) {
             alert('Por favor, selecione um aluno e um livro.');
             return;
         }
 
-        if (id) {
-            const resposta = await EmprestimoRequests.atualizarEmprestimo(Number(id), formData as unknown as EmprestimoDTO);
+        if (id_emprestimo) {
+            const resposta = await EmprestimoRequests.atualizarEmprestimo(Number(id_emprestimo), formData as unknown as EmprestimoDTO);
             if (resposta) {
                 alert('Empréstimo atualizado com sucesso.');
-                navigate('/emprestimo');
+                navigate('/lista/emprestimos');
             } else {
                 alert('Erro ao atualizar empréstimo.');
             }
@@ -95,21 +95,27 @@ function FormAtualizarEmprestimo() {
     }
 
     return (
-        <section className='bg-gray-200 h-[76vh] flex items-center justify-center overflow-auto'>
-            <form onSubmit={handleSubmit} className="py-8">
-                <h1 className="text-[3rem] text-center pt-[1.5rem]">Atualizar Empréstimo</h1>
+        <section className="bg-gray-200 flex-1 py-6 sm:py-10 px-4 overflow-y-auto">
+            <div className="w-full max-w-4xl mx-auto bg-white rounded-xl shadow-xl border border-slate-300 overflow-hidden animate-fade-in transition-all duration-300">
+                <header className="bg-slate-700 p-6 text-white text-center">
+                    <h1 className="text-2xl sm:text-3xl font-bold">Atualizar Empréstimo</h1>
+                    <p className="text-slate-300 text-sm mt-1">Gerencie os vínculos entre alunos e obras</p>
+                </header>
 
-                <div className='flex flex-col items-center'>
-                    <div className='flex justify-center'>
-                        <label htmlFor="id_aluno" className='text-xl m-4'>
-                            Aluno <br />
+                <form onSubmit={handleSubmit} className="p-6 sm:p-10">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Aluno */}
+                        <div className="flex flex-col gap-1.5">
+                            <label htmlFor="id_aluno" className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                                Aluno
+                            </label>
                             <select
                                 name="id_aluno"
                                 id="id_aluno"
                                 required
                                 value={formData.aluno.id_aluno}
                                 onChange={handleChange}
-                                className='w-2xs border-2 border-slate-500 rounded-md p-1 bg-white h-[2.5rem]'
+                                className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50 h-[3rem] text-slate-700"
                             >
                                 <option value="">Selecione um aluno</option>
                                 {alunos.map(aluno => (
@@ -118,17 +124,20 @@ function FormAtualizarEmprestimo() {
                                     </option>
                                 ))}
                             </select>
-                        </label>
+                        </div>
 
-                        <label htmlFor="id_livro" className='text-xl m-4'>
-                            Livro <br />
+                        {/* Livro */}
+                        <div className="flex flex-col gap-1.5">
+                            <label htmlFor="id_livro" className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                                Livro
+                            </label>
                             <select
                                 name="id_livro"
                                 id="id_livro"
                                 required
                                 value={formData.livro.id_livro}
                                 onChange={handleChange}
-                                className='w-2xs border-2 border-slate-500 rounded-md p-1 bg-white h-[2.5rem]'
+                                className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50 h-[3rem] text-slate-700"
                             >
                                 <option value="">Selecione um livro</option>
                                 {livros.map(livro => (
@@ -137,12 +146,13 @@ function FormAtualizarEmprestimo() {
                                     </option>
                                 ))}
                             </select>
-                        </label>
-                    </div>
+                        </div>
 
-                    <div className='flex justify-center'>
-                        <label htmlFor="data_emprestimo" className='text-xl m-4'>
-                            Data do Empréstimo <br />
+                        {/* Data do Empréstimo */}
+                        <div className="flex flex-col gap-1.5">
+                            <label htmlFor="data_emprestimo" className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                                Data do Empréstimo
+                            </label>
                             <input
                                 type="date"
                                 name="data_emprestimo"
@@ -150,33 +160,52 @@ function FormAtualizarEmprestimo() {
                                 required
                                 value={formData.data_emprestimo}
                                 onChange={handleChange}
-                                className='w-2xs border-2 border-slate-500 rounded-md p-1'
+                                className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50"
                             />
-                        </label>
+                        </div>
 
-                        <label htmlFor="data_devolucao" className='text-xl m-4'>
-                            Data de Devolução (Opcional) <br />
+                        {/* Data de Devolução */}
+                        <div className="flex flex-col gap-1.5">
+                            <label htmlFor="data_devolucao" className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                                Data de Devolução (Opcional)
+                            </label>
                             <input
                                 type="date"
                                 name="data_devolucao"
                                 id="data_devolucao"
                                 value={formData.data_devolucao}
                                 onChange={handleChange}
-                                className='w-2xs border-2 border-slate-500 rounded-md p-1'
+                                className="w-full border-2 border-slate-200 rounded-lg p-2.5 focus:border-slate-500 focus:outline-none transition-all bg-slate-50"
                             />
-                        </label>
+                        </div>
                     </div>
-                </div>
 
-                <input type="submit" value="ATUALIZAR" className=' block mx-auto mt-12 bg-slate-500 min-w-3xs min-h-[2.5rem] rounded-md text-white cursor-pointer hover:bg-slate-600 shadow-md transition-all' />
-                <button 
-                    type="button" 
-                    onClick={() => navigate('/emprestimo')}
-                    className=' block mx-auto mt-4 bg-white border-2 border-slate-500 text-slate-500 min-w-3xs min-h-[2.5rem] rounded-md font-semibold hover:bg-slate-50 transition-all shadow-sm'
-                >
-                    VOLTAR
-                </button>
-            </form>
+                    <div className="flex flex-col sm:flex-row gap-4 mt-10">
+                        <input
+                            type="submit"
+                            value="ATUALIZAR EMPRÉSTIMO"
+                            className="flex-1 bg-slate-700 text-white font-bold py-3.5 rounded-lg cursor-pointer hover:bg-slate-600 shadow-md hover:shadow-lg transition-all active:scale-95 uppercase tracking-wide text-sm"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => navigate('/lista/emprestimos')}
+                            className="flex-1 bg-white border-2 border-slate-200 text-slate-600 font-bold py-3.5 rounded-lg hover:bg-slate-50 transition-all shadow-sm uppercase tracking-wide text-sm"
+                        >
+                            VOLTAR PARA LISTAGEM
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <style>{`
+                .animate-fade-in {
+                    animation: fadeIn 0.5s ease-out;
+                }
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+            `}</style>
         </section>
     );
 }
