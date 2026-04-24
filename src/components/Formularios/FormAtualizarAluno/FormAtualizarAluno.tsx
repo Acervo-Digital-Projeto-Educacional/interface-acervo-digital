@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import AlunoRequests from '../../../fetch/AlunoRequests';
 import type AlunoDTO from '../../../dto/AlunoDTO';
 import Utilitario from '../../../utils/Utilitario';
-import toast from 'react-hot-toast';
+import { showCustomToast } from '../../../utils/notify';
 
 function FormAtualizarAluno() {
     const navigate = useNavigate();
@@ -25,7 +25,7 @@ function FormAtualizarAluno() {
                 if (aluno) {
                     setFormData(aluno);
                 } else {
-                    alert("Aluno não encontrado.");
+                    showCustomToast("Aluno não encontrado", "Erro", 2);
                     navigate('/lista/alunos');
                 }
                 setLoading(false);
@@ -49,18 +49,16 @@ function FormAtualizarAluno() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!Utilitario.validarEmail(formData.email)) {
-            alert("E-mail inválido");
+            showCustomToast("E-mail inválido", "Erro no e-mail", 2);
             return;
         }
         if (id_aluno) {
             const resposta = await AlunoRequests.atualizarAluno(Number(id_aluno), formData);
             if (resposta) {
-                toast.success('Aluno atualizado com sucesso!')
-                // alert('Aluno atualizado com sucesso.');
+                showCustomToast("Aluno atuailzado com sucesso", "Sucesso", 1);
                 navigate('/lista/alunos');
             } else {
-                toast.error('Erro ao atualizar aluno.');
-                // alert('Erro ao atualizar aluno.');
+                showCustomToast("Erro ao atualizar aluno", "Erro", 2);
             }
         }
     };

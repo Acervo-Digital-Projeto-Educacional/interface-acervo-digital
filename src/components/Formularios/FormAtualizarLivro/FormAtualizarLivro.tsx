@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import LivroRequests from '../../../fetch/LivroRequests';
 import type LivroDTO from '../../../dto/LivroDTO';
+import { showCustomToast } from '../../../utils/notify';
 
 function FormAtualizarLivro() {
     const navigate = useNavigate();
@@ -26,7 +27,7 @@ function FormAtualizarLivro() {
                 if (livro) {
                     setFormData(livro);
                 } else {
-                    alert("Livro não encontrado.");
+                    showCustomToast("Livro não encontrado", "Erro", 2);
                     navigate('/lista/livros');
                 }
                 setLoading(false);
@@ -51,10 +52,10 @@ function FormAtualizarLivro() {
         if (id_livro) {
             const resposta = await LivroRequests.atualizarLivro(Number(id_livro), formData);
             if (resposta) {
-                alert('Livro atualizado com sucesso.');
+                showCustomToast("Livro atualizado com sucesso.", "Sucesso", 1);
                 navigate('/lista/livros');
             } else {
-                alert('Erro ao atualizar livro.');
+                showCustomToast("Erro ao atualizar livro.", "Erro", 2);
             }
         }
     };

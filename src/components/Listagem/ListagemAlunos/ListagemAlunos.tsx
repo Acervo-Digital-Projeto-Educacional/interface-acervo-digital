@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AlunoRequests from "../../../fetch/AlunoRequests";
 import type AlunoDTO from "../../../dto/AlunoDTO";
 import Utilitario from "../../../utils/Utilitario";
+import { showCustomToast } from "../../../utils/notify";
 
 function ListagemAlunos(): JSX.Element {
     const [alunos, setAlunos] = useState<AlunoDTO[]>([]);
@@ -21,7 +22,7 @@ function ListagemAlunos(): JSX.Element {
                 }
             } catch (error) {
                 console.error(`Erro ao buscar alunos. ${error}`);
-                alert("Erro ao criar a listagem de alunos.");
+                showCustomToast("Erro ao criar a listagem de alunos.", "Erro", 2);
             }
         }
 
@@ -49,14 +50,14 @@ function ListagemAlunos(): JSX.Element {
             try {
                 const sucesso = await AlunoRequests.removerAluno(id_aluno);
                 if (sucesso) {
-                    alert("Aluno removido com sucesso!");
+                    showCustomToast("Aluno removido com sucesso", "Sucesso", 1);
                     setAlunos(alunos.filter(aluno => aluno.id_aluno !== id_aluno));
                 } else {
-                    alert("Não foi possível remover o registro.");
+                    showCustomToast("Não foi possível remover o registro.", "Erro", 2);
                 }
             } catch (error) {
                 console.error("Erro ao remover aluno:", error);
-                alert("Erro ao remover aluno.");
+                showCustomToast("Erro ao remover aluno.", "Erro", 2);
             }
         }
     };

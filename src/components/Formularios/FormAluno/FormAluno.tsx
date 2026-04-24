@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AlunoRequests from '../../../fetch/AlunoRequests';
 import type AlunoDTO from '../../../dto/AlunoDTO';
 import Utilitario from '../../../utils/Utilitario';
+import { showCustomToast } from '../../../utils/notify';
 
 function FormAluno() {
     const navigate = useNavigate();
@@ -32,14 +33,14 @@ function FormAluno() {
     const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!Utilitario.validarEmail(formData.email)) {
-            alert("E-mail inválido");
+            showCustomToast("E-mail inválido", "Erro no e-mail", 2);
             return;
         }
         const resposta = await AlunoRequests.enviarFormularioAluno(formData);
         if (resposta) {
-            alert('Aluno cadastrado com sucesso.');
+            showCustomToast("Aluno cadastrado com sucesso", "Sucesso", 1);
         } else {
-            alert('Erro ao cadastrar aluno.');
+            showCustomToast("Erro ao cadastrar aluno", "Erro", 2);
         }
     };
 

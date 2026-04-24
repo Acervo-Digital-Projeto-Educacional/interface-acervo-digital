@@ -7,6 +7,7 @@ import type AlunoDTO from '../../../dto/AlunoDTO';
 import type LivroDTO from '../../../dto/LivroDTO';
 import type EmprestimoDTO from '../../../dto/EmprestimoDTO';
 import Utilitario from '../../../utils/Utilitario';
+import { showCustomToast } from '../../../utils/notify';
 
 function FormAtualizarEmprestimo() {
     const navigate = useNavigate();
@@ -43,7 +44,7 @@ function FormAtualizarEmprestimo() {
                         data_devolucao: Utilitario.formatarDataParaInput(emprestimo.data_devolucao)
                     });
                 } else {
-                    alert("Empréstimo não encontrado.");
+                    showCustomToast("Empréstimo não encontrado", "Erro", 2);
                     navigate('/lista/emprestimos');
                 }
             }
@@ -75,17 +76,17 @@ function FormAtualizarEmprestimo() {
         e.preventDefault();
 
         if (formData.aluno.id_aluno === 0 || formData.livro.id_livro === 0) {
-            alert('Por favor, selecione um aluno e um livro.');
+            showCustomToast("Por favor, selecione um aluno e um livro", "Erro", 2);
             return;
         }
 
         if (id_emprestimo) {
             const resposta = await EmprestimoRequests.atualizarEmprestimo(Number(id_emprestimo), formData as unknown as EmprestimoDTO);
             if (resposta) {
-                alert('Empréstimo atualizado com sucesso.');
+                showCustomToast("Empréstimo atualizado com sucesso", "Sucesso", 1);
                 navigate('/lista/emprestimos');
             } else {
-                alert('Erro ao atualizar empréstimo.');
+                showCustomToast("Erro ao atualizar empréstimo", "Erro", 2);
             }
         }
     };

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LivroRequests from '../../../fetch/LivroRequests';
 import type LivroDTO from '../../../dto/LivroDTO';
+import { showCustomToast } from '../../../utils/notify';
 
 function FormLivro() {
     const navigate = useNavigate();
@@ -34,9 +35,9 @@ function FormLivro() {
         e.preventDefault();
         const resposta = await LivroRequests.enviarFormularioLivro(formData);
         if (resposta) {
-            alert('Livro cadastrado com sucesso.');
+            showCustomToast("Livro cadastrado com sucesso.", "Sucesso", 1);
         } else {
-            alert('Erro ao cadastrar livro.');
+            showCustomToast("Erro ao cadastrar livro.", "Erro", 2);
         }
     };
 

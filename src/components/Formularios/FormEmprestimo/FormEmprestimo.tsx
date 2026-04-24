@@ -6,6 +6,7 @@ import EmprestimoRequests from '../../../fetch/EmprestimoRequests';
 import type AlunoDTO from '../../../dto/AlunoDTO';
 import type LivroDTO from '../../../dto/LivroDTO';
 import type EmprestimoDTO from '../../../dto/EmprestimoDTO';
+import { showCustomToast } from '../../../utils/notify';
 
 function FormEmprestimo() {
     const navigate = useNavigate();
@@ -63,15 +64,15 @@ function FormEmprestimo() {
 
         // Validação básica
         if (formData.aluno.id_aluno === 0 || formData.livro.id_livro === 0) {
-            alert('Por favor, selecione um aluno e um livro.');
+            showCustomToast("Por favor, selecione um aluno e um livro.", "Erro", 2);
             return;
         }
 
         const resposta = await EmprestimoRequests.enviarFormularioEmprestimo(formData as unknown as EmprestimoDTO);
         if (resposta) {
-            alert('Empréstimo cadastrado com sucesso.');
+            showCustomToast("Empréstimo cadastrado com sucesso.", "Sucesso", 1);
         } else {
-            alert('Erro ao cadastrar empréstimo.');
+            showCustomToast("Erro ao cadastrar empréstimo.", "Error", 2);
         }
     };
 

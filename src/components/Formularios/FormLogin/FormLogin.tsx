@@ -2,6 +2,7 @@
 import { type JSX, useState } from 'react';// Importa os estilos CSS específicos para o formulário de login
 import estilo from './FormLogin.module.css';
 import AuthRequests from '../../../fetch/AuthRequests';
+import { showCustomToast } from '../../../utils/notify';
 
 // Declara o componente funcional LoginForm que retorna um elemento JSX
 function LoginForm(): JSX.Element {
@@ -29,7 +30,7 @@ function LoginForm(): JSX.Element {
         } catch (error) {
             // lança um erro
             console.error(`Erro ao tentar fazer login: ${error}`);
-            alert('Erro ao fazer login, verifique se usuário e/ou senha estão corretos.');
+            showCustomToast("Erro ao fazer login, verifique se usuário e/ou senha estão corretos.", "Erro no login", 2);
         }
     };
 

@@ -2,6 +2,7 @@ import { useState, useEffect, type JSX } from "react";
 import { useNavigate } from "react-router-dom";
 import type EmprestimoDTO from "../../../dto/EmprestimoDTO";
 import EmprestimoRequests from "../../../fetch/EmprestimoRequests";
+import { showCustomToast } from "../../../utils/notify";
 
 function ListagemEmprestimos(): JSX.Element {
     const [emprestimos, setEmprestimos] = useState<EmprestimoDTO[]>([]);
@@ -19,7 +20,7 @@ function ListagemEmprestimos(): JSX.Element {
                 }
             } catch (error) {
                 console.error(`Erro ao buscar empréstimos. ${error}`);
-                alert("Erro ao criar a listagem de empréstimos.");
+                showCustomToast("Erro ao criar a listagem de empréstimos.", "Erro", 2);
             }
         }
 
@@ -52,14 +53,14 @@ function ListagemEmprestimos(): JSX.Element {
             try {
                 const sucesso = await EmprestimoRequests.removerEmprestimo(id_emprestimo);
                 if (sucesso) {
-                    alert("Empréstimo removido com sucesso!");
+                    showCustomToast("Empréstimo removido com sucesso.", "Sucesso", 1);
                     setEmprestimos(emprestimos.filter(emprestimo => emprestimo.id_emprestimo !== id_emprestimo));
                 } else {
-                    alert("Não foi possível remover o registro");
+                    showCustomToast("Não foi possível remover o registro.", "Erro", 2);
                 }
             } catch (error) {
                 console.error("Erro ao remover empréstimo: ", error);
-                alert("Erro ao remover empréstimo.");
+                showCustomToast("Erro ao remover empréstimo", "Erro", 2);
             }
         }
     }

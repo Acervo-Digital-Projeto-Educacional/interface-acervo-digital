@@ -2,6 +2,7 @@ import { useState, useEffect, type JSX } from "react";
 import type LivroDTO from "../../../dto/LivroDTO";
 import LivroRequests from "../../../fetch/LivroRequests";
 import { useNavigate } from "react-router-dom";
+import { showCustomToast } from "../../../utils/notify";
 
 function ListagemLivros(): JSX.Element {
     const [livros, setLivros] = useState<LivroDTO[]>([]);
@@ -19,7 +20,7 @@ function ListagemLivros(): JSX.Element {
                 }
             } catch (error) {
                 console.error(`Erro ao buscar livros. ${error}`);
-                alert("Erro ao criar a listagem de livros.");
+                showCustomToast("Erro ao criar a listagem de livros.", "Erro", 2);
             }
         }
 
@@ -46,14 +47,14 @@ function ListagemLivros(): JSX.Element {
             try {
                 const sucesso = await LivroRequests.removerLivro(id_livro);
                 if (sucesso) {
-                    alert("Livro removido com sucesso!");
+                    showCustomToast("Livro removido com sucesso.", "Sucesso", 1);
                     setLivros(livros.filter(livro => livro.id_livro !== id_livro));
                 } else {
-                    alert("Não foi possível remover o registro");
+                    showCustomToast("Não foi possível remover o registro.", "Erro", 2);
                 }
             } catch (error) {
                 console.error(`Erro ao remover livro: ${error}`);
-                alert("Erro ao remover livro.");
+                showCustomToast("Erro ao remover livro.", "Erro", 2);
             }
         }
     }
