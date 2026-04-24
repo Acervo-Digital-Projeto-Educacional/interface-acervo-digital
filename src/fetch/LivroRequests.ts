@@ -14,14 +14,14 @@ class LivroRequests {
         return headers;
     }
 
-    async obterListaDeLivros(): Promise<LivroDTO | undefined> {
+    async obterListaDeLivros(): Promise<LivroDTO[] | undefined> {
         try {
             const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_LIVROS}`, {
                 headers: this.getHeaders()
             });
 
             if (respostaAPI.ok) {
-                const listaDeLivros: LivroDTO = await respostaAPI.json();
+                const listaDeLivros: LivroDTO[] = await respostaAPI.json();
                 return listaDeLivros;
             } else {
                 throw new Error("Não foi possível listar os livros");

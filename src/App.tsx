@@ -2,9 +2,9 @@ import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import PHome from './pages/PHome/PHome'
 import PLogin from './pages/PLogin/PLogin'
-import PListaAluno from './pages/PLista/PListaAluno/PListaAluno'
-import PListaLivro from './pages/PLista/PListaLivro/PListaLivro'
-import PListaEmprestimo from './pages/PLista/PListaEmprestimo/PListaEmprestimo'
+import PListagemAluno from './pages/PListagem/PListagemAluno/PListagemAluno'
+import PListagemLivro from './pages/PListagem/PListagemLivro/PListagemLivro'
+import PListagemEmprestimo from './pages/PListagem/PListagemEmprestimo/PListagemEmprestimo'
 import PDetalhesAluno from './pages/PDetalhes/PDetalhesAluno/PDetalhesAluno'
 import PAtualizarAluno from './pages/PAtualizar/PAtualizarAluno/PAtualizarAluno'
 import PDetalhesLivro from './pages/PDetalhes/PDetalhesLivro/PDetalhesLivro'
@@ -18,9 +18,9 @@ function App() {
       <Routes>
         <Route path='/' element={<PHome />} />
         <Route path='/login' element={<PLogin />} />
-        <Route path='/lista/alunos' element={<PListaAluno />} />
-        <Route path='/lista/livros' element={<PListaLivro />} />
-        <Route path='/lista/emprestimos' element={<PListaEmprestimo />} />
+        <Route path='/lista/alunos' element={<PListagemAluno />} />
+        <Route path='/lista/livros' element={<PListagemLivro />} />
+        <Route path='/lista/emprestimos' element={<PListagemEmprestimo />} />
         <Route path='/detalhes/aluno/:id_aluno' element={<PDetalhesAluno />} />
         <Route path='/detalhes/livro/:id_livro' element={<PDetalhesLivro />} />
         <Route path='/atualizar/aluno/:id_aluno' element={<PAtualizarAluno />} />

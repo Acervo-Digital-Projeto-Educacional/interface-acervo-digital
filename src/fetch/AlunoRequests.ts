@@ -14,14 +14,14 @@ class AlunoRequests {
         return headers;
     }
 
-    async obterListaDeAlunos(): Promise<AlunoDTO | undefined> {
+    async obterListaDeAlunos(): Promise<AlunoDTO[] | undefined> {
         try {
             const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_ALUNOS}`, {
                 headers: this.getHeaders()
             });
 
             if (respostaAPI.ok) {
-                const listaDeAlunos: AlunoDTO = await respostaAPI.json();
+                const listaDeAlunos: AlunoDTO[] = await respostaAPI.json();
                 return listaDeAlunos;
             } else {
                 throw new Error("Não foi possível listar os alunos.");

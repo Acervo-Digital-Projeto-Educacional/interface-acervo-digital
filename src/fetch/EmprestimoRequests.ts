@@ -14,14 +14,14 @@ class EmprestimoRequests {
         return headers;
     }
 
-    async obterListaDeEmprestimos(): Promise<EmprestimoDTO | undefined> {
+    async obterListaDeEmprestimos(): Promise<EmprestimoDTO[] | undefined> {
         try {
             const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_EMPRESTIMOS}`, {
                 headers: this.getHeaders()
             });
 
             if (respostaAPI.ok) {
-                const listaDeEmprestimos: EmprestimoDTO = await respostaAPI.json();
+                const listaDeEmprestimos: EmprestimoDTO[] = await respostaAPI.json();
                 return listaDeEmprestimos;
             } else {
                 throw new Error("Não foi possível listar os empréstimos.");
