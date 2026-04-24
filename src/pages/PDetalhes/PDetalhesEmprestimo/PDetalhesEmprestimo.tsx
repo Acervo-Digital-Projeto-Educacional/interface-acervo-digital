@@ -8,11 +8,11 @@ function PDetalhesEmprestimo(): JSX.Element {
     const { id_emprestimo } = useParams();
 
     return (
-        <>
+        <div className="min-h-screen flex flex-col">
             <Navegacao />
             <DetalheEmprestimo id_emprestimo={Number(id_emprestimo)} />
             <Rodape />
-        </>
+        </div>
     );
 }
 

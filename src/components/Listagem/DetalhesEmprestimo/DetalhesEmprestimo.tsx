@@ -99,16 +99,16 @@ function DetalheEmprestimo({ id_emprestimo }: DetalheEmprestimoProps): JSX.Eleme
 
     // Renderização dos detalhes do empréstimo
     return (
-        <main className="bg-gray-200 min-h-[76vh] flex flex-col py-6">
+        <main className="bg-gray-200 flex-1 py-6 sm:py-10 px-4 overflow-y-auto">
             <Card
                 title={`Empréstimo #${emprestimo.id_emprestimo}`}
-                className="shadow-lg animate-fade-in transition-all duration-300 w-[80vw] p-8 mx-auto font-bold text-xl"
+                className="shadow-lg animate-fade-in transition-all duration-300 w-full max-w-4xl p-4 sm:p-6 md:p-8 mx-auto font-bold text-xl"
             >
                 {/* Status e datas do empréstimo */}
                 <div className="flex flex-col gap-2">
-                    <div className="flex items-center justify-between flex-wrap gap-2">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <span className="text-gray-500 font-medium tracking-tight">Status do Empréstimo</span>
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-wrap items-center gap-2">
                             <Tag
                                 value={emprestimo.status_emprestimo ?? "Indefinido"}
                                 severity={getStatusEmprestimoSeverity(emprestimo.status_emprestimo)}
@@ -248,12 +248,14 @@ function DetalheEmprestimo({ id_emprestimo }: DetalheEmprestimoProps): JSX.Eleme
                 `}</style>
             </Card>
 
-            <button
-                className="bg-slate-700 hover:bg-slate-500 text-white px-4 py-2 rounded-md w-[80vw] mx-auto mt-8"
-                onClick={() => navigate(`/atualizar/emprestimo/${emprestimo.id_emprestimo}`)}
-            >
-                Editar
-            </button>
+            <div className="w-full max-w-4xl mx-auto mt-6 sm:mt-8">
+                <button
+                    className="w-full bg-slate-700 hover:bg-slate-500 text-white px-4 py-3 rounded-md font-bold transition-all shadow-md active:scale-95"
+                    onClick={() => navigate(`/atualizar/emprestimo/${emprestimo.id_emprestimo}`)}
+                >
+                    Editar Empréstimo
+                </button>
+            </div>
         </main>
     );
 }

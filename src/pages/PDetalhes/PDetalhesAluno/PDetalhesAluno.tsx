@@ -8,11 +8,11 @@ function PDetalhesAluno(): JSX.Element {
     const { id_aluno } = useParams();
 
     return (
-        <>
+        <div className="min-h-screen flex flex-col">
             <Navegacao />
             <DetalhesAluno id_aluno={Number(id_aluno)} />
             <Rodape />
-        </>
+        </div>
     );
 }
 

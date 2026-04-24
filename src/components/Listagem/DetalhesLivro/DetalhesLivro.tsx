@@ -76,13 +76,13 @@ function DetalhesLivro({ id_livro }: DetalhesLivroProps): JSX.Element {
     }
 
     return (
-        <main className="bg-gray-200 h-[76vh] flex flex-col">
+        <main className="bg-gray-200 flex-1 py-6 sm:py-10 px-4 overflow-y-auto">
             <Card
                 title={livro.titulo}
-                className="shadow-lg animate-fade-in transition-all duration-300 w-[80vw] p-8 mx-auto font-bold text-xl"
+                className="shadow-lg animate-fade-in transition-all duration-300 w-full max-w-4xl p-4 sm:p-6 md:p-8 mx-auto font-bold text-xl"
             >
                 <div className="flex flex-col gap-2">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                         <span className="text-gray-500 font-medium tracking-tight">ISBN</span>
                         <Tag value={livro.isbn} severity="info" className="px-3 py-1" />
                     </div>
@@ -159,12 +159,14 @@ function DetalhesLivro({ id_livro }: DetalhesLivroProps): JSX.Element {
             `}</style>
             </Card>
 
-            <button
-                className="bg-slate-700 hover:bg-slate-500 text-white px-4 py-2 rounded-md w-[80vw] mx-auto mt-8"
-                onClick={() => navigate(`/atualizar/livro/${livro.id_livro}`)}
-            >
-                Editar
-            </button>
+            <div className="w-full max-w-4xl mx-auto mt-6 sm:mt-8">
+                <button
+                    className="w-full bg-slate-700 hover:bg-slate-500 text-white px-4 py-3 rounded-md font-bold transition-all shadow-md active:scale-95"
+                    onClick={() => navigate(`/atualizar/livro/${livro.id_livro}`)}
+                >
+                    Editar Livro
+                </button>
+            </div>
         </main>
     );
 }
