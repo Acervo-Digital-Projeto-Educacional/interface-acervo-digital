@@ -55,12 +55,19 @@ function FormAtualizarAluno() {
         if (id_aluno) {
             const resposta = await AlunoRequests.atualizarAluno(Number(id_aluno), formData);
             if (resposta) {
-                showCustomToast("Aluno atuailzado com sucesso", "Sucesso", 1);
-                navigate('/lista/alunos');
+                showCustomToast("Aluno atualizado com sucesso", "Sucesso", 1);
+                // Admin volta para a lista; user vai para os próprios detalhes
+                const role = localStorage.getItem('role');
+                navigate(role === 'admin' ? '/lista/alunos' : `/detalhes/aluno/${id_aluno}`);
             } else {
                 showCustomToast("Erro ao atualizar aluno", "Erro", 2);
             }
         }
+    };
+
+    const voltarDestino = () => {
+        const role = localStorage.getItem('role');
+        return role === 'admin' ? '/lista/alunos' : `/detalhes/aluno/${id_aluno}`;
     };
 
     if (loading) {
@@ -186,10 +193,10 @@ function FormAtualizarAluno() {
                         />
                         <button
                             type="button"
-                            onClick={() => navigate('/lista/alunos')}
+                            onClick={() => navigate(voltarDestino())}
                             className="flex-1 bg-white border-2 border-slate-200 text-slate-600 font-bold py-3.5 rounded-lg hover:bg-slate-50 transition-all shadow-sm uppercase tracking-wide text-sm"
                         >
-                            VOLTAR PARA LISTAGEM
+                            VOLTAR
                         </button>
                     </div>
                 </form>

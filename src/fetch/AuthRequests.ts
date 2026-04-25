@@ -63,13 +63,15 @@ class AuthRequests {
      * @param {*} usuario - objeto com informações do usuário vindos do servidor
      * @param {*} isAuth - estado da autenticação do usuário
      */
-    persistToken(token: string, usuario: {id_usuario: number, nome: string, email: string, role: string}, isAuth: boolean) {
+    persistToken(token: string, usuario: {id_usuario: number, nome: string, email: string, role: string, id_aluno: number | null}, isAuth: boolean) {
         localStorage.setItem('token', token);
         localStorage.setItem('nome', usuario.nome);
         localStorage.setItem('idUsuario', usuario.id_usuario.toString());
         localStorage.setItem('email', usuario.email);
         localStorage.setItem('role', usuario.role);
         localStorage.setItem('isAuth', isAuth.toString());
+        // Persiste o id_aluno vinculado ao usuário (null para admins sem vínculo)
+        localStorage.setItem('idAluno', usuario.id_aluno !== null ? usuario.id_aluno.toString() : '');
     }
 
     /**
@@ -82,7 +84,8 @@ class AuthRequests {
             'idUsuario',
             'email',
             'role',
-            'isAuth'
+            'isAuth',
+            'idAluno'
         ];
 
         keys.map(key => localStorage.removeItem(key));
