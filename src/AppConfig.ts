@@ -1,5 +1,5 @@
 export const SERVER_CFG = {
-    SERVER_URL: 'http://localhost:3333',
+    SERVER_URL: 'https://api-acervo-digital.onrender.com',
 
     // alunos
     ENDPOINT_ALUNOS: '/api/alunos',
