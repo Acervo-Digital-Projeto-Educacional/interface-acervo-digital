@@ -37,7 +37,7 @@ function App() {
         <Route path='/login' element={<PLogin />} />
 
         {/* ROTAS DE USUÁRIO */}
-        <Route path='/cadastro/usuario' element={<ProtectedRoute element={PCadastroUsuario} />} />
+        <Route path='/cadastro/usuario' element={<ProtectedRoute element={PCadastroUsuario} requireAdmin />} />
 
         {/* ROTAS DE ALUNOS */}
         <Route path='/lista/alunos' element={<ProtectedRoute element={PListagemAluno} />} />

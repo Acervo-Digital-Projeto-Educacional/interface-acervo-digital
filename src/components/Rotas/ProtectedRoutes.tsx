@@ -3,6 +3,7 @@ import { type ComponentType } from 'react';
 
 interface ProtectedRouteProps {
     element: ComponentType;
+    requireAdmin?: boolean;
     [key: string]: unknown; // representa o ...rest com tipagem genérica
 }
 
@@ -16,10 +17,19 @@ interface ProtectedRouteProps {
  * @param rest - demais propriedades
  * @returns Elemento renderizado caso o usuário esteja autenticado, caso contrário, redireciona para a página de login
  */
-const ProtectedRoute = ({ element: Element, ...rest }: ProtectedRouteProps) => {
+const ProtectedRoute = ({ element: Element, requireAdmin, ...rest }: ProtectedRouteProps) => {
     const isAuthenticated = !!localStorage.getItem('isAuth');   // recupera o valor de isAuth no localstorage
+    const isAdmin = localStorage.getItem('role') === 'admin';
 
-    return isAuthenticated ? <Element {...rest} /> : <Navigate to="/login" />;  // verifica se o usuário está autenticado (isAuth = true), caso sim, renderiza o elemento, caso contrário, redireciona para a página de login
+    if (!isAuthenticated) {
+        return <Navigate to="/login" />;
+    }
+
+    if (requireAdmin && !isAdmin) {
+        return <Navigate to="/" />; // Redireciona para a home caso não seja admin
+    }
+
+    return <Element {...rest} />;
 };
 
 export default ProtectedRoute;
