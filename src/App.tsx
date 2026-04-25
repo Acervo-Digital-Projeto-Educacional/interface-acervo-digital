@@ -36,22 +36,22 @@ function App() {
         <Route path='/login' element={<PLogin />} />
 
         {/* ROTAS DE ALUNOS */}
-        <Route path='/lista/alunos' element={<PListagemAluno />} />
-        <Route path='/detalhes/aluno/:id_aluno' element={<PDetalhesAluno />} />
-        <Route path='/atualizar/aluno/:id_aluno' element={<PAtualizarAluno />} />
-        <Route path='/cadastro/aluno' element={<PCadastroAluno />} />
+        <Route path='/lista/alunos' element={<ProtectedRoute element={PListagemAluno} />} />
+        <Route path='/detalhes/aluno/:id_aluno' element={<ProtectedRoute element={PDetalhesAluno} />} />
+        <Route path='/atualizar/aluno/:id_aluno' element={<ProtectedRoute element={PAtualizarAluno} />} />
+        <Route path='/cadastro/aluno' element={<ProtectedRoute element={PCadastroAluno} />} />
 
         {/* ROTAS DE LIVROS */}
-        <Route path='/lista/livros' element={<PListagemLivro />} />
-        <Route path='/detalhes/livro/:id_livro' element={<PDetalhesLivro />} />
-        <Route path='/atualizar/livro/:id_livro' element={<PAtualizarLivro />} />
-        <Route path='/cadastro/livro' element={<PCadastroLivro />} />
+        <Route path='/lista/livros' element={<ProtectedRoute element={PListagemLivro} />} />
+        <Route path='/detalhes/livro/:id_livro' element={<ProtectedRoute element={PDetalhesLivro} />} />
+        <Route path='/atualizar/livro/:id_livro' element={<ProtectedRoute element={PAtualizarLivro} />} />
+        <Route path='/cadastro/livro' element={<ProtectedRoute element={PCadastroLivro} />} />
 
         {/* ROTAS DE EMPRÉSTIMOS */}
-        <Route path='/lista/emprestimos' element={<PListagemEmprestimo />} />
-        <Route path='/detalhes/emprestimo/:id_emprestimo' element={<PDetalhesEmprestimo />} />
-        <Route path='/atualizar/emprestimo/:id_emprestimo' element={<PAtualizarEmprestimo />} />
-        <Route path='/cadastro/emprestimo' element={<PCadastroEmprestimo />} />
+        <Route path='/lista/emprestimos' element={<ProtectedRoute element={PListagemEmprestimo} />} />
+        <Route path='/detalhes/emprestimo/:id_emprestimo' element={<ProtectedRoute element={PDetalhesEmprestimo} />} />
+        <Route path='/atualizar/emprestimo/:id_emprestimo' element={<ProtectedRoute element={PAtualizarEmprestimo} />} />
+        <Route path='/cadastro/emprestimo' element={<ProtectedRoute element={PCadastroEmprestimo} />} />
       </Routes>
     </BrowserRouter>
   )
