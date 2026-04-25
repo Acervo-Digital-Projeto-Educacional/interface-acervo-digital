@@ -98,7 +98,7 @@ function Navegacao(): JSX.Element {
                             <Avatar image={avatarImage} shape="circle" className="!w-9 !h-9" />
                             <button
                                 className="hidden md:flex bg-white text-slate-700 px-4 py-1.5 rounded border-none cursor-pointer items-center gap-1.5 hover:bg-gray-100 transition-colors text-sm font-medium"
-                                onClick={AuthRequests.removeToken}
+                                onClick={() => { AuthRequests.removeToken(); navigate('/login'); }}
                             >
                                 <i className="pi pi-sign-out text-xs" />
                                 <span>Sair</span>
@@ -152,7 +152,7 @@ function Navegacao(): JSX.Element {
                     {isAuthenticated ? (
                         <button
                             className="flex items-center gap-3 text-red-300 text-base px-3 py-3 rounded hover:bg-white/10 transition-colors w-full"
-                            onClick={() => { AuthRequests.removeToken(); setMenuOpen(false); }}
+                            onClick={() => { AuthRequests.removeToken(); navigate('/login'); setMenuOpen(false); }}
                         >
                             <i className="pi pi-sign-out w-5 text-center" />
                             <span>Sair</span>

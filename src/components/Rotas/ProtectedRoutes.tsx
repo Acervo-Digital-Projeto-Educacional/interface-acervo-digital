@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { type ComponentType } from 'react';
+import AuthRequests from '../../fetch/AuthRequests';
 
 interface ProtectedRouteProps {
     element: ComponentType;
@@ -18,7 +19,7 @@ interface ProtectedRouteProps {
  * @returns Elemento renderizado caso o usuário esteja autenticado, caso contrário, redireciona para a página de login
  */
 const ProtectedRoute = ({ element: Element, requireAdmin, ...rest }: ProtectedRouteProps) => {
-    const isAuthenticated = !!localStorage.getItem('isAuth');   // recupera o valor de isAuth no localstorage
+    const isAuthenticated = !!(localStorage.getItem('isAuth') && AuthRequests.checkTokenExpiry());
     const isAdmin = localStorage.getItem('role') === 'admin';
 
     if (!isAuthenticated) {

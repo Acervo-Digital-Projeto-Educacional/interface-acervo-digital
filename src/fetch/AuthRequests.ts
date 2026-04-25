@@ -1,5 +1,4 @@
 import { SERVER_CFG } from "../AppConfig";
-import { useNavigate } from "react-router-dom";
 
 /**
  * Classe para lidar com autenticação
@@ -79,9 +78,6 @@ class AuthRequests {
         ];
 
         keys.map(key => localStorage.removeItem(key));
-
-        const navigate = useNavigate();
-        navigate("/login");
     }
 
     /**
