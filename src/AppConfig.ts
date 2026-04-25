@@ -11,5 +11,8 @@ export const SERVER_CFG = {
     ENDPOINT_EMPRESTIMOS: '/api/emprestimos',
 
     // login
-    ENDPOINT_LOGIN: '/api/login'
+    ENDPOINT_LOGIN: '/api/login',
+
+    // usuarios
+    ENDPOINT_USUARIOS: '/api/usuarios'
 }

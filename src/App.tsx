@@ -22,6 +22,7 @@ import PDetalhesEmprestimo from './pages/PDetalhes/PDetalhesEmprestimo/PDetalhes
 import PAtualizarEmprestimo from './pages/PAtualizar/PAtualizarEmprestimo/PAtualizarEmprestimo'
 import PCadastroEmprestimo from './pages/PCadastro/PCadastroEmprestimo/PCadastroEmprestimo'
 import { Toaster } from 'react-hot-toast'
+import PCadastroUsuario from './pages/PCadastro/PCadastroUsuario/PCadastroUsuario'
 
 function App() {
 
@@ -34,6 +35,9 @@ function App() {
       <Routes>
         <Route path='/' element={<PHome />} />
         <Route path='/login' element={<PLogin />} />
+
+        {/* ROTAS DE USUÁRIO */}
+        <Route path='/cadastro/usuario' element={<ProtectedRoute element={PCadastroUsuario} />} />
 
         {/* ROTAS DE ALUNOS */}
         <Route path='/lista/alunos' element={<ProtectedRoute element={PListagemAluno} />} />
