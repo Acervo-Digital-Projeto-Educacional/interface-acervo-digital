@@ -63,3 +63,43 @@ export const showCustomToast = (message: string, title: string, image_code: numb
         </div>
     ));
 };
+
+export const showCustomConfirm = (message: string, title: string): Promise<boolean> => {
+    return new Promise((resolve) => {
+        toast((t) => (
+            <div className="flex flex-col gap-3">
+                <div className="flex-1">
+                    <p className="text-sm font-bold text-slate-800">
+                        {title}
+                    </p>
+                    <p className="mt-1 text-sm text-slate-600">
+                        {message}
+                    </p>
+                </div>
+                <div className="flex justify-end gap-2">
+                    <button
+                        onClick={() => {
+                            toast.dismiss(t.id);
+                            resolve(false);
+                        }}
+                        className="px-3 py-1.5 bg-slate-200 text-slate-700 text-xs font-bold rounded-md hover:bg-slate-300 transition-colors"
+                    >
+                        Cancelar
+                    </button>
+                    <button
+                        onClick={() => {
+                            toast.dismiss(t.id);
+                            resolve(true);
+                        }}
+                        className="px-3 py-1.5 bg-green-600 text-white text-xs font-bold rounded-md hover:bg-green-700 transition-colors"
+                    >
+                        Confirmar
+                    </button>
+                </div>
+            </div>
+        ), {
+            duration: Infinity, // Impede que o toast feche sozinho
+            position: 'top-center'
+        });
+    });
+};

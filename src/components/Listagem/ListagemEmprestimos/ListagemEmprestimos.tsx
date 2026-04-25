@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import type EmprestimoDTO from "../../../dto/EmprestimoDTO";
 import EmprestimoRequests from "../../../fetch/EmprestimoRequests";
 import { showCustomToast } from "../../../utils/notify";
+import { showCustomConfirm } from "../../../utils/notify";
 
 function ListagemEmprestimos(): JSX.Element {
     const [emprestimos, setEmprestimos] = useState<EmprestimoDTO[]>([]);
@@ -48,7 +49,7 @@ function ListagemEmprestimos(): JSX.Element {
     };
 
     const handleRemoverEmprestimo = async (id_emprestimo: number) => {
-        const confirmar = window.confirm("Você realmente deseja remover este registro?");
+        const confirmar = await showCustomConfirm("Você realmente deseja remover este registro?", "Remover registro");
         if (confirmar) {
             try {
                 const sucesso = await EmprestimoRequests.removerEmprestimo(id_emprestimo);

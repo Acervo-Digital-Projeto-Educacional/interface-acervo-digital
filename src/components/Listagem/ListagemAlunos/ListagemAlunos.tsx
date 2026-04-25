@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AlunoRequests from "../../../fetch/AlunoRequests";
 import type AlunoDTO from "../../../dto/AlunoDTO";
 import Utilitario from "../../../utils/Utilitario";
-import { showCustomToast } from "../../../utils/notify";
+import { showCustomConfirm, showCustomToast } from "../../../utils/notify";
 
 function ListagemAlunos(): JSX.Element {
     const [alunos, setAlunos] = useState<AlunoDTO[]>([]);
@@ -45,7 +45,7 @@ function ListagemAlunos(): JSX.Element {
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
     const handleRemoverAluno = async (id_aluno: number) => {
-        const confirmar = window.confirm("Você realmente deseja remover este registro?");
+        const confirmar = await showCustomConfirm("Você realmente deseja remover este registro?", "Remover registro");
         if (confirmar) {
             try {
                 const sucesso = await AlunoRequests.removerAluno(id_aluno);

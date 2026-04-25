@@ -3,6 +3,7 @@ import type LivroDTO from "../../../dto/LivroDTO";
 import LivroRequests from "../../../fetch/LivroRequests";
 import { useNavigate } from "react-router-dom";
 import { showCustomToast } from "../../../utils/notify";
+import { showCustomConfirm } from "../../../utils/notify";
 
 function ListagemLivros(): JSX.Element {
     const [livros, setLivros] = useState<LivroDTO[]>([]);
@@ -42,7 +43,7 @@ function ListagemLivros(): JSX.Element {
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
     const handleRemoverLivro = async (id_livro: number) => {
-        const confirmar = window.confirm("Você realmente deseja remover este registro?");
+        const confirmar = await showCustomConfirm("Você realmente deseja remover este registro?", "Remover registro");
         if (confirmar) {
             try {
                 const sucesso = await LivroRequests.removerLivro(id_livro);
