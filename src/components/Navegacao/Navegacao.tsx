@@ -22,6 +22,7 @@ function Navegacao(): JSX.Element {
 
     const nome = localStorage.getItem('nome') || 'Usuário';
     const email = localStorage.getItem('email') || '';
+    const role = localStorage.getItem('role');
     const avatarImage = "https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png";
 
     // Fecha o menu ao clicar fora
@@ -47,6 +48,7 @@ function Navegacao(): JSX.Element {
             { label: 'Alunos', icon: 'pi pi-users', url: '/lista/alunos' },
             { label: 'Livros', icon: 'pi pi-book', url: '/lista/livros' },
             { label: 'Empréstimos', icon: 'pi pi-send', url: '/lista/emprestimos' },
+            ...(role === 'admin' ? [{ label: 'Usuários', icon: 'pi pi-user', url: '/cadastro/usuario' }] : []),
         ] : []),
     ];
 
