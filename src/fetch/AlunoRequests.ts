@@ -24,11 +24,13 @@ class AlunoRequests {
                 const listaDeAlunos: AlunoDTO[] = await respostaAPI.json();
                 return listaDeAlunos;
             } else {
-                throw new Error("Não foi possível listar os alunos.");
+                const errorData = await respostaAPI.json().catch(() => ({}));
+                const errorMessage = errorData.mensagem || `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`;
+                throw new Error(errorMessage);
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error(`Erro ao fazer a consulta de alunos. ${error}`);
-            return;
+            throw error;
         }
     }
 
@@ -41,15 +43,17 @@ class AlunoRequests {
             });
 
             if (!respostaAPI.ok) {
-                throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+                const errorData = await respostaAPI.json().catch(() => ({}));
+                const errorMessage = errorData.mensagem || `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`;
+                throw new Error(errorMessage);
             }
 
             console.info(`${respostaAPI.status} ${respostaAPI.statusText}`);
 
             return true;
-        } catch (error) {
+        } catch (error: any) {
             console.error(`Erro ao fazer consulta à API. ${error}`);
-            return false;
+            throw error;
         }
     }
 
@@ -61,15 +65,17 @@ class AlunoRequests {
             });
 
             if (!respostaAPI.ok) {
-                throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+                const errorData = await respostaAPI.json().catch(() => ({}));
+                const errorMessage = errorData.mensagem || `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`;
+                throw new Error(errorMessage);
             }
 
             console.info(`${respostaAPI.status} ${respostaAPI.statusText}`);
 
             return true;
-        } catch (error) {
+        } catch (error: any) {
             console.error(`Erro ao fazer consulta à API. ${error}`);
-            return false;
+            throw error;
         }
     }
 
@@ -83,11 +89,13 @@ class AlunoRequests {
                 const aluno: AlunoDTO = await respostaAPI.json();
                 return aluno;
             } else {
-                throw new Error("Não foi possível buscar o aluno.");
+                const errorData = await respostaAPI.json().catch(() => ({}));
+                const errorMessage = errorData.mensagem || `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`;
+                throw new Error(errorMessage);
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error(`Erro ao fazer a consulta de aluno por ID. ${error}`);
-            return;
+            throw error;
         }
     }
 
@@ -100,15 +108,19 @@ class AlunoRequests {
             });
 
             if (!respostaAPI.ok) {
-                throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+                // Tenta extrair a mensagem de erro enviada pela API
+                const errorData = await respostaAPI.json().catch(() => ({}));
+                const errorMessage = errorData.mensagem || `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`;
+                throw new Error(errorMessage);
             }
 
             console.info(`${respostaAPI.status} ${respostaAPI.statusText}`);
 
             return true;
-        } catch (error) {
+        } catch (error: any) {
             console.error(`Erro ao fazer consulta à API. ${error}`);
-            return false;
+            // Relança o erro para que o componente (FormAtualizarAluno) possa capturá-lo e exibir no Toast
+            throw error;
         }
     }
 }

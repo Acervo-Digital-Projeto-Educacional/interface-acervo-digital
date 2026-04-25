@@ -68,11 +68,11 @@ function FormEmprestimo() {
             return;
         }
 
-        const resposta = await EmprestimoRequests.enviarFormularioEmprestimo(formData as unknown as EmprestimoDTO);
-        if (resposta) {
+        try {
+            await EmprestimoRequests.enviarFormularioEmprestimo(formData as unknown as EmprestimoDTO);
             showCustomToast("Empréstimo cadastrado com sucesso.", "Sucesso", 1);
-        } else {
-            showCustomToast("Erro ao cadastrar empréstimo.", "Error", 2);
+        } catch (error: any) {
+            showCustomToast(error.message || "Erro ao cadastrar empréstimo.", "Atenção", 2);
         }
     };
 

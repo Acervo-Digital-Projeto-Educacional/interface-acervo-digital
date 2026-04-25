@@ -50,12 +50,12 @@ function FormAtualizarLivro() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (id_livro) {
-            const resposta = await LivroRequests.atualizarLivro(Number(id_livro), formData);
-            if (resposta) {
+            try {
+                await LivroRequests.atualizarLivro(Number(id_livro), formData);
                 showCustomToast("Livro atualizado com sucesso.", "Sucesso", 1);
                 navigate('/lista/livros');
-            } else {
-                showCustomToast("Erro ao atualizar livro.", "Erro", 2);
+            } catch (error: any) {
+                showCustomToast(error.message || "Erro ao atualizar livro.", "Atenção", 2);
             }
         }
     };

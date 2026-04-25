@@ -24,11 +24,13 @@ class EmprestimoRequests {
                 const listaDeEmprestimos: EmprestimoDTO[] = await respostaAPI.json();
                 return listaDeEmprestimos;
             } else {
-                throw new Error("Não foi possível listar os empréstimos.");
+                const errorData = await respostaAPI.json().catch(() => ({}));
+                const errorMessage = errorData.mensagem || `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`;
+                throw new Error(errorMessage);
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error(`Erro ao fazer a consulta de empréstimos. ${error}`);
-            return;
+            throw error;
         }
     }
 
@@ -41,15 +43,17 @@ class EmprestimoRequests {
             });
 
             if (!respostaAPI.ok) {
-                throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+                const errorData = await respostaAPI.json().catch(() => ({}));
+                const errorMessage = errorData.mensagem || `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`;
+                throw new Error(errorMessage);
             }
 
             console.info(`${respostaAPI.status} ${respostaAPI.statusText}`);
 
             return true;
-        } catch (error) {
+        } catch (error: any) {
             console.error(`Erro ao fazer consulta à API. ${error}`);
-            return false;
+            throw error;
         }
     }
 
@@ -61,15 +65,17 @@ class EmprestimoRequests {
             });
 
             if (!respostaAPI.ok) {
-                throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+                const errorData = await respostaAPI.json().catch(() => ({}));
+                const errorMessage = errorData.mensagem || `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`;
+                throw new Error(errorMessage);
             }
 
             console.info(`${respostaAPI.status} ${respostaAPI.statusText}`);
 
             return true;
-        } catch (error) {
+        } catch (error: any) {
             console.error(`Erro ao fazer consulta à API. ${error}`);
-            return false;
+            throw error;
         }
     }
 
@@ -83,32 +89,36 @@ class EmprestimoRequests {
                 const emprestimo: EmprestimoDTO = await respostaAPI.json();
                 return emprestimo;
             } else {
-                throw new Error("Não foi possível buscar o empréstimo.");
+                const errorData = await respostaAPI.json().catch(() => ({}));
+                const errorMessage = errorData.mensagem || `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`;
+                throw new Error(errorMessage);
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error(`Erro ao fazer a consulta de empréstimo por ID. ${error}`);
-            return;
+            throw error;
         }
     }
 
     async atualizarEmprestimo(id_emprestimo: number, formEmprestimo: EmprestimoDTO): Promise<boolean> {
         try {
-            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_ALUNOS}/${id_emprestimo}`, {
+            const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_EMPRESTIMOS}/${id_emprestimo}`, {
                 method: 'PUT',
                 headers: this.getHeaders(),
                 body: JSON.stringify(formEmprestimo)
             });
 
             if (!respostaAPI.ok) {
-                throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+                const errorData = await respostaAPI.json().catch(() => ({}));
+                const errorMessage = errorData.mensagem || `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`;
+                throw new Error(errorMessage);
             }
 
             console.info(`${respostaAPI.status} ${respostaAPI.statusText}`);
 
             return true;
-        } catch (error) {
+        } catch (error: any) {
             console.error(`Erro ao fazer consulta à API. ${error}`);
-            return false;
+            throw error;
         }
     }
 }

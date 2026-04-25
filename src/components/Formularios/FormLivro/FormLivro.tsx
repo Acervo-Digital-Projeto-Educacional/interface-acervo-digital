@@ -30,14 +30,13 @@ function FormLivro() {
         setFormData(prev => ({ ...prev, [name]: parsedValue }));
     };
 
-    // Envia os dados para a requisição
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const resposta = await LivroRequests.enviarFormularioLivro(formData);
-        if (resposta) {
+        try {
+            await LivroRequests.enviarFormularioLivro(formData);
             showCustomToast("Livro cadastrado com sucesso.", "Sucesso", 1);
-        } else {
-            showCustomToast("Erro ao cadastrar livro.", "Erro", 2);
+        } catch (error: any) {
+            showCustomToast(error.message || "Erro ao cadastrar livro.", "Atenção", 2);
         }
     };
 

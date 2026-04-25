@@ -24,13 +24,16 @@ class LivroRequests {
                 const listaDeLivros: LivroDTO[] = await respostaAPI.json();
                 return listaDeLivros;
             } else {
-                throw new Error("Não foi possível listar os livros");
+                const errorData = await respostaAPI.json().catch(() => ({}));
+                const errorMessage = errorData.mensagem || `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`;
+                throw new Error(errorMessage);
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error(`Erro ao fazer a consulta de livros. ${error}`);
-            return;
+            throw error;
         }
     }
+
     async enviarFormularioLivro(formLivro: LivroDTO): Promise<boolean> {
         try {
             const respostaAPI = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_LIVROS}`, {
@@ -40,15 +43,17 @@ class LivroRequests {
             });
 
             if (!respostaAPI.ok) {
-                throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+                const errorData = await respostaAPI.json().catch(() => ({}));
+                const errorMessage = errorData.mensagem || `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`;
+                throw new Error(errorMessage);
             }
 
             console.info(`${respostaAPI.status} ${respostaAPI.statusText}`);
 
             return true;
-        } catch (error) {
+        } catch (error: any) {
             console.error(`Erro ao fazer consulta à API. ${error}`);
-            return false;
+            throw error;
         }
     }
 
@@ -60,15 +65,17 @@ class LivroRequests {
             });
 
             if (!respostaAPI.ok) {
-                throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+                const errorData = await respostaAPI.json().catch(() => ({}));
+                const errorMessage = errorData.mensagem || `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`;
+                throw new Error(errorMessage);
             }
 
             console.info(`${respostaAPI.status} ${respostaAPI.statusText}`);
 
             return true;
-        } catch (error) {
+        } catch (error: any) {
             console.error(`Erro ao fazer consulta à API. ${error}`);
-            return false;
+            throw error;
         }
     }
 
@@ -82,11 +89,13 @@ class LivroRequests {
                 const livro: LivroDTO = await respostaAPI.json();
                 return livro;
             } else {
-                throw new Error("Não foi possível buscar o livro.");
+                const errorData = await respostaAPI.json().catch(() => ({}));
+                const errorMessage = errorData.mensagem || `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`;
+                throw new Error(errorMessage);
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error(`Erro ao fazer a consulta de livro por ID. ${error}`);
-            return;
+            throw error;
         }
     }
 
@@ -99,15 +108,17 @@ class LivroRequests {
             });
 
             if (!respostaAPI.ok) {
-                throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+                const errorData = await respostaAPI.json().catch(() => ({}));
+                const errorMessage = errorData.mensagem || `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`;
+                throw new Error(errorMessage);
             }
 
             console.info(`${respostaAPI.status} ${respostaAPI.statusText}`);
 
             return true;
-        } catch (error) {
+        } catch (error: any) {
             console.error(`Erro ao fazer consulta à API. ${error}`);
-            return false;
+            throw error;
         }
     }
 }

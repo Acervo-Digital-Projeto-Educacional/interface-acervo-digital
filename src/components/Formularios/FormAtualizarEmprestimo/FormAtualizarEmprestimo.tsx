@@ -81,12 +81,12 @@ function FormAtualizarEmprestimo() {
         }
 
         if (id_emprestimo) {
-            const resposta = await EmprestimoRequests.atualizarEmprestimo(Number(id_emprestimo), formData as unknown as EmprestimoDTO);
-            if (resposta) {
+            try {
+                await EmprestimoRequests.atualizarEmprestimo(Number(id_emprestimo), formData as unknown as EmprestimoDTO);
                 showCustomToast("Empréstimo atualizado com sucesso", "Sucesso", 1);
                 navigate('/lista/emprestimos');
-            } else {
-                showCustomToast("Erro ao atualizar empréstimo", "Erro", 2);
+            } catch (error: any) {
+                showCustomToast(error.message || "Erro ao atualizar empréstimo", "Atenção", 2);
             }
         }
     };

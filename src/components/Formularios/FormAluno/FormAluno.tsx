@@ -29,18 +29,17 @@ function FormAluno() {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    // Envia os dados para a requisição
     const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!Utilitario.validarEmail(formData.email)) {
             showCustomToast("E-mail inválido", "Erro no e-mail", 2);
             return;
         }
-        const resposta = await AlunoRequests.enviarFormularioAluno(formData);
-        if (resposta) {
+        try {
+            await AlunoRequests.enviarFormularioAluno(formData);
             showCustomToast("Aluno cadastrado com sucesso", "Sucesso", 1);
-        } else {
-            showCustomToast("Erro ao cadastrar aluno", "Erro", 2);
+        } catch (error: any) {
+            showCustomToast(error.message || "Erro ao cadastrar aluno", "Atenção", 2);
         }
     };
 

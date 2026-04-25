@@ -53,14 +53,15 @@ function FormAtualizarAluno() {
             return;
         }
         if (id_aluno) {
-            const resposta = await AlunoRequests.atualizarAluno(Number(id_aluno), formData);
-            if (resposta) {
+            try {
+                await AlunoRequests.atualizarAluno(Number(id_aluno), formData);
                 showCustomToast("Aluno atualizado com sucesso", "Sucesso", 1);
                 // Admin volta para a lista; user vai para os próprios detalhes
                 const role = localStorage.getItem('role');
                 navigate(role === 'admin' ? '/lista/alunos' : `/detalhes/aluno/${id_aluno}`);
-            } else {
-                showCustomToast("Erro ao atualizar aluno", "Erro", 2);
+            } catch (error: any) {
+                // error.message agora contém a mensagem amigável vinda da API
+                showCustomToast(error.message || "Erro ao atualizar aluno", "Atenção", 2);
             }
         }
     };
