@@ -1,30 +1,19 @@
+import { SERVER_CFG } from "../AppConfig";
+
 /**
  * Classe para lidar com autenticação
  */
 class AuthRequests {
-
-    private serverUrl: string;
-    private endpointLogin: string;
-    
-    /**
-     * Construtor das rotas e do endereço do servidor
-     */
-    constructor() {
-        // endereço do servidor
-        this.serverUrl = 'http://localhost:3333';
-        // rota do servidor
-        this.endpointLogin = '/api/login';
-    }
 
     /**
      * Realiza a autenticação no servidor
      * @param {*} login - email e senha
      * @returns **true** caso sucesso, **false** caso erro
      */
-    async login(login: { email: string, senha: string}) {       
+    async login(login: { email: string, senha: string }) {
         try {
             // faz a requisição POST ao servidor...
-            const response = await fetch(`${this.serverUrl}${this.endpointLogin}`, {
+            const response = await fetch(`${SERVER_CFG.SERVER_URL}${SERVER_CFG.ENDPOINT_LOGIN}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -32,7 +21,7 @@ class AuthRequests {
                 // passando as informações de login no corpo da requisição
                 body: JSON.stringify(login)
             });
-            
+
             // Verifica alguma falha na comunicação
             if (!response.ok) {
                 console.log('Erro na autenticação');
@@ -40,7 +29,7 @@ class AuthRequests {
             }
             // caso a requisição seja bem sucedida, armazena a resposta em uma constante
             const data = await response.json();
-            console.log( data );
+            console.log(data);
 
             // verifica se o atributo auth da resposta tem o valor TRUE, se tiver é porque a autenticação teve sucesso
             if (data.auth) {
@@ -63,7 +52,7 @@ class AuthRequests {
      * @param {*} usuario - objeto com informações do usuário vindos do servidor
      * @param {*} isAuth - estado da autenticação do usuário
      */
-    persistToken(token: string, usuario: {id_usuario: number, nome: string, email: string, role: string, id_aluno: number | null}, isAuth: boolean) {
+    persistToken(token: string, usuario: { id_usuario: number, nome: string, email: string, role: string, id_aluno: number | null }, isAuth: boolean) {
         localStorage.setItem('token', token);
         localStorage.setItem('nome', usuario.nome);
         localStorage.setItem('idUsuario', usuario.id_usuario.toString());
@@ -99,7 +88,7 @@ class AuthRequests {
     checkTokenExpiry() {
         // recupera o valor do token no localstorage
         const token = localStorage.getItem('token');
-        
+
         // verifica se o valor é diferente de vazio
         if (token) {
             // recupera a data de expiração do token
