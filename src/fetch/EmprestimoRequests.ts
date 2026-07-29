@@ -1,10 +1,12 @@
+const API_URL = import.meta.env.VITE_API_SERVER_URL;
+
 // Classe responsável por fazer requisições à API - emprestimo
 class EmprestimoRequests {
     private serverURL;
     private endpointEmprestimo;
 
     constructor() {
-        this.serverURL = 'http://localhost:3333';
+        this.serverURL = API_URL;
         this.endpointEmprestimo = '/api/emprestimos';
     }
 

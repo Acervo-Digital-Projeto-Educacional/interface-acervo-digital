@@ -1,10 +1,12 @@
+const API_URL = import.meta.env.VITE_API_SERVER_URL;
+
 // Classe responsável por fazer requisições à API - livro
 class LivroRequests {
     private serverUrl;
     private endpointLivro;
 
     constructor() {
-        this.serverUrl = 'http://localhost:3333';
+        this.serverUrl = API_URL;
         this.endpointLivro = '/api/livros';
     }
 
